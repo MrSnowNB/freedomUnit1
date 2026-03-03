@@ -1,0 +1,139 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-03-03T15:51:23-0500",
+    "kicad_version": "9.0.7",
+    "schematic_parity": [],
+    "source": "FreedomUnit_V2.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "uuid": "117644df-b588-415f-bdf1-647eff542c31"
+                },
+                {
+                    "description": "Reference field of J5",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 0.0
+                    },
+                    "uuid": "9343db4c-bf6f-49cb-bc87-9df6f0db9ec5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Footprint 'Lambda62C-9S' does not match copy in library 'FreedomUnit'.",
+            "items": [
+                {
+                    "description": "Footprint M1",
+                    "pos": {
+                        "x": 65.0,
+                        "y": 15.0
+                    },
+                    "uuid": "062018aa-9c0e-4566-ae5f-e7fc716cc980"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'Nordic_AQFN-73-1EP_7x7mm_P0.5mm' does not match copy in library 'Package_DFN_QFN'.",
+            "items": [
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 25.0
+                    },
+                    "uuid": "4a05a60b-7033-4d2f-8b29-e93cefa58eb1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'Taoglas_CGGBP.25.4.A.02' does not match copy in library 'FreedomUnit'.",
+            "items": [
+                {
+                    "description": "Footprint AE2",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 35.0
+                    },
+                    "uuid": "6d631958-2e85-4a2c-9ec6-774701e3ac41"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'Johanson_2450AT18D0100' does not match copy in library 'FreedomUnit'.",
+            "items": [
+                {
+                    "description": "Footprint AE1",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 10.0
+                    },
+                    "uuid": "ac7f8564-c243-4ed9-903a-2c5c0ac559b3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'USB_C_Receptacle_GCT_USB4085' does not match copy in library 'Connector_USB'.",
+            "items": [
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 50.0
+                    },
+                    "uuid": "7e62cf89-bd61-4cb4-a6fc-18e5077385f1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'CONSMA006.062' does not match copy in library 'FreedomUnit'.",
+            "items": [
+                {
+                    "description": "Footprint J3",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 10.0
+                    },
+                    "uuid": "4af09393-a8c6-4a33-b909-ab6e3426ff1b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'Molex_54548-1071_1x10-1MP_P0.5mm_Horizontal' does not match copy in library 'Connector_FFC-FPC'.",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 5.0
+                    },
+                    "uuid": "fc00c841-2d9a-4e3e-b488-f2af596db3fb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

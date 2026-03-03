@@ -1,0 +1,13 @@
+# KiCad standard gitignore
+*.bak
+*.bck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.kicad_prl
+*-backups/
+fp-info-cache/
+_autosave-*
+*.lck
+*.tmp
+*.zip
+*.log

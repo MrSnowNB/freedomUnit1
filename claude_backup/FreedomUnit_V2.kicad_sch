@@ -1,0 +1,209 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "00000000-0000-0000-0000-000000000001")
+	(paper "A4")
+	(title_block
+		(title "Freedom Unit V2 — Root Schematic")
+		(date "2026-03-03")
+		(rev "V2.2")
+		(company "GarageAGI LLC")
+	)
+	(lib_symbols)
+	(sheet
+		(at 30 40)
+		(size 50 20)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 255 194 1.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000000000002")
+		(property "Sheetname" "MCU (nRF52840)"
+			(at 30 38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sheetfile" "Sheet1_MCU.kicad_sch"
+			(at 30 62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "FreedomUnit_V2"
+				(path "/00000000-0000-0000-0000-000000000001"
+					(page "1")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 30 80)
+		(size 50 20)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 255 194 1.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000000000003")
+		(property "Sheetname" "Power Management"
+			(at 30 78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sheetfile" "Sheet3_Power.kicad_sch"
+			(at 30 102 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "FreedomUnit_V2"
+				(path "/00000000-0000-0000-0000-000000000001"
+					(page "1")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 170 40)
+		(size 50 20)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 255 194 1.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000000000004")
+		(property "Sheetname" "Peripherals"
+			(at 170 38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sheetfile" "Sheet5_Peripherals.kicad_sch"
+			(at 170 62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "FreedomUnit_V2"
+				(path "/00000000-0000-0000-0000-000000000001"
+					(page "1")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 100 40)
+		(size 50 20)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 255 194 1.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000000000005")
+		(property "Sheetname" "LoRa Radio"
+			(at 100 38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sheetfile" "Sheet2_LoRa.kicad_sch"
+			(at 100 62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "FreedomUnit_V2"
+				(path "/00000000-0000-0000-0000-000000000001"
+					(page "1")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 100 80)
+		(size 50 20)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 255 255 194 1.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000000000006")
+		(property "Sheetname" "USB Interface"
+			(at 100 78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sheetfile" "Sheet4_USB.kicad_sch"
+			(at 100 102 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "FreedomUnit_V2"
+				(path "/00000000-0000-0000-0000-000000000001"
+					(page "1")
+				)
+			)
+		)
+	)
+)

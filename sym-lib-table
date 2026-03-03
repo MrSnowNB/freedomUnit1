@@ -1,0 +1,7 @@
+(sym_lib_table
+  (lib (name "FreedomUnit")(type "KiCad")(uri "${KIPRJMOD}/libs/FreedomUnit.kicad_sym")(options "")(descr "Custom project symbols"))
+  (lib (name "MCU_Nordic")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/symbols/MCU_Nordic.kicad_sym")(options "")(descr ""))
+  (lib (name "Battery_Management")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/symbols/Battery_Management.kicad_sym")(options "")(descr ""))
+  (lib (name "Connector_Generic")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/symbols/Connector_Generic.kicad_sym")(options "")(descr ""))
+  (lib (name "Device")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/symbols/Device.kicad_sym")(options "")(descr ""))
+)

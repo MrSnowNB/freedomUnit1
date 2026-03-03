@@ -1,0 +1,12 @@
+(fp_lib_table
+  (lib (name "FreedomUnit")(type "KiCad")(uri "${KIPRJMOD}/libs/FreedomUnit.pretty")(options "")(descr "Custom project footprints"))
+  (lib (name "Package_DFN_QFN")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Package_DFN_QFN.pretty")(options "")(descr ""))
+  (lib (name "Package_TO_SOT_SMD")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Package_TO_SOT_SMD.pretty")(options "")(descr ""))
+  (lib (name "Connector_USB")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Connector_USB.pretty")(options "")(descr ""))
+  (lib (name "Connector_FFC-FPC")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Connector_FFC-FPC.pretty")(options "")(descr ""))
+  (lib (name "Button_Switch_SMD")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Button_Switch_SMD.pretty")(options "")(descr ""))
+  (lib (name "MountingHole")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/MountingHole.pretty")(options "")(descr ""))
+  (lib (name "Capacitor_SMD")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Capacitor_SMD.pretty")(options "")(descr ""))
+  (lib (name "Resistor_SMD")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Resistor_SMD.pretty")(options "")(descr ""))
+  (lib (name "Inductor_SMD")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Inductor_SMD.pretty")(options "")(descr ""))
+)
