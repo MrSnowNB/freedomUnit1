@@ -25,6 +25,13 @@
 ### 5. Documentation Updates
 - Updated `README.md` to reflect the new repository structure.
 
+### 6. Footprint and Library Table Fixes (Post-Cleanup)
+- Added 9 missing footprint libraries to `fp-lib-table` (Connector_JST, Battery, RF_Antenna, etc.).
+- Added 4 missing symbol libraries to `sym-lib-table`.
+- Corrected wrong footprint assignments for `ANT1`, `BT1`, `D1`, `J4`, and `U5`.
+- Filled empty footprint fields for `U1`, `J2`, `J3`, and `U9`.
+- Integrated `fix_footprints.py` into `scripts/gemini_tools/`.
+
 ## Final Repository State
 - **Root**: Clean KiCad 9 project files and technical mandates.
 - **docs/**: Master spec and placement guide.
