@@ -3219,7 +3219,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:Texas_S-PVQFN-N16"
+		(property "Footprint" "Package_DFN_QFN:Texas_S-PVQFN-N16_EP2.7x2.7mm"
 			(at 85 55 0)
 			(effects
 				(font

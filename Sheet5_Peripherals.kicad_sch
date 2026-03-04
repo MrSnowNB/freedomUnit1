@@ -3038,7 +3038,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 215 150 0)
 			(effects
 				(font
@@ -3173,7 +3173,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 273.65 110 0)
 			(effects
 				(font
@@ -3304,7 +3304,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 75 150 0)
 			(effects
 				(font
@@ -4377,7 +4377,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 250 150 0)
 			(effects
 				(font
@@ -4445,7 +4445,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 280 75.32 0)
 			(effects
 				(font
@@ -4840,7 +4840,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 180 150 0)
 			(effects
 				(font
@@ -5059,7 +5059,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 40 150 0)
 			(effects
 				(font
@@ -5127,7 +5127,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 112.62 33.65 0)
 			(effects
 				(font
@@ -5191,7 +5191,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 145 150 0)
 			(effects
 				(font
@@ -5258,7 +5258,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 110 150 0)
 			(effects
 				(font
@@ -5326,7 +5326,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS636"
+		(property "Footprint" "FreedomUnit:SW_SPST_PTS636"
 			(at 150.08 171.35 0)
 			(effects
 				(font

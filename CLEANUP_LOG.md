@@ -37,6 +37,17 @@
 - Total of 18 libraries now properly registered in the footprint table.
 - Integrated `fix_fp_lib_table.py` into `scripts/gemini_tools/`.
 
+### 8. Comprehensive Error Fix (Schematic & Footprint Alignment)
+- **nRF52840 (U1) Pin Remapping**: Remapped 120 pin references in `Sheet1_MCU.kicad_sch` to align GPIO names with physical AQFN-73 pad names (e.g., P0.04 -> J1).
+- **Footprint Rebuilding**:
+    - Rebuilt `Lambda62C-9S` with correct 19-pad layout.
+    - Rebuilt `CONSMA006.062` SMA connector with signal + ground pads.
+    - Created custom `SW_SPST_PTS636` footprint in the `FreedomUnit` library.
+- **Schematic Corrections**:
+    - Fixed SW2-SW8 footprints to point to the new `FreedomUnit:SW_SPST_PTS636`.
+    - Fixed BQ25504 (U4) footprint to `Texas_S-PVQFN-N16_EP2.7x2.7mm`.
+- Integrated `fix_all_errors.py` into `scripts/gemini_tools/`.
+
 ## Final Repository State
 - **Root**: Clean KiCad 9 project files and technical mandates.
 - **docs/**: Master spec and placement guide.

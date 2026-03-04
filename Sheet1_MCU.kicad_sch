@@ -609,7 +609,7 @@
 							)
 						)
 					)
-					(number "P0.19"
+					(number "AC15"
 						(effects
 							(font
 								(size 1 1)
@@ -627,7 +627,7 @@
 							)
 						)
 					)
-					(number "P0.22"
+					(number "AD18"
 						(effects
 							(font
 								(size 1 1)
@@ -645,7 +645,7 @@
 							)
 						)
 					)
-					(number "P0.23"
+					(number "AC19"
 						(effects
 							(font
 								(size 1 1)
@@ -663,7 +663,7 @@
 							)
 						)
 					)
-					(number "P0.24"
+					(number "AD20"
 						(effects
 							(font
 								(size 1 1)
@@ -681,7 +681,7 @@
 							)
 						)
 					)
-					(number "P0.20"
+					(number "AD16"
 						(effects
 							(font
 								(size 1 1)
@@ -699,7 +699,7 @@
 							)
 						)
 					)
-					(number "P0.17"
+					(number "AD12"
 						(effects
 							(font
 								(size 1 1)
@@ -717,7 +717,7 @@
 							)
 						)
 					)
-					(number "P0.25"
+					(number "AC21"
 						(effects
 							(font
 								(size 1 1)
@@ -735,7 +735,7 @@
 							)
 						)
 					)
-					(number "P1.06"
+					(number "R24"
 						(effects
 							(font
 								(size 1 1)
@@ -753,7 +753,7 @@
 							)
 						)
 					)
-					(number "P1.07"
+					(number "P23"
 						(effects
 							(font
 								(size 1 1)
@@ -771,7 +771,7 @@
 							)
 						)
 					)
-					(number "P0.31"
+					(number "A8"
 						(effects
 							(font
 								(size 1 1)
@@ -789,7 +789,7 @@
 							)
 						)
 					)
-					(number "P0.29"
+					(number "A10"
 						(effects
 							(font
 								(size 1 1)
@@ -807,7 +807,7 @@
 							)
 						)
 					)
-					(number "P0.30"
+					(number "B9"
 						(effects
 							(font
 								(size 1 1)
@@ -825,7 +825,7 @@
 							)
 						)
 					)
-					(number "P0.28"
+					(number "B11"
 						(effects
 							(font
 								(size 1 1)
@@ -843,7 +843,7 @@
 							)
 						)
 					)
-					(number "P1.11"
+					(number "B19"
 						(effects
 							(font
 								(size 1 1)
@@ -861,7 +861,7 @@
 							)
 						)
 					)
-					(number "P0.26"
+					(number "G1"
 						(effects
 							(font
 								(size 1 1)
@@ -879,7 +879,7 @@
 							)
 						)
 					)
-					(number "P0.27"
+					(number "H2"
 						(effects
 							(font
 								(size 1 1)
@@ -897,7 +897,7 @@
 							)
 						)
 					)
-					(number "P1.04"
+					(number "U24"
 						(effects
 							(font
 								(size 1 1)
@@ -915,7 +915,7 @@
 							)
 						)
 					)
-					(number "P1.05"
+					(number "T23"
 						(effects
 							(font
 								(size 1 1)
@@ -933,7 +933,7 @@
 							)
 						)
 					)
-					(number "P1.02"
+					(number "W24"
 						(effects
 							(font
 								(size 1 1)
@@ -951,7 +951,7 @@
 							)
 						)
 					)
-					(number "P0.12"
+					(number "U1"
 						(effects
 							(font
 								(size 1 1)
@@ -969,7 +969,7 @@
 							)
 						)
 					)
-					(number "P0.16"
+					(number "AC11"
 						(effects
 							(font
 								(size 1 1)
@@ -987,7 +987,7 @@
 							)
 						)
 					)
-					(number "P0.04"
+					(number "J1"
 						(effects
 							(font
 								(size 1 1)
@@ -1005,7 +1005,7 @@
 							)
 						)
 					)
-					(number "H1"
+					(number "H23"
 						(effects
 							(font
 								(size 1 1)
@@ -1023,7 +1023,7 @@
 							)
 						)
 					)
-					(number "34"
+					(number "B24"
 						(effects
 							(font
 								(size 1 1)
@@ -1041,7 +1041,7 @@
 							)
 						)
 					)
-					(number "13"
+					(number "A22"
 						(effects
 							(font
 								(size 1 1)
@@ -1059,7 +1059,7 @@
 							)
 						)
 					)
-					(number "35"
+					(number "A23"
 						(effects
 							(font
 								(size 1 1)
@@ -1077,7 +1077,7 @@
 							)
 						)
 					)
-					(number "30"
+					(number "C1"
 						(effects
 							(font
 								(size 1 1)
@@ -1095,7 +1095,7 @@
 							)
 						)
 					)
-					(number "GND"
+					(number "EP"
 						(effects
 							(font
 								(size 1 1)
@@ -1113,7 +1113,7 @@
 							)
 						)
 					)
-					(number "37"
+					(number "B5"
 						(effects
 							(font
 								(size 1 1)
@@ -1131,7 +1131,7 @@
 							)
 						)
 					)
-					(number "3"
+					(number "D2"
 						(effects
 							(font
 								(size 1 1)
@@ -1149,7 +1149,7 @@
 							)
 						)
 					)
-					(number "46"
+					(number "E24"
 						(effects
 							(font
 								(size 1 1)
@@ -1167,7 +1167,7 @@
 							)
 						)
 					)
-					(number "4"
+					(number "F2"
 						(effects
 							(font
 								(size 1 1)
@@ -1185,7 +1185,7 @@
 							)
 						)
 					)
-					(number "48"
+					(number "Y2"
 						(effects
 							(font
 								(size 1 1)
@@ -1203,7 +1203,7 @@
 							)
 						)
 					)
-					(number "7"
+					(number "AC5"
 						(effects
 							(font
 								(size 1 1)
@@ -1221,7 +1221,7 @@
 							)
 						)
 					)
-					(number "P1.10"
+					(number "A20"
 						(effects
 							(font
 								(size 1 1)
@@ -1239,7 +1239,7 @@
 							)
 						)
 					)
-					(number "P0.18"
+					(number "AC13"
 						(effects
 							(font
 								(size 1 1)
@@ -1257,7 +1257,7 @@
 							)
 						)
 					)
-					(number "P0.11"
+					(number "T2"
 						(effects
 							(font
 								(size 1 1)
@@ -1275,7 +1275,7 @@
 							)
 						)
 					)
-					(number "P0.06"
+					(number "L1"
 						(effects
 							(font
 								(size 1 1)
@@ -1293,7 +1293,7 @@
 							)
 						)
 					)
-					(number "P0.08"
+					(number "N1"
 						(effects
 							(font
 								(size 1 1)
@@ -1311,7 +1311,7 @@
 							)
 						)
 					)
-					(number "P1.00"
+					(number "AD22"
 						(effects
 							(font
 								(size 1 1)
@@ -1329,7 +1329,7 @@
 							)
 						)
 					)
-					(number "P1.01"
+					(number "Y23"
 						(effects
 							(font
 								(size 1 1)
@@ -1347,7 +1347,7 @@
 							)
 						)
 					)
-					(number "P0.14"
+					(number "AC9"
 						(effects
 							(font
 								(size 1 1)
@@ -1365,7 +1365,7 @@
 							)
 						)
 					)
-					(number "P0.13"
+					(number "AD8"
 						(effects
 							(font
 								(size 1 1)
@@ -1383,7 +1383,7 @@
 							)
 						)
 					)
-					(number "P0.15"
+					(number "AD10"
 						(effects
 							(font
 								(size 1 1)
@@ -1401,7 +1401,7 @@
 							)
 						)
 					)
-					(number "P1.14"
+					(number "B15"
 						(effects
 							(font
 								(size 1 1)
@@ -1419,7 +1419,7 @@
 							)
 						)
 					)
-					(number "P1.15"
+					(number "A14"
 						(effects
 							(font
 								(size 1 1)
@@ -1437,7 +1437,7 @@
 							)
 						)
 					)
-					(number "P1.12"
+					(number "B17"
 						(effects
 							(font
 								(size 1 1)
@@ -1455,7 +1455,7 @@
 							)
 						)
 					)
-					(number "P1.13"
+					(number "A16"
 						(effects
 							(font
 								(size 1 1)
@@ -1473,7 +1473,7 @@
 							)
 						)
 					)
-					(number "P0.07"
+					(number "M2"
 						(effects
 							(font
 								(size 1 1)
@@ -1491,7 +1491,7 @@
 							)
 						)
 					)
-					(number "P0.05"
+					(number "K2"
 						(effects
 							(font
 								(size 1 1)
@@ -1509,7 +1509,7 @@
 							)
 						)
 					)
-					(number "D+"
+					(number "AD6"
 						(effects
 							(font
 								(size 1 1)
@@ -1527,7 +1527,7 @@
 							)
 						)
 					)
-					(number "D-"
+					(number "AD4"
 						(effects
 							(font
 								(size 1 1)
@@ -1545,7 +1545,7 @@
 							)
 						)
 					)
-					(number "P1.08"
+					(number "P2"
 						(effects
 							(font
 								(size 1 1)
@@ -1563,7 +1563,7 @@
 							)
 						)
 					)
-					(number "P1.09"
+					(number "R1"
 						(effects
 							(font
 								(size 1 1)
@@ -1581,7 +1581,7 @@
 							)
 						)
 					)
-					(number "SWDIO"
+					(number "AC24"
 						(effects
 							(font
 								(size 1 1)
@@ -1599,7 +1599,7 @@
 							)
 						)
 					)
-					(number "SWDCLK"
+					(number "AA24"
 						(effects
 							(font
 								(size 1 1)
@@ -1617,7 +1617,7 @@
 							)
 						)
 					)
-					(number "P0.09"
+					(number "L24"
 						(effects
 							(font
 								(size 1 1)
@@ -1635,7 +1635,7 @@
 							)
 						)
 					)
-					(number "P0.10"
+					(number "J24"
 						(effects
 							(font
 								(size 1 1)
@@ -1653,7 +1653,7 @@
 							)
 						)
 					)
-					(number "P0.21"
+					(number "AC17"
 						(effects
 							(font
 								(size 1 1)
@@ -1671,7 +1671,7 @@
 							)
 						)
 					)
-					(number "P1.03"
+					(number "V23"
 						(effects
 							(font
 								(size 1 1)
@@ -5342,184 +5342,184 @@
 				)
 			)
 		)
-		(pin "P0.22"
+		(pin "AD18"
 			(uuid "a1e29959-9652-47f7-a4c1-c992283eacaa")
 		)
-		(pin "P0.24"
+		(pin "AD20"
 			(uuid "0bf12c01-ae1b-49ee-9e3b-2a3654421c91")
 		)
-		(pin "P0.17"
+		(pin "AD12"
 			(uuid "325714e9-9e98-418d-9c87-bc45e48557b8")
 		)
-		(pin "P1.06"
+		(pin "R24"
 			(uuid "c114a217-d7cc-4ae9-bdfb-bdb02db01561")
 		)
-		(pin "P0.31"
+		(pin "A8"
 			(uuid "a5b1ca74-d4b4-4668-84fd-f491c0f48fa6")
 		)
-		(pin "P0.19"
+		(pin "AC15"
 			(uuid "e3ee0477-ec94-4ba3-86cf-88abd6d53fa3")
 		)
-		(pin "P0.23"
+		(pin "AC19"
 			(uuid "bec13537-bbb1-4f4b-9a61-c37b1344f095")
 		)
-		(pin "P0.20"
+		(pin "AD16"
 			(uuid "901bcb09-f59c-4a8b-8b01-e9eb4dcf86f0")
 		)
-		(pin "P0.25"
+		(pin "AC21"
 			(uuid "48f54e57-0ef5-493f-bd6e-39c2f0cece75")
 		)
-		(pin "P1.07"
+		(pin "P23"
 			(uuid "56e91879-26c6-40d3-80fa-2034dd9b730f")
 		)
-		(pin "P1.11"
+		(pin "B19"
 			(uuid "42184c5e-573c-4ed4-a95b-4402cb46a193")
 		)
-		(pin "P0.27"
+		(pin "H2"
 			(uuid "208400f5-8d97-40b9-9d4c-a9d07e027b16")
 		)
-		(pin "P1.04"
+		(pin "U24"
 			(uuid "f98cae10-2593-49f9-8f3f-21e52d0248ea")
 		)
-		(pin "P1.02"
+		(pin "W24"
 			(uuid "f78df3a5-957d-44a4-bf48-9d213a13a108")
 		)
-		(pin "30"
+		(pin "C1"
 			(uuid "bbbd0d3b-9f7a-48aa-a677-78f02539daa7")
 		)
-		(pin "P1.05"
+		(pin "T23"
 			(uuid "907c83f2-f325-493c-9018-cddff87b8578")
 		)
-		(pin "P0.12"
+		(pin "U1"
 			(uuid "adab4670-9127-4356-8979-a097fd821721")
 		)
-		(pin "37"
+		(pin "B5"
 			(uuid "7bd15870-bc39-4a1d-828c-6c94de7a40dc")
 		)
-		(pin "P0.26"
+		(pin "G1"
 			(uuid "4f88c8c0-0c4f-4f4c-9943-b2463e175c4c")
 		)
-		(pin "H1"
+		(pin "H23"
 			(uuid "5eff8eba-3878-4afc-83c8-11eed1b0a514")
 		)
-		(pin "P0.28"
+		(pin "B11"
 			(uuid "ab066737-83c6-4fbe-b918-afb4fabae85b")
 		)
-		(pin "34"
+		(pin "B24"
 			(uuid "471c5bc2-25d8-4458-ae61-888c89157040")
 		)
-		(pin "P0.04"
+		(pin "J1"
 			(uuid "a8fe8a13-7c28-43f6-9bed-513e8ab586f8")
 		)
-		(pin "P0.29"
+		(pin "A10"
 			(uuid "3491ab7e-e8ee-464d-bbd0-034b076bdc1a")
 		)
-		(pin "35"
+		(pin "A23"
 			(uuid "7b1e325b-1cf7-4ef9-baea-846d43245319")
 		)
-		(pin "GND"
+		(pin "EP"
 			(uuid "1eee1a93-d051-434a-8b5d-2e5a37236fe4")
 		)
-		(pin "P0.16"
+		(pin "AC11"
 			(uuid "a328805b-38bf-4ee4-a130-f0a8009e5224")
 		)
-		(pin "13"
+		(pin "A22"
 			(uuid "d24dba9f-b60f-4756-a781-d28ca7b2275f")
 		)
-		(pin "P0.30"
+		(pin "B9"
 			(uuid "2613bc9d-589c-46bc-ad21-b4ed81119dd4")
 		)
-		(pin "D+"
+		(pin "AD6"
 			(uuid "bd0d2675-5ec0-4ed2-b6dd-942a0549fb74")
 		)
-		(pin "P1.08"
+		(pin "P2"
 			(uuid "106dfe70-a614-44f0-b294-ea02c924df87")
 		)
-		(pin "SWDIO"
+		(pin "AC24"
 			(uuid "fd46135b-3931-458d-9b06-3a552891c260")
 		)
-		(pin "48"
+		(pin "Y2"
 			(uuid "0612167b-a75d-4be9-a08f-21d310082f6e")
 		)
-		(pin "7"
+		(pin "AC5"
 			(uuid "45884a23-974e-4e12-9657-325c92e3df14")
 		)
-		(pin "3"
+		(pin "D2"
 			(uuid "a381ca66-4ad6-4ac3-a294-3eda637b2162")
 		)
-		(pin "P1.15"
+		(pin "A14"
 			(uuid "14830820-5fc7-400f-8dca-7db881285d2a")
 		)
-		(pin "4"
+		(pin "F2"
 			(uuid "d8bb9c8b-adc4-4e19-888a-5eb3afc959e1")
 		)
-		(pin "P0.11"
+		(pin "T2"
 			(uuid "184ccd7b-bafb-4a47-94cd-3775b9addf02")
 		)
-		(pin "P1.00"
+		(pin "AD22"
 			(uuid "e3611676-367e-4d17-89f6-47e7beee44b7")
 		)
-		(pin "P0.06"
+		(pin "L1"
 			(uuid "21cea67e-c009-4bc4-9231-773fe1f9240a")
 		)
-		(pin "46"
+		(pin "E24"
 			(uuid "20cc39ff-c286-4e34-afa7-a846ee3f84c1")
 		)
-		(pin "P0.08"
+		(pin "N1"
 			(uuid "791fc231-2968-443f-97b3-f233f7972a4e")
 		)
-		(pin "P1.10"
+		(pin "A20"
 			(uuid "fb2bd691-d64b-4476-89bf-9833ecb7b6bb")
 		)
-		(pin "P1.01"
+		(pin "Y23"
 			(uuid "88c71c4c-e849-48d1-ba24-fdb73561d024")
 		)
-		(pin "P0.14"
+		(pin "AC9"
 			(uuid "e364f2c7-b622-417e-b2ca-9bcdf1f3d222")
 		)
-		(pin "P0.13"
+		(pin "AD8"
 			(uuid "5b22e786-fba1-44cb-b432-cf9839d1ef44")
 		)
-		(pin "P0.15"
+		(pin "AD10"
 			(uuid "791daf55-cd84-47dd-bbe5-dc6b021978e9")
 		)
-		(pin "P1.14"
+		(pin "B15"
 			(uuid "8d700612-6b9a-449e-9312-3b9929ecb609")
 		)
-		(pin "P1.12"
+		(pin "B17"
 			(uuid "8ba89735-e29a-4178-800b-fcd07df8913c")
 		)
-		(pin "P1.13"
+		(pin "A16"
 			(uuid "90f55a61-20c8-43be-96c5-fe94ddaf7e66")
 		)
-		(pin "P0.18"
+		(pin "AC13"
 			(uuid "14af5d8b-c60b-4cba-836e-97278d6c97b5")
 		)
-		(pin "P0.07"
+		(pin "M2"
 			(uuid "3cc0039e-c253-43e5-9ce9-bccc82b164a1")
 		)
-		(pin "P0.05"
+		(pin "K2"
 			(uuid "13ee0041-ed38-4711-a30d-1120a16e0d8a")
 		)
-		(pin "D-"
+		(pin "AD4"
 			(uuid "a16cda87-222f-4d9b-a3e7-c3da868a93f9")
 		)
-		(pin "P1.09"
+		(pin "R1"
 			(uuid "73e77239-b209-4f85-ae7e-29d6ad86b95e")
 		)
-		(pin "SWDCLK"
+		(pin "AA24"
 			(uuid "527d79d4-250b-4494-a112-3c5b1398cbf7")
 		)
-		(pin "P0.09"
+		(pin "L24"
 			(uuid "1c4bc9ad-c0e7-49e8-b26c-0d0f70e421d5")
 		)
-		(pin "P0.10"
+		(pin "J24"
 			(uuid "c065e50e-1548-4318-9931-be0e3e4311e6")
 		)
-		(pin "P0.21"
+		(pin "AC17"
 			(uuid "f9603fa2-64d2-4f28-9e82-1425cbbaf1c8")
 		)
-		(pin "P1.03"
+		(pin "V23"
 			(uuid "d99b55ac-2f34-483d-b625-48c02aeb0d3b")
 		)
 		(instances
