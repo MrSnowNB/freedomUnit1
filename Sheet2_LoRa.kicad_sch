@@ -1234,7 +1234,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "FreedomUnit:CONSMA006.062"
 			(at 148.59 55.88 0)
 			(effects
 				(font

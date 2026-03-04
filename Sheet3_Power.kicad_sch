@@ -3020,7 +3020,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal"
+		(property "Footprint" "Battery:BatteryHolder_Keystone_1042_1x18650"
 			(at 165 55 0)
 			(effects
 				(font
@@ -4368,7 +4368,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Diode_SMD:D_SOD-323"
 			(at 130 115 0)
 			(effects
 				(font
@@ -4502,7 +4502,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
 			(at 85 115 0)
 			(effects
 				(font

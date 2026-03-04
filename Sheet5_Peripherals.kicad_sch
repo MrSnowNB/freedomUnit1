@@ -3840,7 +3840,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Connector_FFC-FPC:Hirose_FH12-10S-0.5SH_1x10-1MP_P0.50mm_Horizontal"
 			(at 175 55 0)
 			(effects
 				(font
@@ -5390,7 +5390,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "RF_GPS:ublox_MAX"
 			(at 70 55 0)
 			(effects
 				(font

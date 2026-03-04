@@ -1,4 +1,13 @@
 (fp_lib_table
   (version 7)
   (lib (name "FreedomUnit")(type "KiCad")(uri "${KIPRJMOD}/libs/FreedomUnit.pretty")(options "")(descr "Custom project footprints"))
+  (lib (name "Connector_JST")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Connector_JST.pretty")(options "")(descr ""))
+  (lib (name "Connector_PinHeader_2.54mm")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Connector_PinHeader_2.54mm.pretty")(options "")(descr ""))
+  (lib (name "Crystal")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Crystal.pretty")(options "")(descr ""))
+  (lib (name "LED_SMD")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/LED_SMD.pretty")(options "")(descr ""))
+  (lib (name "Package_SON")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Package_SON.pretty")(options "")(descr ""))
+  (lib (name "Diode_SMD")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Diode_SMD.pretty")(options "")(descr ""))
+  (lib (name "Battery")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/Battery.pretty")(options "")(descr ""))
+  (lib (name "RF_GPS")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/RF_GPS.pretty")(options "")(descr ""))
+  (lib (name "RF_Antenna")(type "KiCad")(uri "C:/Program Files/KiCad/9.0/share/kicad/footprints/RF_Antenna.pretty")(options "")(descr ""))
 )

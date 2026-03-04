@@ -4790,7 +4790,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "RF_Antenna:Johanson_2450AT18x100"
 			(at 185 250 0)
 			(effects
 				(font
@@ -5316,7 +5316,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm"
 			(at 200 150 0)
 			(effects
 				(font
