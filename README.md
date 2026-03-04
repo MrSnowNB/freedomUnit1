@@ -37,7 +37,8 @@ Power: Solar ──> BQ25504 ──> MCP73831 ──> Battery
 ```
 freedomUnit1/
 ├── docs/
-│   └── Freedom-Unit-Board-Layout-v2.2.md    # Master PCB spec (830 lines)
+│   ├── Freedom-Unit-Board-Layout-v2.2.md    # Master PCB spec (830 lines)
+│   └── FreedomUnit_V2_Placement_Guide.md    # Component placement reference
 ├── libs/
 │   ├── FreedomUnit.kicad_sym                # Custom symbol library
 │   └── FreedomUnit.pretty/                  # Custom footprint library
@@ -56,7 +57,8 @@ freedomUnit1/
 │   │   └── generate_project_files.py        # Root schematic + .kicad_pro
 │   └── gemini_tools/                        # Post-processing utilities
 │       ├── assign_footprints.py             # Map lib_id → footprint
-│       └── create_placeholders.py           # Generate placeholder .kicad_mod
+│       ├── create_placeholders.py           # Generate placeholder .kicad_mod
+│       └── placement_guide.py               # Auto-placement script
 ├── fab/                                     # Manufacturing outputs
 │   ├── FreedomUnit_V2.xml                   # Netlist export
 │   └── *.json                               # ERC/DRC reports
