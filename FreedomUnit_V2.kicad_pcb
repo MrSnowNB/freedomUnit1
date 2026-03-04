@@ -1,0 +1,164 @@
+(kicad_pcb
+  (version 20241229)
+  (generator "Gemini CLI")
+  (generator_version "9.0")
+  (general
+    (thickness 1.6)
+  )
+  (paper "A4")
+  (layers
+    (0 "F.Cu" signal)
+    (2 "B.Cu" signal)
+    (25 "Edge.Cuts" user)
+  )
+  (setup
+    (stackup
+      (layer "F.Cu" (type "signal") (thickness 0.035))
+      (layer "In1.GND" (type "power") (thickness 0.0175))
+      (layer "In2.Power" (type "power") (thickness 0.0175))
+      (layer "B.Cu" (type "signal") (thickness 0.035))
+    )
+  )
+
+  (gr_line (start 0 0) (end 80 0)
+    (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (uuid "117644df-b588-415f-bdf1-647eff542c31")
+  )
+
+  (gr_line (start 80 0) (end 80 50)
+    (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (uuid "0465e2a7-4cfe-4017-aa2a-92c8457e3c02")
+  )
+
+  (gr_line (start 80 50) (end 0 50)
+    (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (uuid "07c9e65d-1fbc-49c5-a585-ff07f203e605")
+  )
+
+  (gr_line (start 0 50) (end 0 0)
+    (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (uuid "34719055-2e24-4ebc-9bd9-1594c34fff19")
+  )
+
+  (footprint "FreedomUnit:Lambda62C-9S"
+    (layer "F.Cu")
+    (uuid "062018aa-9c0e-4566-ae5f-e7fc716cc980")
+    (at 65 15 0)
+    (property "Reference" "M1"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "225b13ff-30d3-4843-9048-bd4b6c27a524")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+    (property "Value" "Lambda62C-9S"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "07447ad5-fac2-47a7-ad92-8dd6b7766e28")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+  )
+
+  (footprint "Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm"
+    (layer "F.Cu")
+    (uuid "4a05a60b-7033-4d2f-8b29-e93cefa58eb1")
+    (at 40.0 25.0 0)
+    (property "Reference" "U1"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "0a1ef5b3-4615-474f-9696-3c43fd2d7069")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+    (property "Value" "nRF52840"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "e26fc2c5-353c-42f5-b830-5581aca33900")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+  )
+
+  (footprint "FreedomUnit:Taoglas_CGGBP.25.4.A.02"
+    (layer "F.Cu")
+    (uuid "6d631958-2e85-4a2c-9ec6-774701e3ac41")
+    (at 15 35 0)
+    (property "Reference" "AE2"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "3a84c04d-5577-49a4-afa7-34b49573d586")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+    (property "Value" "GPS"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "a55c8f56-ca96-4f31-9f93-9ebb771e906e")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+  )
+
+  (footprint "FreedomUnit:Johanson_2450AT18D0100"
+    (layer "F.Cu")
+    (uuid "ac7f8564-c243-4ed9-903a-2c5c0ac559b3")
+    (at 15 10 0)
+    (property "Reference" "AE1"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "d9924545-f29a-4552-a51a-3174f8c94c89")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+    (property "Value" "BLE"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "61b81567-8349-4d7a-9d9a-4efc8d601d61")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+  )
+
+  (footprint "Connector_USB:USB_C_Receptacle_GCT_USB4085"
+    (layer "F.Cu")
+    (uuid "7e62cf89-bd61-4cb4-a6fc-18e5077385f1")
+    (at 40.0 50 180)
+    (property "Reference" "J4"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "a2309045-f947-4305-8aa4-f029a8e4feb5")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+    (property "Value" "USB-C"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "32b89037-aa03-43f5-8ebf-c96da431b44b")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+  )
+
+  (footprint "FreedomUnit:CONSMA006.062"
+    (layer "F.Cu")
+    (uuid "4af09393-a8c6-4a33-b909-ab6e3426ff1b")
+    (at 80 10 90)
+    (property "Reference" "J3"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "4276f344-7b3c-4edc-87db-55e698e46f09")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+    (property "Value" "SMA"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "0223c373-e8ba-4e67-8e7a-dd3776d9985d")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+  )
+
+  (footprint "Connector_FFC-FPC:Molex_54548-1071_1x10-1MP_P0.5mm_Horizontal"
+    (layer "F.Cu")
+    (uuid "fc00c841-2d9a-4e3e-b488-f2af596db3fb")
+    (at 40.0 5 0)
+    (property "Reference" "J5"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "9343db4c-bf6f-49cb-bc87-9df6f0db9ec5")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+    (property "Value" "LCD"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "691b0e54-3507-4dc8-9e8e-2c63f3b96762")
+      (effects (font (size 1 1) (thickness 0.15)))
+    )
+  )
+)

@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "FreedomUnit")(type "KiCad")(uri "${KIPRJMOD}/libs/FreedomUnit.kicad_sym")(options "")(descr "Custom project symbols"))
+)

@@ -1,0 +1,24 @@
+# KiCad standard ignores
+*.bak
+*.bck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.kicad_prl
+*-backups/
+_autosave-*
+*.lck
+*.tmp
+
+# Build artifacts
+fp-info-cache
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+__pycache__/
+*.pyc
