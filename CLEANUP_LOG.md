@@ -32,6 +32,11 @@
 - Filled empty footprint fields for `U1`, `J2`, `J3`, and `U9`.
 - Integrated `fix_footprints.py` into `scripts/gemini_tools/`.
 
+### 7. Final Library Table Restoration
+- Restored 8 missing standard KiCad footprint libraries to `fp-lib-table` (Button_Switch_SMD, Capacitor_SMD, Resistor_SMD, etc.).
+- Total of 18 libraries now properly registered in the footprint table.
+- Integrated `fix_fp_lib_table.py` into `scripts/gemini_tools/`.
+
 ## Final Repository State
 - **Root**: Clean KiCad 9 project files and technical mandates.
 - **docs/**: Master spec and placement guide.
