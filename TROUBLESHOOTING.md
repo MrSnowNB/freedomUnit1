@@ -1,7 +1,7 @@
 ---
-title: "Troubleshooting — Huffman Mesh POC"
-version: 1.0.0
-date: 2026-03-04
+title: "Troubleshooting — CyberMesh Codec POC"
+version: 2.0.0
+date: 2026-03-05
 status: active
 project: huffman-mesh-poc
 ---

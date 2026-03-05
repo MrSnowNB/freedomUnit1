@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-huffman_mesh_poc.py — Experiment D: LLM Codec + Pre-Tokenizer Over LoRa
+huffman_mesh_poc.py — Experiment E: Lemonade Backend + LFM2 on LoRa
 =========================================================================
-v4.0: Adds pre-tokenizer (Phase 1) and LLM encode/decode codec (Phase 2)
-to the LLM conversation pipeline from Experiment C.
+v5.0: Swaps Ollama for Lemonade Server. Model name is config-driven
+for hot-swap between backends/hardware without code changes.
 
 Config-driven behavior:
-  llm_codec: false  → Phase 1 (pretokenizer + raw codec, like Exp C with normalization)
+  llm_codec: false  → Phase 1 (pretokenizer + raw codec)
   llm_codec: true   → Phase 2 (pretokenizer + LLM encode/decode + codec)
 
 One "Hi" DM triggers the full experiment:
@@ -51,8 +51,8 @@ from paginator import paginate, reassemble
 from pretokenizer import normalize, compute_hit_rate
 from llm_codec import llm_encode, llm_decode, get_codebook_words
 
-VERSION = "4.0"
-EXPERIMENT = "D"
+VERSION = "5.0"
+EXPERIMENT = "E"
 
 
 # ==========================================
@@ -84,17 +84,19 @@ def load_config() -> dict:
 
 
 # ==========================================
-# LLM INTEGRATION — Ollama / Gemma3
+# LLM INTEGRATION — Lemonade Server
 # ==========================================
 
-OLLAMA_URL = "http://localhost:11434"
+# Populated from config.yaml at startup. Module-level so warmup/generate can use it.
+LLM_BASE_URL = "http://localhost:8000"   # overwritten by config["llm_base_url"]
+MODEL_NAME   = "test01"                  # overwritten by config["model_name"]
 
 def warmup_model(model_name: str) -> float:
     """Force model into memory. Returns warmup time in seconds."""
-    log(f"Warming up model '{model_name}'...")
+    log(f"Warming up model '{model_name}' on {LLM_BASE_URL}...")
     start = time.time()
     try:
-        resp = requests.post(f"{OLLAMA_URL}/api/generate", json={
+        resp = requests.post(f"{LLM_BASE_URL}/api/generate", json={
             "model": model_name,
             "prompt": "warmup",
             "options": {"num_predict": 1},
@@ -105,9 +107,9 @@ def warmup_model(model_name: str) -> float:
             log(f"Model '{model_name}' loaded in {elapsed:.1f}s")
             return elapsed
         else:
-            raise RuntimeError(f"Ollama returned {resp.status_code}: {resp.text[:200]}")
+            raise RuntimeError(f"LLM server returned {resp.status_code}: {resp.text[:200]}")
     except requests.exceptions.ConnectionError:
-        raise RuntimeError(f"Cannot connect to Ollama at {OLLAMA_URL}. Is it running?")
+        raise RuntimeError(f"Cannot connect to LLM server at {LLM_BASE_URL}. Is Lemonade running?")
 
 
 def generate_response(model: str, system_prompt: str,
@@ -124,7 +126,7 @@ def generate_response(model: str, system_prompt: str,
     full_prompt += "You: "
 
     start = time.time()
-    resp = requests.post(f"{OLLAMA_URL}/api/generate", json={
+    resp = requests.post(f"{LLM_BASE_URL}/api/generate", json={
         "model": model,
         "prompt": full_prompt,
         "options": {"temperature": 0.7},
@@ -215,13 +217,13 @@ class CodecWrapper:
 
 
 # ==========================================
-# EXPERIMENT D — LLM CONVERSATION + CODEC
+# EXPERIMENT E — LEMONADE BACKEND + LLM CODEC
 # ==========================================
 
-class ExperimentD:
+class ExperimentRunner:
     """
-    Runs Experiment D: LLM conversation over LoRa with pre-tokenizer and
-    optional LLM encode/decode codec.
+    Runs Experiment E: LLM conversation over LoRa with Lemonade backend,
+    pre-tokenizer, and optional LLM encode/decode codec.
 
     Config-driven:
       llm_codec: false → Phase 1 (pretokenizer only)
@@ -239,8 +241,11 @@ class ExperimentD:
         self.peer_id = None
         self.role = None  # "A" or "B"
 
-        # LLM config
-        self.model = config.get("model", "gemma3:latest")
+        # LLM config — model name is a hot-swap variable
+        global LLM_BASE_URL, MODEL_NAME
+        LLM_BASE_URL = config.get("llm_base_url", "http://localhost:8000")
+        MODEL_NAME   = config.get("model_name", "test01")
+        self.model = MODEL_NAME
         self.system_prompt = config.get("conversation_seed", "")
         self.messages_per_node = config.get("messages_per_node", 10)
         self.timeout_s = config.get("timeout_s", 45)
@@ -281,11 +286,11 @@ class ExperimentD:
         dev_path = None if port == "auto" else port
 
         print(f"\n{'=' * 65}")
-        print(f"  EXPERIMENT D — {self.phase_label}")
+        print(f"  EXPERIMENT {EXPERIMENT} — {self.phase_label}")
         print(f"  CyberMesh / Liberty Mesh — v{VERSION}")
-        print(f"  Model: {self.model}  |  Messages/node: {self.messages_per_node}")
-        print(f"  Port: {port}  |  Timeout: {self.timeout_s}s")
-        print(f"  Pretokenizer: {'ON' if self.use_pretokenizer else 'OFF'}  |  LLM Codec: {'ON' if self.use_llm_codec else 'OFF'}")
+        print(f"  Model: {self.model}  |  Backend: {LLM_BASE_URL}")
+        print(f"  Messages/node: {self.messages_per_node}  |  Timeout: {self.timeout_s}s")
+        print(f"  Port: {port}  |  Pretok: {'ON' if self.use_pretokenizer else 'OFF'}  |  LLM Codec: {'ON' if self.use_llm_codec else 'OFF'}")
         print(f"{'=' * 65}\n")
 
         pub.subscribe(self._on_receive, "meshtastic.receive")
@@ -489,7 +494,7 @@ class ExperimentD:
         decoded_by_llm = None
         if self.use_llm_codec and not decoded.startswith("DECODE_ERROR"):
             try:
-                decoded_by_llm, dec_ms = llm_decode(decoded, model=self.model)
+                decoded_by_llm, dec_ms = llm_decode(decoded, model=self.model, base_url=LLM_BASE_URL)
                 log(f"RX Step {step}: CODEC=\"{decoded[:40]}\" → LLM_DECODED=\"{decoded_by_llm[:40]}\" "
                     f"({comp_bytes}B, {dec_ms:.0f}ms, RSSI={rssi}, SNR={snr})")
             except Exception as e:
@@ -546,7 +551,7 @@ class ExperimentD:
                 fallback = False
                 if self.use_llm_codec:
                     try:
-                        encoded_text, encode_ms = llm_encode(natural_text, model=self.model)
+                        encoded_text, encode_ms = llm_encode(natural_text, model=self.model, base_url=LLM_BASE_URL)
                         log(f"LLM encoded ({encode_ms:.0f}ms): \"{encoded_text[:80]}\"")
 
                         # Check hit rate — fallback if below threshold
@@ -571,7 +576,7 @@ class ExperimentD:
                 else:
                     text_to_send = natural_text
 
-                # Pre-tokenizer normalization (always for Experiment D)
+                # Pre-tokenizer normalization (always for Experiment E)
                 if self.use_pretokenizer:
                     text_to_send = normalize(text_to_send)
 
@@ -771,7 +776,7 @@ class ExperimentD:
     def _print_comparison(self):
         """Print side-by-side comparison of both runs."""
         print(f"\n{'=' * 70}")
-        print(f"  EXPERIMENT D — {self.phase_label} — Combined Results")
+        print(f"  EXPERIMENT {EXPERIMENT} — {self.phase_label} — Combined Results")
         print(f"{'=' * 70}")
 
         for codec_name, label in [("mux_grid", "MUX Grid"), ("huffman", "Huffman (4K)")]:
@@ -838,7 +843,7 @@ class ExperimentD:
 
             lines = [
                 "---",
-                f'title: "Experiment D — {self.phase_label} — {label} — Run Log"',
+                f'title: "Experiment {EXPERIMENT} — {self.phase_label} — {label} — Run Log"',
                 f"date: {datetime.now(timezone.utc).isoformat()}",
                 f"version: {VERSION}",
                 f"phase: {phase_tag}",
@@ -853,7 +858,7 @@ class ExperimentD:
                 f"fallback_threshold: {self.fallback_threshold}",
                 "---",
                 "",
-                f"# Experiment D — {self.phase_label} — {label} — Results",
+                f"# Experiment {EXPERIMENT} — {self.phase_label} — {label} — Results",
                 "",
                 "## Per-Message Metrics",
                 "",
@@ -952,12 +957,12 @@ class ExperimentD:
         phase_tag = "Phase 2 (LLM Codec)" if self.use_llm_codec else "Phase 1 (Pre-Tokenizer)"
         lines = [
             "---",
-            f'title: "Experiment D — {phase_tag} — Combined Results"',
+            f'title: "Experiment {EXPERIMENT} — {phase_tag} — Combined Results"',
             f"date: {datetime.now(timezone.utc).isoformat()}",
             f"version: {VERSION}",
             "---",
             "",
-            f"# Experiment D — {phase_tag} — Combined Results",
+            f"# Experiment {EXPERIMENT} — {phase_tag} — Combined Results",
             "",
             "| Metric | Huffman (4K) | MUX Grid |",
             "|--------|-------------|----------|",
@@ -1010,7 +1015,7 @@ class ExperimentD:
         try:
             self.run_experiment()
             print(f"\n{'=' * 65}")
-            print(f"  EXPERIMENT D — {self.phase_label} — COMPLETE")
+            print(f"  EXPERIMENT {EXPERIMENT} — {self.phase_label} — COMPLETE")
             print(f"  Check logs/ directory for full results.")
             print(f"{'=' * 65}\n")
         except KeyboardInterrupt:
@@ -1034,12 +1039,12 @@ def main():
 
     print("\n" + "─" * 65)
     print(f"  huffman_mesh_poc.py v{VERSION}")
-    print(f"  Experiment D — {phase_label}")
+    print(f"  Experiment {EXPERIMENT} — {phase_label}")
     print(f"  CyberMesh / Liberty Mesh Project")
     print(f"  Author: Mark Snow, Jr. — Mindtech")
     print("─" * 65)
 
-    exp = ExperimentD(config)
+    exp = ExperimentRunner(config)
     exp.run()
 
 

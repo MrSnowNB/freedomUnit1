@@ -1,0 +1,1871 @@
+{
+  "experiment": "D",
+  "phase": "phase2",
+  "timestamp": "2026-03-05T15:06:13.597753+00:00",
+  "node": "!0408a160",
+  "peer": "!07c01855",
+  "role": "B",
+  "model": "test01",
+  "pretokenizer": true,
+  "llm_codec": true,
+  "fallback_threshold": 0.7,
+  "runs": {
+    "mux_grid": [
+      {
+        "step": 1,
+        "direction": "B\u2192A",
+        "original": "hiker1 the trailhead sign is open",
+        "natural": "Hiker1: The trailhead sign is open.",
+        "encoded": "hiker1 the trailhead sign is open",
+        "decoded_by_llm": null,
+        "raw_bytes": 33,
+        "comp_bytes": 29,
+        "ratio": 1.1379310344827587,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2130.9845447540283,
+        "enc_ms": 878.6313533782959,
+        "dec_ms": null,
+        "tokens": 67,
+        "pages": 1,
+        "hit_pct": 66.66666666666666,
+        "esc_count": 2,
+        "fallback": true
+      },
+      {
+        "step": 2,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "would you like me to also help rewrite it in a more formal tone",
+        "decoded_by_llm": "Hiker1: Would you like me to rephrase it in a more formal style?",
+        "raw_bytes": null,
+        "comp_bytes": 33,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 6.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1317.8136348724365,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "direction": "B\u2192A",
+        "original": "hiker1 yes please do",
+        "natural": "Hiker1: Yes, please do.",
+        "encoded": "hiker1 yes please do",
+        "decoded_by_llm": null,
+        "raw_bytes": 20,
+        "comp_bytes": 16,
+        "ratio": 1.25,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2211.3964557647705,
+        "enc_ms": 2224.7698307037354,
+        "dec_ms": null,
+        "tokens": 61,
+        "pages": 1,
+        "hit_pct": 75.0,
+        "esc_count": 1,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "could you help me refine this message for clarity and professionalism",
+        "decoded_by_llm": "Hiker1: Could you help me refine this message for clarity and professionalism?",
+        "raw_bytes": null,
+        "comp_bytes": 48,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 5.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1292.9043769836426,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "direction": "B\u2192A",
+        "original": "hiker1 could you help me make this message clearer and more professional",
+        "natural": "Hiker1: Yes, please help with the message.",
+        "encoded": "hiker1 could you help me make this message clearer and more professional",
+        "decoded_by_llm": null,
+        "raw_bytes": 72,
+        "comp_bytes": 33,
+        "ratio": 2.1818181818181817,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2636.869430541992,
+        "enc_ms": 1068.000316619873,
+        "dec_ms": null,
+        "tokens": 76,
+        "pages": 1,
+        "hit_pct": 83.33333333333334,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "let me know if youd like me to adjust the tone or content further",
+        "decoded_by_llm": "Hiker1: Would you like me to adjust the tone or content of this message?",
+        "raw_bytes": null,
+        "comp_bytes": 39,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1270.2131271362305,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "direction": "B\u2192A",
+        "original": "hiker1 could you adjust the tone or content of this message",
+        "natural": "Hiker1: Yes, please adjust the tone or content.",
+        "encoded": "hiker1 could you adjust the tone or content of this message",
+        "decoded_by_llm": null,
+        "raw_bytes": 59,
+        "comp_bytes": 36,
+        "ratio": 1.6388888888888888,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2524.294376373291,
+        "enc_ms": 1901.4720916748047,
+        "dec_ms": null,
+        "tokens": 51,
+        "pages": 1,
+        "hit_pct": 72.72727272727273,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "would you like me to make it sound more formal or more casual",
+        "decoded_by_llm": "Hiker1: Would you like me to make this message sound more formal or casual?",
+        "raw_bytes": null,
+        "comp_bytes": 26,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 7.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 2267.1430110931396,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "direction": "B\u2192A",
+        "original": "hiker1 would you like me to adjust the tone or content of this message",
+        "natural": "Hiker1: Would you like me to adjust the tone or content of this message?",
+        "encoded": "hiker1 would you like me to adjust the tone or content of this message",
+        "decoded_by_llm": null,
+        "raw_bytes": 70,
+        "comp_bytes": 40,
+        "ratio": 1.75,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2539.0238761901855,
+        "enc_ms": 1732.3493957519531,
+        "dec_ms": null,
+        "tokens": 52,
+        "pages": 1,
+        "hit_pct": 78.57142857142857,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "would you like me to rewrite this in a more formal tone or adjust it for a specific audience",
+        "decoded_by_llm": "Hiker1: Would you like me to rewrite this in a more formal tone or tailor it for a specific audience?",
+        "raw_bytes": null,
+        "comp_bytes": 46,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 6.25,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1921.776533126831,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "direction": "B\u2192A",
+        "original": "hiker1 would you like me to adjust the tone or content of this message",
+        "natural": "Hiker1: Would you like me to adjust the tone or content of this message?",
+        "encoded": "hiker1 would you like me to adjust the tone or content of this message",
+        "decoded_by_llm": null,
+        "raw_bytes": 70,
+        "comp_bytes": 40,
+        "ratio": 1.75,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2529.4811725616455,
+        "enc_ms": 1897.2246646881104,
+        "dec_ms": null,
+        "tokens": 53,
+        "pages": 1,
+        "hit_pct": 78.57142857142857,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "if you want a more formal or polished version heres a refined version",
+        "decoded_by_llm": "Hiker1: Would you like a more formal or polished version of this message?",
+        "raw_bytes": null,
+        "comp_bytes": 43,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 5.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 2310.164451599121,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "direction": "B\u2192A",
+        "original": "hiker1 would you like a more formal or polished version of this message",
+        "natural": "Hiker1: Would you like a more formal or polished version of this message?",
+        "encoded": "hiker1 would you like a more formal or polished version of this message",
+        "decoded_by_llm": null,
+        "raw_bytes": 71,
+        "comp_bytes": 35,
+        "ratio": 2.0285714285714285,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2688.117504119873,
+        "enc_ms": 1695.5907344818115,
+        "dec_ms": null,
+        "tokens": 48,
+        "pages": 1,
+        "hit_pct": 84.61538461538461,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "42 sensors are working ill check again in 30 minutes",
+        "decoded_by_llm": "Hiker1: The 42 sensors are operational; please check again in 30 minutes.",
+        "raw_bytes": null,
+        "comp_bytes": 31,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 5.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 2025.9006023406982,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "direction": "B\u2192A",
+        "original": "hiker1 the 42 sensors are operational please check again in 30 minutes",
+        "natural": "Hiker1: The 42 sensors are operational; please check again in 30 minutes.",
+        "encoded": "hiker1 the 42 sensors are operational please check again in 30 minutes",
+        "decoded_by_llm": null,
+        "raw_bytes": 70,
+        "comp_bytes": 48,
+        "ratio": 1.4583333333333333,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2321.1820125579834,
+        "enc_ms": 2241.633892059326,
+        "dec_ms": null,
+        "tokens": 44,
+        "pages": 1,
+        "hit_pct": 75.0,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "42 sensors are operational ill follow up in 30 minutes as instructed",
+        "decoded_by_llm": "Hiker1: The 42 sensors are operational; follow up in 30 minutes as instructed.",
+        "raw_bytes": null,
+        "comp_bytes": 56,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -10,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1870.4743385314941,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "direction": "B\u2192A",
+        "original": "it seems like your message might be incomplete or missing a specific point could you please clarify or provide more details about what youd like to rewrite for example",
+        "natural": "",
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 167,
+        "comp_bytes": 73,
+        "ratio": 2.287671232876712,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 26.005268096923828,
+        "enc_ms": 3069.887638092041,
+        "dec_ms": null,
+        "tokens": 0,
+        "pages": 1,
+        "hit_pct": 86.20689655172413,
+        "esc_count": 4,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "if you are asking about a specific context like a project a message or something else feel free to clarify",
+        "decoded_by_llm": "Got it! If you're looking to refine a message or need help with a specific context (like a project, tone, or content), just let me know. I'm here to assist! \ud83d\ude0a",
+        "raw_bytes": null,
+        "comp_bytes": 37,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 6.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1687.0014667510986,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj review sensor data evaluate the situation and organize an emergency response plan",
+        "natural": "The flood warning is active for Lawrence Township, NJ. Check sensor status, assess conditions, and plan emergency response.",
+        "encoded": "the flood warning is active in lawrence township nj review sensor data evaluate the situation and organize an emergency response plan",
+        "decoded_by_llm": null,
+        "raw_bytes": 133,
+        "comp_bytes": 70,
+        "ratio": 1.9,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1530.8592319488525,
+        "enc_ms": 1388.939619064331,
+        "dec_ms": null,
+        "tokens": 22,
+        "pages": 1,
+        "hit_pct": 80.95238095238095,
+        "esc_count": 4,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "note if you meant to write a more formal or polished version heres a refined version",
+        "decoded_by_llm": "Please clarify your request for a more formal or polished version.",
+        "raw_bytes": null,
+        "comp_bytes": 54,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 5.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1175.9352684020996,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      }
+    ],
+    "huffman": [
+      {
+        "step": 1,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj coordinate with the other agent to check sensors assess conditions and plan an emergency response",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Please coordinate with the other agent to check sensor status, assess conditions, and plan an emergency response.",
+        "encoded": "the flood warning is active in lawrence township nj coordinate with the other agent to check sensors assess conditions and plan an emergency response",
+        "decoded_by_llm": null,
+        "raw_bytes": 149,
+        "comp_bytes": 76,
+        "ratio": 1.9605263157894737,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1649.4255065917969,
+        "enc_ms": 1112.4658584594727,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 79.16666666666666,
+        "esc_count": 5,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "1 sentence i need to check the flood sensors and see if any are out of range lets confirm the situation together",
+        "decoded_by_llm": "Check the flood sensors in Lawrence Township, NJ. Let's confirm the situation together.",
+        "raw_bytes": null,
+        "comp_bytes": 54,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 5.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1410.4053974151611,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active please check the sensors and confirm the situation",
+        "natural": "The flood warning is active. Let's check the sensors and confirm the situation.",
+        "encoded": "the flood warning is active please check the sensors and confirm the situation",
+        "decoded_by_llm": null,
+        "raw_bytes": 78,
+        "comp_bytes": 29,
+        "ratio": 2.689655172413793,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1280.9646129608154,
+        "enc_ms": 1118.9382076263428,
+        "dec_ms": null,
+        "tokens": 15,
+        "pages": 1,
+        "hit_pct": 92.3076923076923,
+        "esc_count": 1,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "2 sentences there are 3 sensors near the river but one is not responding i should investigate",
+        "decoded_by_llm": "Two sensors near the river are active; one is not responding and needs investigation.",
+        "raw_bytes": null,
+        "comp_bytes": 66,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -10,
+        "snr": 5.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1289.7827625274658,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors near the river are operational one is not responding and needs investigation",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and requires investigation.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and needs investigation",
+        "decoded_by_llm": null,
+        "raw_bytes": 116,
+        "comp_bytes": 58,
+        "ratio": 2.0,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1095.7896709442139,
+        "enc_ms": 1146.7361450195312,
+        "dec_ms": null,
+        "tokens": 21,
+        "pages": 1,
+        "hit_pct": 84.21052631578947,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "let me know if youd like it rephrased further",
+        "decoded_by_llm": "Let me know if you need further adjustments.",
+        "raw_bytes": null,
+        "comp_bytes": 31,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 6.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1006.7691802978516,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors near the river are operational one is not responding and requires investigation",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and requires investigation",
+        "decoded_by_llm": null,
+        "raw_bytes": 119,
+        "comp_bytes": 58,
+        "ratio": 2.0517241379310347,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1525.4299640655518,
+        "enc_ms": 886.0635757446289,
+        "dec_ms": null,
+        "tokens": 21,
+        "pages": 1,
+        "hit_pct": 84.21052631578947,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "would you like me to help with a more detailed explanation or additional sentences",
+        "decoded_by_llm": "Would you like a more detailed explanation or additional information?",
+        "raw_bytes": null,
+        "comp_bytes": 42,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 5.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1006.4043998718262,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors near the river are operational one is not responding and needs investigation let me know if you need further details",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation. Let me know if you need further details.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and needs investigation let me know if you need further details",
+        "decoded_by_llm": null,
+        "raw_bytes": 156,
+        "comp_bytes": 69,
+        "ratio": 2.260869565217391,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1285.4914665222168,
+        "enc_ms": 1503.147840499878,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 88.88888888888889,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "but if you want a more natural or polished version you can say",
+        "decoded_by_llm": "If you prefer a more natural or polished version, you can say: \"If you'd like a more natural or polished version, just let me know.",
+        "raw_bytes": null,
+        "comp_bytes": 30,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 5.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1337.5358581542969,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors near the river are operational one is not responding and requires investigation let me know if you need further details",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation. Let me know if you need further details.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and requires investigation let me know if you need further details",
+        "decoded_by_llm": null,
+        "raw_bytes": 159,
+        "comp_bytes": 69,
+        "ratio": 2.3043478260869565,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1546.3306903839111,
+        "enc_ms": 1564.5265579223633,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 88.88888888888889,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "if you meant something else please clarify",
+        "decoded_by_llm": "If you need further clarification, please let me know.",
+        "raw_bytes": null,
+        "comp_bytes": 27,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 6.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 691.2715435028076,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors near the river are operational one is not responding and requires investigation let me know if you need further details",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation. Let me know if you need further details.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and requires investigation let me know if you need further details",
+        "decoded_by_llm": null,
+        "raw_bytes": 159,
+        "comp_bytes": 69,
+        "ratio": 2.3043478260869565,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1681.0081005096436,
+        "enc_ms": 1582.5250148773193,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 88.88888888888889,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "let me know if you need a more detailed version",
+        "decoded_by_llm": "Let me know if you need a more detailed version.",
+        "raw_bytes": null,
+        "comp_bytes": 19,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 5.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 887.519359588623,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation. Let me know if you need further details.",
+        "encoded": "the flood warning is active two sensors",
+        "decoded_by_llm": null,
+        "raw_bytes": 39,
+        "comp_bytes": 22,
+        "ratio": 1.7727272727272727,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1898.66042137146,
+        "enc_ms": 785.6640815734863,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 85.71428571428571,
+        "esc_count": 1,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "let me know if youd like it adjusted",
+        "decoded_by_llm": "",
+        "raw_bytes": null,
+        "comp_bytes": 29,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 5.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 31.584739685058594,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "direction": "B\u2192A",
+        "original": "ive checked the flood sensors in lawrence township two are working one is not responding we need to investigate it",
+        "natural": "I\u2019ve checked the flood sensors in Lawrence Township. Two are working, one is not responding. We need to investigate it.",
+        "encoded": "ive checked the flood sensors in lawrence township two are working one is not responding we need to investigate it",
+        "decoded_by_llm": null,
+        "raw_bytes": 114,
+        "comp_bytes": 84,
+        "ratio": 1.3571428571428572,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1479.0751934051514,
+        "enc_ms": 1290.4767990112305,
+        "dec_ms": null,
+        "tokens": 24,
+        "pages": 1,
+        "hit_pct": 65.0,
+        "esc_count": 7,
+        "fallback": true
+      },
+      {
+        "step": 18,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "note this response is a bit long for a single sentence but ill keep it concise and accurate",
+        "decoded_by_llm": "The flood warning is active; two sensors are working, one is not responding. We need to investigate.",
+        "raw_bytes": null,
+        "comp_bytes": 47,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 6.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1223.7930297851562,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors are operational one is not responding and needs attention",
+        "natural": "The flood warning is active. Two sensors are working, one needs investigation.",
+        "encoded": "the flood warning is active two sensors are operational one is not responding and needs attention",
+        "decoded_by_llm": null,
+        "raw_bytes": 97,
+        "comp_bytes": 53,
+        "ratio": 1.830188679245283,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1316.361904144287,
+        "enc_ms": 1234.278917312622,
+        "dec_ms": null,
+        "tokens": 14,
+        "pages": 1,
+        "hit_pct": 81.25,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "1 sentence thank you for your prompt response we will update you with the latest status",
+        "decoded_by_llm": "Thank you for your prompt response. We will update you with the latest status.",
+        "raw_bytes": null,
+        "comp_bytes": 41,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 6.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1060.997724533081,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      }
+    ]
+  },
+  "transcripts": {
+    "mux_grid": [
+      {
+        "step": 1,
+        "sender": "Role B",
+        "natural": "Hiker1: The trailhead sign is open.",
+        "encoded": "hiker1 the trailhead sign is open",
+        "decoded": null,
+        "fallback": true
+      },
+      {
+        "step": 2,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "would you like me to also help rewrite it in a more formal tone",
+        "decoded": "Hiker1: Would you like me to rephrase it in a more formal style?",
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "sender": "Role B",
+        "natural": "Hiker1: Yes, please do.",
+        "encoded": "hiker1 yes please do",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "could you help me refine this message for clarity and professionalism",
+        "decoded": "Hiker1: Could you help me refine this message for clarity and professionalism?",
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "sender": "Role B",
+        "natural": "Hiker1: Yes, please help with the message.",
+        "encoded": "hiker1 could you help me make this message clearer and more professional",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "let me know if youd like me to adjust the tone or content further",
+        "decoded": "Hiker1: Would you like me to adjust the tone or content of this message?",
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "sender": "Role B",
+        "natural": "Hiker1: Yes, please adjust the tone or content.",
+        "encoded": "hiker1 could you adjust the tone or content of this message",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "would you like me to make it sound more formal or more casual",
+        "decoded": "Hiker1: Would you like me to make this message sound more formal or casual?",
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "sender": "Role B",
+        "natural": "Hiker1: Would you like me to adjust the tone or content of this message?",
+        "encoded": "hiker1 would you like me to adjust the tone or content of this message",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "would you like me to rewrite this in a more formal tone or adjust it for a specific audience",
+        "decoded": "Hiker1: Would you like me to rewrite this in a more formal tone or tailor it for a specific audience?",
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "sender": "Role B",
+        "natural": "Hiker1: Would you like me to adjust the tone or content of this message?",
+        "encoded": "hiker1 would you like me to adjust the tone or content of this message",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "if you want a more formal or polished version heres a refined version",
+        "decoded": "Hiker1: Would you like a more formal or polished version of this message?",
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "sender": "Role B",
+        "natural": "Hiker1: Would you like a more formal or polished version of this message?",
+        "encoded": "hiker1 would you like a more formal or polished version of this message",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "42 sensors are working ill check again in 30 minutes",
+        "decoded": "Hiker1: The 42 sensors are operational; please check again in 30 minutes.",
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "sender": "Role B",
+        "natural": "Hiker1: The 42 sensors are operational; please check again in 30 minutes.",
+        "encoded": "hiker1 the 42 sensors are operational please check again in 30 minutes",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "42 sensors are operational ill follow up in 30 minutes as instructed",
+        "decoded": "Hiker1: The 42 sensors are operational; follow up in 30 minutes as instructed.",
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "sender": "Role B",
+        "natural": "",
+        "encoded": "it seems like your message might be incomplete or missing a specific point could you please clarify or provide more details about what youd like to rewrite for example",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "if you are asking about a specific context like a project a message or something else feel free to clarify",
+        "decoded": "Got it! If you're looking to refine a message or need help with a specific context (like a project, tone, or content), just let me know. I'm here to assist! \ud83d\ude0a",
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "sender": "Role B",
+        "natural": "The flood warning is active for Lawrence Township, NJ. Check sensor status, assess conditions, and plan emergency response.",
+        "encoded": "the flood warning is active in lawrence township nj review sensor data evaluate the situation and organize an emergency response plan",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "note if you meant to write a more formal or polished version heres a refined version",
+        "decoded": "Please clarify your request for a more formal or polished version.",
+        "fallback": false
+      }
+    ],
+    "huffman": [
+      {
+        "step": 1,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Please coordinate with the other agent to check sensor status, assess conditions, and plan an emergency response.",
+        "encoded": "the flood warning is active in lawrence township nj coordinate with the other agent to check sensors assess conditions and plan an emergency response",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "1 sentence i need to check the flood sensors and see if any are out of range lets confirm the situation together",
+        "decoded": "Check the flood sensors in Lawrence Township, NJ. Let's confirm the situation together.",
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Let's check the sensors and confirm the situation.",
+        "encoded": "the flood warning is active please check the sensors and confirm the situation",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "2 sentences there are 3 sensors near the river but one is not responding i should investigate",
+        "decoded": "Two sensors near the river are active; one is not responding and needs investigation.",
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and requires investigation.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and needs investigation",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "let me know if youd like it rephrased further",
+        "decoded": "Let me know if you need further adjustments.",
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and requires investigation",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "would you like me to help with a more detailed explanation or additional sentences",
+        "decoded": "Would you like a more detailed explanation or additional information?",
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation. Let me know if you need further details.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and needs investigation let me know if you need further details",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "but if you want a more natural or polished version you can say",
+        "decoded": "If you prefer a more natural or polished version, you can say: \"If you'd like a more natural or polished version, just let me know.",
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation. Let me know if you need further details.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and requires investigation let me know if you need further details",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "if you meant something else please clarify",
+        "decoded": "If you need further clarification, please let me know.",
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation. Let me know if you need further details.",
+        "encoded": "the flood warning is active two sensors near the river are operational one is not responding and requires investigation let me know if you need further details",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "let me know if you need a more detailed version",
+        "decoded": "Let me know if you need a more detailed version.",
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors near the river are operational; one is not responding and needs investigation. Let me know if you need further details.",
+        "encoded": "the flood warning is active two sensors",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "let me know if youd like it adjusted",
+        "decoded": "",
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "sender": "Role B",
+        "natural": "I\u2019ve checked the flood sensors in Lawrence Township. Two are working, one is not responding. We need to investigate it.",
+        "encoded": "ive checked the flood sensors in lawrence township two are working one is not responding we need to investigate it",
+        "decoded": null,
+        "fallback": true
+      },
+      {
+        "step": 18,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "note this response is a bit long for a single sentence but ill keep it concise and accurate",
+        "decoded": "The flood warning is active; two sensors are working, one is not responding. We need to investigate.",
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors are working, one needs investigation.",
+        "encoded": "the flood warning is active two sensors are operational one is not responding and needs attention",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "1 sentence thank you for your prompt response we will update you with the latest status",
+        "decoded": "Thank you for your prompt response. We will update you with the latest status.",
+        "fallback": false
+      }
+    ]
+  },
+  "log_entries": [
+    {
+      "ts": "10:02:15.851",
+      "level": "INFO",
+      "msg": "Node: Liberty-Node-02  (!0408a160)"
+    },
+    {
+      "ts": "10:02:15.851",
+      "level": "INFO",
+      "msg": "Waiting for 'Hi' trigger DM..."
+    },
+    {
+      "ts": "10:02:15.851",
+      "level": "INFO",
+      "msg": "Warming up model 'test01' on http://localhost:8000..."
+    },
+    {
+      "ts": "10:02:16.289",
+      "level": "INFO",
+      "msg": "Model 'test01' loaded in 0.4s"
+    },
+    {
+      "ts": "10:02:16.289",
+      "level": "INFO",
+      "msg": "Waiting for trigger..."
+    },
+    {
+      "ts": "10:02:44.018",
+      "level": "INFO",
+      "msg": "TRIGGER received from !07c01855: \"Hi\""
+    },
+    {
+      "ts": "10:02:44.161",
+      "level": "INFO",
+      "msg": "Role assigned: B  |  Peer: !07c01855"
+    },
+    {
+      "ts": "10:02:44.164",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "10:02:44.165",
+      "level": "INFO",
+      "msg": "RUN 1 OF 2: MUX GRID CODEC \u2014 Phase 2 (LLM Codec)"
+    },
+    {
+      "ts": "10:02:44.165",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "10:02:44.257",
+      "level": "INFO",
+      "msg": "=== RUN: MUX_GRID === Codec ID: 0x02, Codebook: 4095 words, 20 messages, Pretokenizer: ON, LLM Codec: ON"
+    },
+    {
+      "ts": "10:02:46.389",
+      "level": "INFO",
+      "msg": "LLM generated (2131ms, 67 tokens): \"Hiker1: The trailhead sign is open.\""
+    },
+    {
+      "ts": "10:02:47.268",
+      "level": "INFO",
+      "msg": "LLM encoded (879ms): \"Hiker1: The trailhead sign is open.\""
+    },
+    {
+      "ts": "10:02:47.269",
+      "level": "WARN",
+      "msg": "WARN: LLM encode hit rate 67%, below threshold 70% \u2014 falling back to raw"
+    },
+    {
+      "ts": "10:02:48.332",
+      "level": "INFO",
+      "msg": "TX Step 1: NATURAL=\"Hiker1: The trailhead sign is open.\" \u2192 ENCODED=\"hiker1 the trailhead sign is open\" (33B \u2192 29B, 1.14:1, 67% hit) [FALLBACK]"
+    },
+    {
+      "ts": "10:02:48.332",
+      "level": "INFO",
+      "msg": "RX Step 2: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:02:53.837",
+      "level": "INFO",
+      "msg": "RX Step 2: CODEC=\"would you like me to also help rewrite i\" \u2192 LLM_DECODED=\"Hiker1: Would you like me to rephrase it\" (33B, 1318ms, RSSI=-8, SNR=6.0)"
+    },
+    {
+      "ts": "10:02:56.048",
+      "level": "INFO",
+      "msg": "LLM generated (2211ms, 61 tokens): \"Hiker1: Yes, please do.\""
+    },
+    {
+      "ts": "10:02:58.273",
+      "level": "INFO",
+      "msg": "LLM encoded (2225ms): \"Hiker1: Yes, please do.\""
+    },
+    {
+      "ts": "10:02:59.332",
+      "level": "INFO",
+      "msg": "TX Step 3: NATURAL=\"Hiker1: Yes, please do.\" \u2192 ENCODED=\"hiker1 yes please do\" (20B \u2192 16B, 1.25:1, 75% hit)"
+    },
+    {
+      "ts": "10:02:59.332",
+      "level": "INFO",
+      "msg": "RX Step 4: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:03:04.512",
+      "level": "INFO",
+      "msg": "RX Step 4: CODEC=\"could you help me refine this message fo\" \u2192 LLM_DECODED=\"Hiker1: Could you help me refine this me\" (48B, 1293ms, RSSI=-9, SNR=5.5)"
+    },
+    {
+      "ts": "10:03:07.149",
+      "level": "INFO",
+      "msg": "LLM generated (2637ms, 76 tokens): \"Hiker1: Yes, please help with the message.\""
+    },
+    {
+      "ts": "10:03:08.218",
+      "level": "INFO",
+      "msg": "LLM encoded (1068ms): \"Hiker1: Could you help me make this message clearer and more professional?\""
+    },
+    {
+      "ts": "10:03:09.278",
+      "level": "INFO",
+      "msg": "TX Step 5: NATURAL=\"Hiker1: Yes, please help with the message.\" \u2192 ENCODED=\"hiker1 could you help me make this message clearer\" (72B \u2192 33B, 2.18:1, 83% hit)"
+    },
+    {
+      "ts": "10:03:09.278",
+      "level": "INFO",
+      "msg": "RX Step 6: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:03:13.857",
+      "level": "INFO",
+      "msg": "RX Step 6: CODEC=\"let me know if youd like me to adjust th\" \u2192 LLM_DECODED=\"Hiker1: Would you like me to adjust the \" (39B, 1270ms, RSSI=-8, SNR=6.75)"
+    },
+    {
+      "ts": "10:03:16.381",
+      "level": "INFO",
+      "msg": "LLM generated (2524ms, 51 tokens): \"Hiker1: Yes, please adjust the tone or content.\""
+    },
+    {
+      "ts": "10:03:18.283",
+      "level": "INFO",
+      "msg": "LLM encoded (1901ms): \"Hiker1: Could you adjust the tone or content of this message?\""
+    },
+    {
+      "ts": "10:03:19.335",
+      "level": "INFO",
+      "msg": "TX Step 7: NATURAL=\"Hiker1: Yes, please adjust the tone or content.\" \u2192 ENCODED=\"hiker1 could you adjust the tone or content of thi\" (59B \u2192 36B, 1.64:1, 73% hit)"
+    },
+    {
+      "ts": "10:03:19.335",
+      "level": "INFO",
+      "msg": "RX Step 8: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:03:26.015",
+      "level": "INFO",
+      "msg": "RX Step 8: CODEC=\"would you like me to make it sound more \" \u2192 LLM_DECODED=\"Hiker1: Would you like me to make this m\" (26B, 2267ms, RSSI=-8, SNR=7.0)"
+    },
+    {
+      "ts": "10:03:28.556",
+      "level": "INFO",
+      "msg": "LLM generated (2539ms, 52 tokens): \"Hiker1: Would you like me to adjust the tone or content of this message?\""
+    },
+    {
+      "ts": "10:03:30.288",
+      "level": "INFO",
+      "msg": "LLM encoded (1732ms): \"Hiker1: Would you like me to adjust the tone or content of this message?\""
+    },
+    {
+      "ts": "10:03:31.355",
+      "level": "INFO",
+      "msg": "TX Step 9: NATURAL=\"Hiker1: Would you like me to adjust the tone or co\" \u2192 ENCODED=\"hiker1 would you like me to adjust the tone or con\" (70B \u2192 40B, 1.75:1, 79% hit)"
+    },
+    {
+      "ts": "10:03:31.355",
+      "level": "INFO",
+      "msg": "RX Step 10: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:03:44.795",
+      "level": "INFO",
+      "msg": "RX Step 10: CODEC=\"would you like me to rewrite this in a m\" \u2192 LLM_DECODED=\"Hiker1: Would you like me to rewrite thi\" (46B, 1922ms, RSSI=-8, SNR=6.25)"
+    },
+    {
+      "ts": "10:03:47.325",
+      "level": "INFO",
+      "msg": "LLM generated (2529ms, 53 tokens): \"Hiker1: Would you like me to adjust the tone or content of this message?\""
+    },
+    {
+      "ts": "10:03:49.222",
+      "level": "INFO",
+      "msg": "LLM encoded (1897ms): \"Hiker1: Would you like me to adjust the tone or content of this message?\""
+    },
+    {
+      "ts": "10:03:50.277",
+      "level": "INFO",
+      "msg": "TX Step 11: NATURAL=\"Hiker1: Would you like me to adjust the tone or co\" \u2192 ENCODED=\"hiker1 would you like me to adjust the tone or con\" (70B \u2192 40B, 1.75:1, 79% hit)"
+    },
+    {
+      "ts": "10:03:50.277",
+      "level": "INFO",
+      "msg": "RX Step 12: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:03:56.911",
+      "level": "INFO",
+      "msg": "RX Step 12: CODEC=\"if you want a more formal or polished ve\" \u2192 LLM_DECODED=\"Hiker1: Would you like a more formal or \" (43B, 2310ms, RSSI=-8, SNR=5.5)"
+    },
+    {
+      "ts": "10:03:59.600",
+      "level": "INFO",
+      "msg": "LLM generated (2688ms, 48 tokens): \"Hiker1: Would you like a more formal or polished version of this message?\""
+    },
+    {
+      "ts": "10:04:01.295",
+      "level": "INFO",
+      "msg": "LLM encoded (1696ms): \"Hiker1: Would you like a more formal or polished version of this message?\""
+    },
+    {
+      "ts": "10:04:02.364",
+      "level": "INFO",
+      "msg": "TX Step 13: NATURAL=\"Hiker1: Would you like a more formal or polished v\" \u2192 ENCODED=\"hiker1 would you like a more formal or polished ve\" (71B \u2192 35B, 2.03:1, 85% hit)"
+    },
+    {
+      "ts": "10:04:02.364",
+      "level": "INFO",
+      "msg": "RX Step 14: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:04:08.184",
+      "level": "INFO",
+      "msg": "RX Step 14: CODEC=\"42 sensors are working ill check again i\" \u2192 LLM_DECODED=\"Hiker1: The 42 sensors are operational; \" (31B, 2026ms, RSSI=-8, SNR=5.5)"
+    },
+    {
+      "ts": "10:04:10.505",
+      "level": "INFO",
+      "msg": "LLM generated (2321ms, 44 tokens): \"Hiker1: The 42 sensors are operational; please check again in 30 minutes.\""
+    },
+    {
+      "ts": "10:04:12.747",
+      "level": "INFO",
+      "msg": "LLM encoded (2242ms): \"Hiker1: The 42 sensors are operational; please check again in 30 minutes.\""
+    },
+    {
+      "ts": "10:04:13.818",
+      "level": "INFO",
+      "msg": "TX Step 15: NATURAL=\"Hiker1: The 42 sensors are operational; please che\" \u2192 ENCODED=\"hiker1 the 42 sensors are operational please check\" (70B \u2192 48B, 1.46:1, 75% hit)"
+    },
+    {
+      "ts": "10:04:13.818",
+      "level": "INFO",
+      "msg": "RX Step 16: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:04:19.542",
+      "level": "INFO",
+      "msg": "RX Step 16: CODEC=\"42 sensors are operational ill follow up\" \u2192 LLM_DECODED=\"Hiker1: The 42 sensors are operational; \" (56B, 1870ms, RSSI=-10, SNR=6.75)"
+    },
+    {
+      "ts": "10:04:19.568",
+      "level": "INFO",
+      "msg": "LLM generated (26ms, 0 tokens): \"\""
+    },
+    {
+      "ts": "10:04:22.638",
+      "level": "INFO",
+      "msg": "LLM encoded (3070ms): \"It seems like your message might be incomplete or missing a specific point. Coul\""
+    },
+    {
+      "ts": "10:04:23.714",
+      "level": "INFO",
+      "msg": "TX Step 17: \"it seems like your message might be incomplete or missing a \" (167B \u2192 73B, 2.29:1, 1 pg, 86% hit)"
+    },
+    {
+      "ts": "10:04:23.715",
+      "level": "INFO",
+      "msg": "RX Step 18: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:04:28.774",
+      "level": "INFO",
+      "msg": "RX Step 18: CODEC=\"if you are asking about a specific conte\" \u2192 LLM_DECODED=\"Got it! If you're looking to refine a me\" (37B, 1687ms, RSSI=-9, SNR=6.0)"
+    },
+    {
+      "ts": "10:04:30.305",
+      "level": "INFO",
+      "msg": "LLM generated (1531ms, 22 tokens): \"The flood warning is active for Lawrence Township, NJ. Check sensor status, asse\""
+    },
+    {
+      "ts": "10:04:31.694",
+      "level": "INFO",
+      "msg": "LLM encoded (1389ms): \"The flood warning is active in Lawrence Township, NJ. Review sensor data, evalua\""
+    },
+    {
+      "ts": "10:04:32.759",
+      "level": "INFO",
+      "msg": "TX Step 19: NATURAL=\"The flood warning is active for Lawrence Township,\" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (133B \u2192 70B, 1.90:1, 81% hit)"
+    },
+    {
+      "ts": "10:04:32.759",
+      "level": "INFO",
+      "msg": "RX Step 20: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:04:38.162",
+      "level": "INFO",
+      "msg": "RX Step 20: CODEC=\"note if you meant to write a more formal\" \u2192 LLM_DECODED=\"Please clarify your request for a more f\" (54B, 1176ms, RSSI=-9, SNR=5.75)"
+    },
+    {
+      "ts": "10:04:38.162",
+      "level": "INFO",
+      "msg": "Run 1 complete. Pausing 5s before Run 2..."
+    },
+    {
+      "ts": "10:04:43.163",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "10:04:43.163",
+      "level": "INFO",
+      "msg": "RUN 2 OF 2: HUFFMAN CODEC (4K) \u2014 Phase 2 (LLM Codec)"
+    },
+    {
+      "ts": "10:04:43.163",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "10:04:43.264",
+      "level": "INFO",
+      "msg": "=== RUN: HUFFMAN === Codec ID: 0x01, Codebook: 4095 words, 20 messages, Pretokenizer: ON, LLM Codec: ON"
+    },
+    {
+      "ts": "10:04:44.913",
+      "level": "INFO",
+      "msg": "LLM generated (1649ms, 30 tokens): \"The flood warning is active in Lawrence Township, NJ. Please coordinate with the\""
+    },
+    {
+      "ts": "10:04:46.026",
+      "level": "INFO",
+      "msg": "LLM encoded (1112ms): \"The flood warning is active in Lawrence Township, NJ. Coordinate with the other \""
+    },
+    {
+      "ts": "10:04:47.097",
+      "level": "INFO",
+      "msg": "TX Step 1: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (149B \u2192 76B, 1.96:1, 79% hit)"
+    },
+    {
+      "ts": "10:04:47.097",
+      "level": "INFO",
+      "msg": "RX Step 2: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:04:52.790",
+      "level": "INFO",
+      "msg": "RX Step 2: CODEC=\"1 sentence i need to check the flood sen\" \u2192 LLM_DECODED=\"Check the flood sensors in Lawrence Town\" (54B, 1410ms, RSSI=-9, SNR=5.5)"
+    },
+    {
+      "ts": "10:04:54.071",
+      "level": "INFO",
+      "msg": "LLM generated (1281ms, 15 tokens): \"The flood warning is active. Let's check the sensors and confirm the situation.\""
+    },
+    {
+      "ts": "10:04:55.192",
+      "level": "INFO",
+      "msg": "LLM encoded (1119ms): \"The flood warning is active. Please check the sensors and confirm the situation.\""
+    },
+    {
+      "ts": "10:04:56.252",
+      "level": "INFO",
+      "msg": "TX Step 3: NATURAL=\"The flood warning is active. Let's check the senso\" \u2192 ENCODED=\"the flood warning is active please check the senso\" (78B \u2192 29B, 2.69:1, 92% hit)"
+    },
+    {
+      "ts": "10:04:56.252",
+      "level": "INFO",
+      "msg": "RX Step 4: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:05:04.006",
+      "level": "INFO",
+      "msg": "RX Step 4: CODEC=\"2 sentences there are 3 sensors near the\" \u2192 LLM_DECODED=\"Two sensors near the river are active; o\" (66B, 1290ms, RSSI=-10, SNR=5.75)"
+    },
+    {
+      "ts": "10:05:05.104",
+      "level": "INFO",
+      "msg": "LLM generated (1096ms, 21 tokens): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:06.251",
+      "level": "INFO",
+      "msg": "LLM encoded (1147ms): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:07.329",
+      "level": "INFO",
+      "msg": "TX Step 5: NATURAL=\"The flood warning is active. Two sensors near the \" \u2192 ENCODED=\"the flood warning is active two sensors near the r\" (116B \u2192 58B, 2.00:1, 84% hit)"
+    },
+    {
+      "ts": "10:05:07.329",
+      "level": "INFO",
+      "msg": "RX Step 6: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:05:12.056",
+      "level": "INFO",
+      "msg": "RX Step 6: CODEC=\"let me know if youd like it rephrased fu\" \u2192 LLM_DECODED=\"Let me know if you need further adjustme\" (31B, 1007ms, RSSI=-9, SNR=6.5)"
+    },
+    {
+      "ts": "10:05:13.582",
+      "level": "INFO",
+      "msg": "LLM generated (1525ms, 21 tokens): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:14.468",
+      "level": "INFO",
+      "msg": "LLM encoded (886ms): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:15.551",
+      "level": "INFO",
+      "msg": "TX Step 7: NATURAL=\"The flood warning is active. Two sensors near the \" \u2192 ENCODED=\"the flood warning is active two sensors near the r\" (119B \u2192 58B, 2.05:1, 84% hit)"
+    },
+    {
+      "ts": "10:05:15.551",
+      "level": "INFO",
+      "msg": "RX Step 8: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:05:20.871",
+      "level": "INFO",
+      "msg": "RX Step 8: CODEC=\"would you like me to help with a more de\" \u2192 LLM_DECODED=\"Would you like a more detailed explanati\" (42B, 1006ms, RSSI=-9, SNR=5.5)"
+    },
+    {
+      "ts": "10:05:22.156",
+      "level": "INFO",
+      "msg": "LLM generated (1285ms, 30 tokens): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:23.659",
+      "level": "INFO",
+      "msg": "LLM encoded (1503ms): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:24.727",
+      "level": "INFO",
+      "msg": "TX Step 9: NATURAL=\"The flood warning is active. Two sensors near the \" \u2192 ENCODED=\"the flood warning is active two sensors near the r\" (156B \u2192 69B, 2.26:1, 89% hit)"
+    },
+    {
+      "ts": "10:05:24.727",
+      "level": "INFO",
+      "msg": "RX Step 10: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:05:29.392",
+      "level": "INFO",
+      "msg": "RX Step 10: CODEC=\"but if you want a more natural or polish\" \u2192 LLM_DECODED=\"If you prefer a more natural or polished\" (30B, 1338ms, RSSI=-9, SNR=5.75)"
+    },
+    {
+      "ts": "10:05:30.938",
+      "level": "INFO",
+      "msg": "LLM generated (1546ms, 30 tokens): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:32.503",
+      "level": "INFO",
+      "msg": "LLM encoded (1565ms): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:33.565",
+      "level": "INFO",
+      "msg": "TX Step 11: NATURAL=\"The flood warning is active. Two sensors near the \" \u2192 ENCODED=\"the flood warning is active two sensors near the r\" (159B \u2192 69B, 2.30:1, 89% hit)"
+    },
+    {
+      "ts": "10:05:33.565",
+      "level": "INFO",
+      "msg": "RX Step 12: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:05:37.192",
+      "level": "INFO",
+      "msg": "RX Step 12: CODEC=\"if you meant something else please clari\" \u2192 LLM_DECODED=\"If you need further clarification, pleas\" (27B, 691ms, RSSI=-9, SNR=6.0)"
+    },
+    {
+      "ts": "10:05:38.876",
+      "level": "INFO",
+      "msg": "LLM generated (1681ms, 30 tokens): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:40.459",
+      "level": "INFO",
+      "msg": "LLM encoded (1583ms): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:41.537",
+      "level": "INFO",
+      "msg": "TX Step 13: NATURAL=\"The flood warning is active. Two sensors near the \" \u2192 ENCODED=\"the flood warning is active two sensors near the r\" (159B \u2192 69B, 2.30:1, 89% hit)"
+    },
+    {
+      "ts": "10:05:41.537",
+      "level": "INFO",
+      "msg": "RX Step 14: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:05:46.618",
+      "level": "INFO",
+      "msg": "RX Step 14: CODEC=\"let me know if you need a more detailed \" \u2192 LLM_DECODED=\"Let me know if you need a more detailed \" (19B, 888ms, RSSI=-9, SNR=5.5)"
+    },
+    {
+      "ts": "10:05:48.516",
+      "level": "INFO",
+      "msg": "LLM generated (1899ms, 30 tokens): \"The flood warning is active. Two sensors near the river are operational; one is \""
+    },
+    {
+      "ts": "10:05:49.302",
+      "level": "INFO",
+      "msg": "LLM encoded (786ms): \"The flood warning is active. Two sensors\""
+    },
+    {
+      "ts": "10:05:50.364",
+      "level": "INFO",
+      "msg": "TX Step 15: NATURAL=\"The flood warning is active. Two sensors near the \" \u2192 ENCODED=\"the flood warning is active two sensors\" (39B \u2192 22B, 1.77:1, 86% hit)"
+    },
+    {
+      "ts": "10:05:50.364",
+      "level": "INFO",
+      "msg": "RX Step 16: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:05:54.143",
+      "level": "INFO",
+      "msg": "RX Step 16: CODEC=\"let me know if youd like it adjusted\" \u2192 LLM_DECODED=\"\" (29B, 32ms, RSSI=-9, SNR=5.5)"
+    },
+    {
+      "ts": "10:05:55.623",
+      "level": "INFO",
+      "msg": "LLM generated (1479ms, 24 tokens): \"I\u2019ve checked the flood sensors in Lawrence Township. Two are working, one is not\""
+    },
+    {
+      "ts": "10:05:56.913",
+      "level": "INFO",
+      "msg": "LLM encoded (1290ms): \"I\u2019ve looked into the flood sensors in Lawrence Township. Two are functioning, on\""
+    },
+    {
+      "ts": "10:05:56.916",
+      "level": "WARN",
+      "msg": "WARN: LLM encode hit rate 68%, below threshold 70% \u2014 falling back to raw"
+    },
+    {
+      "ts": "10:05:57.983",
+      "level": "INFO",
+      "msg": "TX Step 17: NATURAL=\"I\u2019ve checked the flood sensors in Lawrence Townshi\" \u2192 ENCODED=\"ive checked the flood sensors in lawrence township\" (114B \u2192 84B, 1.36:1, 65% hit) [FALLBACK]"
+    },
+    {
+      "ts": "10:05:57.983",
+      "level": "INFO",
+      "msg": "RX Step 18: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:06:04.831",
+      "level": "INFO",
+      "msg": "RX Step 18: CODEC=\"note this response is a bit long for a s\" \u2192 LLM_DECODED=\"The flood warning is active; two sensors\" (47B, 1224ms, RSSI=-9, SNR=6.0)"
+    },
+    {
+      "ts": "10:06:06.148",
+      "level": "INFO",
+      "msg": "LLM generated (1316ms, 14 tokens): \"The flood warning is active. Two sensors are working, one needs investigation.\""
+    },
+    {
+      "ts": "10:06:07.383",
+      "level": "INFO",
+      "msg": "LLM encoded (1234ms): \"The flood warning is active. Two sensors are operational; one is not responding \""
+    },
+    {
+      "ts": "10:06:08.448",
+      "level": "INFO",
+      "msg": "TX Step 19: NATURAL=\"The flood warning is active. Two sensors are worki\" \u2192 ENCODED=\"the flood warning is active two sensors are operat\" (97B \u2192 53B, 1.83:1, 81% hit)"
+    },
+    {
+      "ts": "10:06:08.448",
+      "level": "INFO",
+      "msg": "RX Step 20: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "10:06:13.577",
+      "level": "INFO",
+      "msg": "RX Step 20: CODEC=\"1 sentence thank you for your prompt res\" \u2192 LLM_DECODED=\"Thank you for your prompt response. We w\" (41B, 1061ms, RSSI=-9, SNR=6.0)"
+    },
+    {
+      "ts": "10:06:13.588",
+      "level": "INFO",
+      "msg": "Log written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-d-phase2-mux-grid-log_20260305_100613.md"
+    },
+    {
+      "ts": "10:06:13.595",
+      "level": "INFO",
+      "msg": "Log written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-d-phase2-huffman-log_20260305_100613.md"
+    },
+    {
+      "ts": "10:06:13.597",
+      "level": "INFO",
+      "msg": "Comparison written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-d-phase2-comparison_20260305_100613.md"
+    }
+  ]
+}

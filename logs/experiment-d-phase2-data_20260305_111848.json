@@ -1,0 +1,1861 @@
+{
+  "experiment": "D",
+  "phase": "phase2",
+  "timestamp": "2026-03-05T16:18:48.994929+00:00",
+  "node": "!0408a160",
+  "peer": "!07c01855",
+  "role": "B",
+  "model": "test01",
+  "pretokenizer": true,
+  "llm_codec": true,
+  "fallback_threshold": 0.7,
+  "runs": {
+    "mux_grid": [
+      {
+        "step": 1,
+        "direction": "B\u2192A",
+        "original": "it seems like your message might be incomplete or missing a specific point could you clarify what youd like me to rewrite or refine for example",
+        "natural": "",
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 143,
+        "comp_bytes": 77,
+        "ratio": 1.8571428571428572,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 63.03215026855469,
+        "enc_ms": 2073.975086212158,
+        "dec_ms": null,
+        "tokens": 0,
+        "pages": 1,
+        "hit_pct": 80.76923076923077,
+        "esc_count": 5,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "would you like me to also help with a more technical or formal version",
+        "decoded_by_llm": "Certainly! Here's a more formal and technical version of your request:",
+        "raw_bytes": null,
+        "comp_bytes": 20,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -31,
+        "snr": 5.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 2744.929552078247,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj we must check sensors evaluate conditions and prepare a response",
+        "natural": "The flood warning is active for Lawrence Township, NJ. We need to check sensors, assess conditions, and plan response.",
+        "encoded": "the flood warning is active in lawrence township nj we must check sensors evaluate conditions and prepare a response",
+        "decoded_by_llm": null,
+        "raw_bytes": 116,
+        "comp_bytes": 66,
+        "ratio": 1.7575757575757576,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1428.9257526397705,
+        "enc_ms": 892.5480842590332,
+        "dec_ms": null,
+        "tokens": 23,
+        "pages": 1,
+        "hit_pct": 78.94736842105263,
+        "esc_count": 4,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "3 backup sensors are operational proceed with monitoring and alert the public",
+        "decoded_by_llm": "Three backup sensors are working. Proceed with monitoring and notify the public.",
+        "raw_bytes": null,
+        "comp_bytes": 48,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -31,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1186.70654296875,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active we must check sensors assess conditions and plan response three backup sensors are operational",
+        "natural": "The flood warning is active. We need to check sensors and plan response. Three backup sensors are operational.",
+        "encoded": "the flood warning is active we must check sensors assess conditions and plan response three backup sensors are operational",
+        "decoded_by_llm": null,
+        "raw_bytes": 122,
+        "comp_bytes": 67,
+        "ratio": 1.8208955223880596,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1562.190055847168,
+        "enc_ms": 1522.7491855621338,
+        "dec_ms": null,
+        "tokens": 20,
+        "pages": 1,
+        "hit_pct": 78.94736842105263,
+        "esc_count": 4,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "would you like me to help you rephrase this message for a different audience or context",
+        "decoded_by_llm": "Would you like me to adjust this message for a different audience or situation?",
+        "raw_bytes": null,
+        "comp_bytes": 32,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -28,
+        "snr": 6.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 977.8032302856445,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active we must check sensors assess conditions and plan response three backup sensors are ready",
+        "natural": "The flood warning is active. We need to check sensors and plan response. Three backup sensors are ready.",
+        "encoded": "the flood warning is active we must check sensors assess conditions and plan response three backup sensors are ready",
+        "decoded_by_llm": null,
+        "raw_bytes": 116,
+        "comp_bytes": 55,
+        "ratio": 2.109090909090909,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1379.1675567626953,
+        "enc_ms": 1507.537603378296,
+        "dec_ms": null,
+        "tokens": 20,
+        "pages": 1,
+        "hit_pct": 84.21052631578947,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "but you want a more natural polished version",
+        "decoded_by_llm": "The flood warning is active. We need to check sensors and plan response. Three backup sensors are ready.",
+        "raw_bytes": null,
+        "comp_bytes": 22,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -24,
+        "snr": 5.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1378.1874179840088,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj we need to check sensors assess conditions and prepare for response three backup sensors are ready",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are operational.",
+        "encoded": "the flood warning is active in lawrence township nj we need to check sensors assess conditions and prepare for response three backup sensors are ready",
+        "decoded_by_llm": null,
+        "raw_bytes": 150,
+        "comp_bytes": 81,
+        "ratio": 1.8518518518518519,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1321.4788436889648,
+        "enc_ms": 1021.5933322906494,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 80.0,
+        "esc_count": 5,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "would you like me to also help with a more formal version suitable for a maintenance report",
+        "decoded_by_llm": "Would you like me to provide a more formal version for a maintenance report?",
+        "raw_bytes": null,
+        "comp_bytes": 24,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -25,
+        "snr": 6.25,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1310.7960224151611,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj we must check sensors evaluate conditions and prepare for response three backup sensors are ready",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are operational.",
+        "encoded": "the flood warning is active in lawrence township nj we must check sensors evaluate conditions and prepare for response three backup sensors are ready",
+        "decoded_by_llm": null,
+        "raw_bytes": 149,
+        "comp_bytes": 82,
+        "ratio": 1.8170731707317074,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2052.967071533203,
+        "enc_ms": 1771.4941501617432,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 79.16666666666666,
+        "esc_count": 5,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "translation",
+        "decoded_by_llm": "The flood warning is active. We need to check sensors, assess conditions, and prepare. Three backup sensors are operational.",
+        "raw_bytes": null,
+        "comp_bytes": 5,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -21,
+        "snr": 6.25,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1553.8177490234375,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj we must check sensors evaluate conditions and prepare for response three backup sensors are ready",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are operational.",
+        "encoded": "the flood warning is active in lawrence township nj we must check sensors evaluate conditions and prepare for response three backup sensors are ready",
+        "decoded_by_llm": null,
+        "raw_bytes": 149,
+        "comp_bytes": 82,
+        "ratio": 1.8170731707317074,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2258.1241130828857,
+        "enc_ms": 1446.4972019195557,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 79.16666666666666,
+        "esc_count": 5,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "78 of the network is secure keep monitoring and inform the public as needed",
+        "decoded_by_llm": "The flood warning is active. We need to check sensors, assess conditions, and prepare. Three backup sensors are operational.",
+        "raw_bytes": null,
+        "comp_bytes": 29,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1132.5187683105469,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj we need to check sensors evaluate conditions and prepare for response three backup sensors are operational",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are ready.",
+        "encoded": "the flood warning is active in lawrence township nj we need to check sensors evaluate conditions and prepare for response three backup sensors are operational",
+        "decoded_by_llm": null,
+        "raw_bytes": 158,
+        "comp_bytes": 95,
+        "ratio": 1.6631578947368422,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1749.7429847717285,
+        "enc_ms": 1954.7998905181885,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 76.0,
+        "esc_count": 6,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "",
+        "decoded_by_llm": "The flood warning is active. We need to check sensors and prepare. Three backup sensors are ready.",
+        "raw_bytes": null,
+        "comp_bytes": 3,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -7,
+        "snr": 5.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 832.1897983551025,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj we need to check sensors evaluate conditions and prepare for response three backup sensors are operational",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are ready.",
+        "encoded": "the flood warning is active in lawrence township nj we need to check sensors evaluate conditions and prepare for response three backup sensors are operational",
+        "decoded_by_llm": null,
+        "raw_bytes": 158,
+        "comp_bytes": 95,
+        "ratio": 1.6631578947368422,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1596.7175960540771,
+        "enc_ms": 1520.9412574768066,
+        "dec_ms": null,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 76.0,
+        "esc_count": 6,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "would you like me to make this sound more formal or more casual",
+        "decoded_by_llm": "Would you like me to adjust the tone of this message to be more formal or casual?",
+        "raw_bytes": null,
+        "comp_bytes": 26,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 5.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1293.9493656158447,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "direction": "B\u2192A",
+        "original": "it seems like your message might be incomplete or missing a specific point could you clarify what youd like me to rewrite or refine for example",
+        "natural": "",
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 143,
+        "comp_bytes": 77,
+        "ratio": 1.8571428571428572,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 33.07080268859863,
+        "enc_ms": 3466.158390045166,
+        "dec_ms": null,
+        "tokens": 0,
+        "pages": 1,
+        "hit_pct": 80.76923076923077,
+        "esc_count": 5,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "if you meant something else or need a different format let me know",
+        "decoded_by_llm": "Understood! If you have a specific message or idea you'd like to refine, feel free to share it, and I'll adjust it accordingly. Let me know how I can help!",
+        "raw_bytes": null,
+        "comp_bytes": 27,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 6.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1958.2562446594238,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      }
+    ],
+    "huffman": [
+      {
+        "step": 1,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj review sensors and evaluate the situation coordinate with the team to plan an emergency response",
+        "natural": "The flood warning is active for Lawrence Township, NJ. Check sensors and assess conditions. Plan emergency response with the team.",
+        "encoded": "the flood warning is active in lawrence township nj review sensors and evaluate the situation coordinate with the team to plan an emergency response",
+        "decoded_by_llm": null,
+        "raw_bytes": 148,
+        "comp_bytes": 77,
+        "ratio": 1.922077922077922,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1580.7251930236816,
+        "enc_ms": 1668.1036949157715,
+        "dec_ms": null,
+        "tokens": 23,
+        "pages": 1,
+        "hit_pct": 79.16666666666666,
+        "esc_count": 5,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "i will provide a concise and clear response",
+        "decoded_by_llm": "I'll keep my responses brief and clear. Let me know if you need anything else.",
+        "raw_bytes": null,
+        "comp_bytes": 22,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 7.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1189.1989707946777,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active coordinate with the team to assess conditions and respond",
+        "natural": "The flood warning is active. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active coordinate with the team to assess conditions and respond",
+        "decoded_by_llm": null,
+        "raw_bytes": 85,
+        "comp_bytes": 39,
+        "ratio": 2.1794871794871793,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1414.77370262146,
+        "enc_ms": 1290.745496749878,
+        "dec_ms": null,
+        "tokens": 16,
+        "pages": 1,
+        "hit_pct": 85.71428571428571,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "answer thank you for your message",
+        "decoded_by_llm": "Thank you for your message.",
+        "raw_bytes": null,
+        "comp_bytes": 13,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 7.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 823.8937854766846,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active coordinate with the team to evaluate conditions and take action",
+        "natural": "The flood warning is active. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active coordinate with the team to evaluate conditions and take action",
+        "decoded_by_llm": null,
+        "raw_bytes": 91,
+        "comp_bytes": 42,
+        "ratio": 2.1666666666666665,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1409.9454879760742,
+        "enc_ms": 1289.7450923919678,
+        "dec_ms": null,
+        "tokens": 16,
+        "pages": 1,
+        "hit_pct": 86.66666666666667,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "i will provide a concise and clear response",
+        "decoded_by_llm": "I'll keep my response brief and clear. Let me know if you need further details.",
+        "raw_bytes": null,
+        "comp_bytes": 22,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1286.0393524169922,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj coordinate with the team to evaluate and respond",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess and respond.",
+        "encoded": "the flood warning is active in lawrence township nj coordinate with the team to evaluate and respond",
+        "decoded_by_llm": null,
+        "raw_bytes": 100,
+        "comp_bytes": 60,
+        "ratio": 1.6666666666666667,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1557.5523376464844,
+        "enc_ms": 1547.64723777771,
+        "dec_ms": null,
+        "tokens": 20,
+        "pages": 1,
+        "hit_pct": 76.47058823529412,
+        "esc_count": 4,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "i will provide a concise and clear response",
+        "decoded_by_llm": "I'll keep my response brief and clear. Let me know if you need anything else.",
+        "raw_bytes": null,
+        "comp_bytes": 22,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1258.317470550537,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj the team should assess conditions and respond promptly",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess and respond.",
+        "encoded": "the flood warning is active in lawrence township nj the team should assess conditions and respond promptly",
+        "decoded_by_llm": null,
+        "raw_bytes": 106,
+        "comp_bytes": 58,
+        "ratio": 1.8275862068965518,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1251.7056465148926,
+        "enc_ms": 873.1749057769775,
+        "dec_ms": null,
+        "tokens": 20,
+        "pages": 1,
+        "hit_pct": 76.47058823529412,
+        "esc_count": 4,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "i will provide a concise and clear response",
+        "decoded_by_llm": "I'll keep my response brief and clear. Let me know if you need anything else.",
+        "raw_bytes": null,
+        "comp_bytes": 22,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 7.25,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1313.270092010498,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj the team should assess conditions and respond immediately",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active in lawrence township nj the team should assess conditions and respond immediately",
+        "decoded_by_llm": null,
+        "raw_bytes": 109,
+        "comp_bytes": 50,
+        "ratio": 2.18,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1756.795883178711,
+        "enc_ms": 1402.8353691101074,
+        "dec_ms": null,
+        "tokens": 21,
+        "pages": 1,
+        "hit_pct": 82.35294117647058,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "i understand your request here are two short responses",
+        "decoded_by_llm": "The flood warning is active. Coordinate with the team to assess conditions and respond.",
+        "raw_bytes": null,
+        "comp_bytes": 18,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 7.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1255.1302909851074,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj the team must assess conditions and respond",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active in lawrence township nj the team must assess conditions and respond",
+        "decoded_by_llm": null,
+        "raw_bytes": 95,
+        "comp_bytes": 49,
+        "ratio": 1.9387755102040816,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1793.982744216919,
+        "enc_ms": 1368.0953979492188,
+        "dec_ms": null,
+        "tokens": 21,
+        "pages": 1,
+        "hit_pct": 81.25,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "you are asking for a 1 sentence response here it is",
+        "decoded_by_llm": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "raw_bytes": null,
+        "comp_bytes": 28,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -7,
+        "snr": 8.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1400.0680446624756,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj the team must assess conditions and respond",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active in lawrence township nj the team must assess conditions and respond",
+        "decoded_by_llm": null,
+        "raw_bytes": 95,
+        "comp_bytes": 49,
+        "ratio": 1.9387755102040816,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1817.246437072754,
+        "enc_ms": 1385.8649730682373,
+        "dec_ms": null,
+        "tokens": 21,
+        "pages": 1,
+        "hit_pct": 81.25,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "answer thank you for your message",
+        "decoded_by_llm": "The flood warning is active. Coordinate with the team to assess conditions and respond.",
+        "raw_bytes": null,
+        "comp_bytes": 13,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -9,
+        "snr": 7.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1265.0346755981445,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj coordinate with the team to assess and respond",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active in lawrence township nj coordinate with the team to assess and respond",
+        "decoded_by_llm": null,
+        "raw_bytes": 98,
+        "comp_bytes": 58,
+        "ratio": 1.6896551724137931,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1841.7904376983643,
+        "enc_ms": 1474.865436553955,
+        "dec_ms": null,
+        "tokens": 21,
+        "pages": 1,
+        "hit_pct": 76.47058823529412,
+        "esc_count": 4,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "let me know if youd like me to tailor it further",
+        "decoded_by_llm": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "raw_bytes": null,
+        "comp_bytes": 31,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 7.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1462.0065689086914,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "direction": "B\u2192A",
+        "original": "it seems like your message might be incomplete or missing a specific point could you clarify what youd like me to rewrite or refine for example",
+        "natural": "",
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 143,
+        "comp_bytes": 74,
+        "ratio": 1.9324324324324325,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 51.570892333984375,
+        "enc_ms": 3471.339464187622,
+        "dec_ms": null,
+        "tokens": 0,
+        "pages": 1,
+        "hit_pct": 80.76923076923077,
+        "esc_count": 5,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "you would respond with a concise message such as",
+        "decoded_by_llm": "Understood. Please provide the specific details or content you'd like to be rewritten.",
+        "raw_bytes": null,
+        "comp_bytes": 24,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 7.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": 1302.5057315826416,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      }
+    ]
+  },
+  "transcripts": {
+    "mux_grid": [
+      {
+        "step": 1,
+        "sender": "Role B",
+        "natural": "",
+        "encoded": "it seems like your message might be incomplete or missing a specific point could you clarify what youd like me to rewrite or refine for example",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "would you like me to also help with a more technical or formal version",
+        "decoded": "Certainly! Here's a more formal and technical version of your request:",
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "sender": "Role B",
+        "natural": "The flood warning is active for Lawrence Township, NJ. We need to check sensors, assess conditions, and plan response.",
+        "encoded": "the flood warning is active in lawrence township nj we must check sensors evaluate conditions and prepare a response",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "3 backup sensors are operational proceed with monitoring and alert the public",
+        "decoded": "Three backup sensors are working. Proceed with monitoring and notify the public.",
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "sender": "Role B",
+        "natural": "The flood warning is active. We need to check sensors and plan response. Three backup sensors are operational.",
+        "encoded": "the flood warning is active we must check sensors assess conditions and plan response three backup sensors are operational",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "would you like me to help you rephrase this message for a different audience or context",
+        "decoded": "Would you like me to adjust this message for a different audience or situation?",
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "sender": "Role B",
+        "natural": "The flood warning is active. We need to check sensors and plan response. Three backup sensors are ready.",
+        "encoded": "the flood warning is active we must check sensors assess conditions and plan response three backup sensors are ready",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "but you want a more natural polished version",
+        "decoded": "The flood warning is active. We need to check sensors and plan response. Three backup sensors are ready.",
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are operational.",
+        "encoded": "the flood warning is active in lawrence township nj we need to check sensors assess conditions and prepare for response three backup sensors are ready",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "would you like me to also help with a more formal version suitable for a maintenance report",
+        "decoded": "Would you like me to provide a more formal version for a maintenance report?",
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are operational.",
+        "encoded": "the flood warning is active in lawrence township nj we must check sensors evaluate conditions and prepare for response three backup sensors are ready",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "translation",
+        "decoded": "The flood warning is active. We need to check sensors, assess conditions, and prepare. Three backup sensors are operational.",
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are operational.",
+        "encoded": "the flood warning is active in lawrence township nj we must check sensors evaluate conditions and prepare for response three backup sensors are ready",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "78 of the network is secure keep monitoring and inform the public as needed",
+        "decoded": "The flood warning is active. We need to check sensors, assess conditions, and prepare. Three backup sensors are operational.",
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are ready.",
+        "encoded": "the flood warning is active in lawrence township nj we need to check sensors evaluate conditions and prepare for response three backup sensors are operational",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "",
+        "decoded": "The flood warning is active. We need to check sensors and prepare. Three backup sensors are ready.",
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. We need to check sensors, assess conditions, and prepare for response. Three backup sensors are ready.",
+        "encoded": "the flood warning is active in lawrence township nj we need to check sensors evaluate conditions and prepare for response three backup sensors are operational",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "would you like me to make this sound more formal or more casual",
+        "decoded": "Would you like me to adjust the tone of this message to be more formal or casual?",
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "sender": "Role B",
+        "natural": "",
+        "encoded": "it seems like your message might be incomplete or missing a specific point could you clarify what youd like me to rewrite or refine for example",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "if you meant something else or need a different format let me know",
+        "decoded": "Understood! If you have a specific message or idea you'd like to refine, feel free to share it, and I'll adjust it accordingly. Let me know how I can help!",
+        "fallback": false
+      }
+    ],
+    "huffman": [
+      {
+        "step": 1,
+        "sender": "Role B",
+        "natural": "The flood warning is active for Lawrence Township, NJ. Check sensors and assess conditions. Plan emergency response with the team.",
+        "encoded": "the flood warning is active in lawrence township nj review sensors and evaluate the situation coordinate with the team to plan an emergency response",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "i will provide a concise and clear response",
+        "decoded": "I'll keep my responses brief and clear. Let me know if you need anything else.",
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active coordinate with the team to assess conditions and respond",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "answer thank you for your message",
+        "decoded": "Thank you for your message.",
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active coordinate with the team to evaluate conditions and take action",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "i will provide a concise and clear response",
+        "decoded": "I'll keep my response brief and clear. Let me know if you need further details.",
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess and respond.",
+        "encoded": "the flood warning is active in lawrence township nj coordinate with the team to evaluate and respond",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "i will provide a concise and clear response",
+        "decoded": "I'll keep my response brief and clear. Let me know if you need anything else.",
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess and respond.",
+        "encoded": "the flood warning is active in lawrence township nj the team should assess conditions and respond promptly",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "i will provide a concise and clear response",
+        "decoded": "I'll keep my response brief and clear. Let me know if you need anything else.",
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active in lawrence township nj the team should assess conditions and respond immediately",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "i understand your request here are two short responses",
+        "decoded": "The flood warning is active. Coordinate with the team to assess conditions and respond.",
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active in lawrence township nj the team must assess conditions and respond",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "you are asking for a 1 sentence response here it is",
+        "decoded": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active in lawrence township nj the team must assess conditions and respond",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "answer thank you for your message",
+        "decoded": "The flood warning is active. Coordinate with the team to assess conditions and respond.",
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "encoded": "the flood warning is active in lawrence township nj coordinate with the team to assess and respond",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "let me know if youd like me to tailor it further",
+        "decoded": "The flood warning is active in Lawrence Township, NJ. Coordinate with the team to assess conditions and respond.",
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "sender": "Role B",
+        "natural": "",
+        "encoded": "it seems like your message might be incomplete or missing a specific point could you clarify what youd like me to rewrite or refine for example",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "you would respond with a concise message such as",
+        "decoded": "Understood. Please provide the specific details or content you'd like to be rewritten.",
+        "fallback": false
+      }
+    ]
+  },
+  "log_entries": [
+    {
+      "ts": "11:15:13.664",
+      "level": "INFO",
+      "msg": "Node: Liberty-Node-02  (!0408a160)"
+    },
+    {
+      "ts": "11:15:13.666",
+      "level": "INFO",
+      "msg": "Waiting for 'Hi' trigger DM..."
+    },
+    {
+      "ts": "11:15:13.666",
+      "level": "INFO",
+      "msg": "Warming up model 'test01' on http://localhost:8000..."
+    },
+    {
+      "ts": "11:15:14.586",
+      "level": "INFO",
+      "msg": "Model 'test01' loaded in 0.9s"
+    },
+    {
+      "ts": "11:15:14.586",
+      "level": "INFO",
+      "msg": "Waiting for trigger..."
+    },
+    {
+      "ts": "11:15:32.758",
+      "level": "INFO",
+      "msg": "TRIGGER received from !07c01855: \"Hi\""
+    },
+    {
+      "ts": "11:15:32.851",
+      "level": "INFO",
+      "msg": "Role assigned: B  |  Peer: !07c01855"
+    },
+    {
+      "ts": "11:15:32.852",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "11:15:32.852",
+      "level": "INFO",
+      "msg": "RUN 1 OF 2: MUX GRID CODEC \u2014 Phase 2 (LLM Codec)"
+    },
+    {
+      "ts": "11:15:32.852",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "11:15:32.945",
+      "level": "INFO",
+      "msg": "=== RUN: MUX_GRID === Codec ID: 0x02, Codebook: 4095 words, 20 messages, Pretokenizer: ON, LLM Codec: ON"
+    },
+    {
+      "ts": "11:15:33.008",
+      "level": "INFO",
+      "msg": "LLM generated (63ms, 0 tokens): \"\""
+    },
+    {
+      "ts": "11:15:35.082",
+      "level": "INFO",
+      "msg": "LLM encoded (2074ms): \"It seems like your message might be incomplete or missing a specific point. Coul\""
+    },
+    {
+      "ts": "11:15:36.156",
+      "level": "INFO",
+      "msg": "TX Step 1: \"it seems like your message might be incomplete or missing a \" (143B \u2192 77B, 1.86:1, 1 pg, 81% hit)"
+    },
+    {
+      "ts": "11:15:36.156",
+      "level": "INFO",
+      "msg": "RX Step 2: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:15:44.205",
+      "level": "INFO",
+      "msg": "RX Step 2: CODEC=\"would you like me to also help with a mo\" \u2192 LLM_DECODED=\"Certainly! Here's a more formal and tech\" (20B, 2745ms, RSSI=-31, SNR=5.75)"
+    },
+    {
+      "ts": "11:15:45.634",
+      "level": "INFO",
+      "msg": "LLM generated (1429ms, 23 tokens): \"The flood warning is active for Lawrence Township, NJ. We need to check sensors,\""
+    },
+    {
+      "ts": "11:15:46.527",
+      "level": "INFO",
+      "msg": "LLM encoded (893ms): \"The flood warning is active in Lawrence Township, NJ. We must check sensors, eva\""
+    },
+    {
+      "ts": "11:15:47.600",
+      "level": "INFO",
+      "msg": "TX Step 3: NATURAL=\"The flood warning is active for Lawrence Township,\" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (116B \u2192 66B, 1.76:1, 79% hit)"
+    },
+    {
+      "ts": "11:15:47.600",
+      "level": "INFO",
+      "msg": "RX Step 4: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:15:52.534",
+      "level": "INFO",
+      "msg": "RX Step 4: CODEC=\"3 backup sensors are operational proceed\" \u2192 LLM_DECODED=\"Three backup sensors are working. Procee\" (48B, 1187ms, RSSI=-31, SNR=6.75)"
+    },
+    {
+      "ts": "11:15:54.099",
+      "level": "INFO",
+      "msg": "LLM generated (1562ms, 20 tokens): \"The flood warning is active. We need to check sensors and plan response. Three b\""
+    },
+    {
+      "ts": "11:15:55.622",
+      "level": "INFO",
+      "msg": "LLM encoded (1523ms): \"The flood warning is active. We must check sensors, assess conditions, and plan \""
+    },
+    {
+      "ts": "11:15:56.697",
+      "level": "INFO",
+      "msg": "TX Step 5: NATURAL=\"The flood warning is active. We need to check sens\" \u2192 ENCODED=\"the flood warning is active we must check sensors \" (122B \u2192 67B, 1.82:1, 79% hit)"
+    },
+    {
+      "ts": "11:15:56.701",
+      "level": "INFO",
+      "msg": "RX Step 6: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:16:08.085",
+      "level": "INFO",
+      "msg": "RX Step 6: CODEC=\"would you like me to help you rephrase t\" \u2192 LLM_DECODED=\"Would you like me to adjust this message\" (32B, 978ms, RSSI=-28, SNR=6.0)"
+    },
+    {
+      "ts": "11:16:09.465",
+      "level": "INFO",
+      "msg": "LLM generated (1379ms, 20 tokens): \"The flood warning is active. We need to check sensors and plan response. Three b\""
+    },
+    {
+      "ts": "11:16:10.973",
+      "level": "INFO",
+      "msg": "LLM encoded (1508ms): \"The flood warning is active. We must check sensors, assess conditions, and plan \""
+    },
+    {
+      "ts": "11:16:12.030",
+      "level": "INFO",
+      "msg": "TX Step 7: NATURAL=\"The flood warning is active. We need to check sens\" \u2192 ENCODED=\"the flood warning is active we must check sensors \" (116B \u2192 55B, 2.11:1, 84% hit)"
+    },
+    {
+      "ts": "11:16:12.030",
+      "level": "INFO",
+      "msg": "RX Step 8: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:16:16.583",
+      "level": "INFO",
+      "msg": "RX Step 8: CODEC=\"but you want a more natural polished ver\" \u2192 LLM_DECODED=\"The flood warning is active. We need to \" (22B, 1378ms, RSSI=-24, SNR=5.75)"
+    },
+    {
+      "ts": "11:16:17.905",
+      "level": "INFO",
+      "msg": "LLM generated (1321ms, 30 tokens): \"The flood warning is active in Lawrence Township, NJ. We need to check sensors, \""
+    },
+    {
+      "ts": "11:16:18.926",
+      "level": "INFO",
+      "msg": "LLM encoded (1022ms): \"The flood warning is active in Lawrence Township, NJ. We need to check sensors, \""
+    },
+    {
+      "ts": "11:16:19.990",
+      "level": "INFO",
+      "msg": "TX Step 9: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (150B \u2192 81B, 1.85:1, 80% hit)"
+    },
+    {
+      "ts": "11:16:19.990",
+      "level": "INFO",
+      "msg": "RX Step 10: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:16:25.092",
+      "level": "INFO",
+      "msg": "RX Step 10: CODEC=\"would you like me to also help with a mo\" \u2192 LLM_DECODED=\"Would you like me to provide a more form\" (24B, 1311ms, RSSI=-25, SNR=6.25)"
+    },
+    {
+      "ts": "11:16:27.146",
+      "level": "INFO",
+      "msg": "LLM generated (2053ms, 30 tokens): \"The flood warning is active in Lawrence Township, NJ. We need to check sensors, \""
+    },
+    {
+      "ts": "11:16:28.918",
+      "level": "INFO",
+      "msg": "LLM encoded (1771ms): \"The flood warning is active in Lawrence Township, NJ. We must check sensors, eva\""
+    },
+    {
+      "ts": "11:16:29.986",
+      "level": "INFO",
+      "msg": "TX Step 11: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (149B \u2192 82B, 1.82:1, 79% hit)"
+    },
+    {
+      "ts": "11:16:29.988",
+      "level": "INFO",
+      "msg": "RX Step 12: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:16:35.667",
+      "level": "INFO",
+      "msg": "RX Step 12: CODEC=\"translation\" \u2192 LLM_DECODED=\"The flood warning is active. We need to \" (5B, 1554ms, RSSI=-21, SNR=6.25)"
+    },
+    {
+      "ts": "11:16:37.926",
+      "level": "INFO",
+      "msg": "LLM generated (2258ms, 30 tokens): \"The flood warning is active in Lawrence Township, NJ. We need to check sensors, \""
+    },
+    {
+      "ts": "11:16:39.375",
+      "level": "INFO",
+      "msg": "LLM encoded (1446ms): \"The flood warning is active in Lawrence Township, NJ. We must check sensors, eva\""
+    },
+    {
+      "ts": "11:16:40.450",
+      "level": "INFO",
+      "msg": "TX Step 13: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (149B \u2192 82B, 1.82:1, 79% hit)"
+    },
+    {
+      "ts": "11:16:40.450",
+      "level": "INFO",
+      "msg": "RX Step 14: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:16:45.634",
+      "level": "INFO",
+      "msg": "RX Step 14: CODEC=\"78 of the network is secure keep monitor\" \u2192 LLM_DECODED=\"The flood warning is active. We need to \" (29B, 1133ms, RSSI=-8, SNR=6.75)"
+    },
+    {
+      "ts": "11:16:47.386",
+      "level": "INFO",
+      "msg": "LLM generated (1750ms, 30 tokens): \"The flood warning is active in Lawrence Township, NJ. We need to check sensors, \""
+    },
+    {
+      "ts": "11:16:49.341",
+      "level": "INFO",
+      "msg": "LLM encoded (1955ms): \"The flood warning is active in Lawrence Township, NJ. We need to check sensors, \""
+    },
+    {
+      "ts": "11:16:50.437",
+      "level": "INFO",
+      "msg": "TX Step 15: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (158B \u2192 95B, 1.66:1, 76% hit)"
+    },
+    {
+      "ts": "11:16:50.437",
+      "level": "INFO",
+      "msg": "RX Step 16: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:16:54.942",
+      "level": "INFO",
+      "msg": "RX Step 16: CODEC=\"\" \u2192 LLM_DECODED=\"The flood warning is active. We need to \" (3B, 832ms, RSSI=-7, SNR=5.75)"
+    },
+    {
+      "ts": "11:16:56.538",
+      "level": "INFO",
+      "msg": "LLM generated (1597ms, 30 tokens): \"The flood warning is active in Lawrence Township, NJ. We need to check sensors, \""
+    },
+    {
+      "ts": "11:16:58.059",
+      "level": "INFO",
+      "msg": "LLM encoded (1521ms): \"The flood warning is active in Lawrence Township, NJ. We need to check sensors, \""
+    },
+    {
+      "ts": "11:16:59.140",
+      "level": "INFO",
+      "msg": "TX Step 17: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (158B \u2192 95B, 1.66:1, 76% hit)"
+    },
+    {
+      "ts": "11:16:59.142",
+      "level": "INFO",
+      "msg": "RX Step 18: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:17:05.235",
+      "level": "INFO",
+      "msg": "RX Step 18: CODEC=\"would you like me to make this sound mor\" \u2192 LLM_DECODED=\"Would you like me to adjust the tone of \" (26B, 1294ms, RSSI=-9, SNR=5.5)"
+    },
+    {
+      "ts": "11:17:05.268",
+      "level": "INFO",
+      "msg": "LLM generated (33ms, 0 tokens): \"\""
+    },
+    {
+      "ts": "11:17:08.734",
+      "level": "INFO",
+      "msg": "LLM encoded (3466ms): \"It seems like your message might be incomplete or missing a specific point. Coul\""
+    },
+    {
+      "ts": "11:17:09.812",
+      "level": "INFO",
+      "msg": "TX Step 19: \"it seems like your message might be incomplete or missing a \" (143B \u2192 77B, 1.86:1, 1 pg, 81% hit)"
+    },
+    {
+      "ts": "11:17:09.812",
+      "level": "INFO",
+      "msg": "RX Step 20: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:17:14.841",
+      "level": "INFO",
+      "msg": "RX Step 20: CODEC=\"if you meant something else or need a di\" \u2192 LLM_DECODED=\"Understood! If you have a specific messa\" (27B, 1958ms, RSSI=-8, SNR=6.5)"
+    },
+    {
+      "ts": "11:17:14.841",
+      "level": "INFO",
+      "msg": "Run 1 complete. Pausing 5s before Run 2..."
+    },
+    {
+      "ts": "11:17:19.847",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "11:17:19.847",
+      "level": "INFO",
+      "msg": "RUN 2 OF 2: HUFFMAN CODEC (4K) \u2014 Phase 2 (LLM Codec)"
+    },
+    {
+      "ts": "11:17:19.849",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "11:17:19.963",
+      "level": "INFO",
+      "msg": "=== RUN: HUFFMAN === Codec ID: 0x01, Codebook: 4095 words, 20 messages, Pretokenizer: ON, LLM Codec: ON"
+    },
+    {
+      "ts": "11:17:21.548",
+      "level": "INFO",
+      "msg": "LLM generated (1581ms, 23 tokens): \"The flood warning is active for Lawrence Township, NJ. Check sensors and assess \""
+    },
+    {
+      "ts": "11:17:23.217",
+      "level": "INFO",
+      "msg": "LLM encoded (1668ms): \"The flood warning is active in Lawrence Township, NJ. Review sensors and evaluat\""
+    },
+    {
+      "ts": "11:17:24.287",
+      "level": "INFO",
+      "msg": "TX Step 1: NATURAL=\"The flood warning is active for Lawrence Township,\" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (148B \u2192 77B, 1.92:1, 79% hit)"
+    },
+    {
+      "ts": "11:17:24.287",
+      "level": "INFO",
+      "msg": "RX Step 2: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:17:30.852",
+      "level": "INFO",
+      "msg": "RX Step 2: CODEC=\"i will provide a concise and clear respo\" \u2192 LLM_DECODED=\"I'll keep my responses brief and clear. \" (22B, 1189ms, RSSI=-9, SNR=7.5)"
+    },
+    {
+      "ts": "11:17:32.268",
+      "level": "INFO",
+      "msg": "LLM generated (1415ms, 16 tokens): \"The flood warning is active. Coordinate with the team to assess conditions and r\""
+    },
+    {
+      "ts": "11:17:33.558",
+      "level": "INFO",
+      "msg": "LLM encoded (1291ms): \"The flood warning is active. Coordinate with the team to assess conditions and r\""
+    },
+    {
+      "ts": "11:17:34.616",
+      "level": "INFO",
+      "msg": "TX Step 3: NATURAL=\"The flood warning is active. Coordinate with the t\" \u2192 ENCODED=\"the flood warning is active coordinate with the te\" (85B \u2192 39B, 2.18:1, 86% hit)"
+    },
+    {
+      "ts": "11:17:34.616",
+      "level": "INFO",
+      "msg": "RX Step 4: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:17:39.349",
+      "level": "INFO",
+      "msg": "RX Step 4: CODEC=\"answer thank you for your message\" \u2192 LLM_DECODED=\"Thank you for your message.\" (13B, 824ms, RSSI=-8, SNR=7.5)"
+    },
+    {
+      "ts": "11:17:40.759",
+      "level": "INFO",
+      "msg": "LLM generated (1410ms, 16 tokens): \"The flood warning is active. Coordinate with the team to assess conditions and r\""
+    },
+    {
+      "ts": "11:17:42.049",
+      "level": "INFO",
+      "msg": "LLM encoded (1290ms): \"The flood warning is active. Coordinate with the team to evaluate conditions and\""
+    },
+    {
+      "ts": "11:17:43.134",
+      "level": "INFO",
+      "msg": "TX Step 5: NATURAL=\"The flood warning is active. Coordinate with the t\" \u2192 ENCODED=\"the flood warning is active coordinate with the te\" (91B \u2192 42B, 2.17:1, 87% hit)"
+    },
+    {
+      "ts": "11:17:43.136",
+      "level": "INFO",
+      "msg": "RX Step 6: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:17:48.162",
+      "level": "INFO",
+      "msg": "RX Step 6: CODEC=\"i will provide a concise and clear respo\" \u2192 LLM_DECODED=\"I'll keep my response brief and clear. L\" (22B, 1286ms, RSSI=-8, SNR=6.75)"
+    },
+    {
+      "ts": "11:17:49.720",
+      "level": "INFO",
+      "msg": "LLM generated (1558ms, 20 tokens): \"The flood warning is active in Lawrence Township, NJ. Coordinate with the team t\""
+    },
+    {
+      "ts": "11:17:51.267",
+      "level": "INFO",
+      "msg": "LLM encoded (1548ms): \"The flood warning is active in Lawrence Township, NJ. Coordinate with the team t\""
+    },
+    {
+      "ts": "11:17:52.325",
+      "level": "INFO",
+      "msg": "TX Step 7: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (100B \u2192 60B, 1.67:1, 76% hit)"
+    },
+    {
+      "ts": "11:17:52.325",
+      "level": "INFO",
+      "msg": "RX Step 8: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:17:57.615",
+      "level": "INFO",
+      "msg": "RX Step 8: CODEC=\"i will provide a concise and clear respo\" \u2192 LLM_DECODED=\"I'll keep my response brief and clear. L\" (22B, 1258ms, RSSI=-8, SNR=6.75)"
+    },
+    {
+      "ts": "11:17:58.866",
+      "level": "INFO",
+      "msg": "LLM generated (1252ms, 20 tokens): \"The flood warning is active in Lawrence Township, NJ. Coordinate with the team t\""
+    },
+    {
+      "ts": "11:17:59.741",
+      "level": "INFO",
+      "msg": "LLM encoded (873ms): \"The flood warning is active in Lawrence Township, NJ. The team should assess con\""
+    },
+    {
+      "ts": "11:18:00.805",
+      "level": "INFO",
+      "msg": "TX Step 9: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (106B \u2192 58B, 1.83:1, 76% hit)"
+    },
+    {
+      "ts": "11:18:00.805",
+      "level": "INFO",
+      "msg": "RX Step 10: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:18:05.608",
+      "level": "INFO",
+      "msg": "RX Step 10: CODEC=\"i will provide a concise and clear respo\" \u2192 LLM_DECODED=\"I'll keep my response brief and clear. L\" (22B, 1313ms, RSSI=-8, SNR=7.25)"
+    },
+    {
+      "ts": "11:18:07.364",
+      "level": "INFO",
+      "msg": "LLM generated (1757ms, 21 tokens): \"The flood warning is active in Lawrence Township, NJ. Coordinate with the team t\""
+    },
+    {
+      "ts": "11:18:08.767",
+      "level": "INFO",
+      "msg": "LLM encoded (1403ms): \"The flood warning is active in Lawrence Township, NJ. The team should assess con\""
+    },
+    {
+      "ts": "11:18:09.840",
+      "level": "INFO",
+      "msg": "TX Step 11: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (109B \u2192 50B, 2.18:1, 82% hit)"
+    },
+    {
+      "ts": "11:18:09.840",
+      "level": "INFO",
+      "msg": "RX Step 12: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:18:14.137",
+      "level": "INFO",
+      "msg": "RX Step 12: CODEC=\"i understand your request here are two s\" \u2192 LLM_DECODED=\"The flood warning is active. Coordinate \" (18B, 1255ms, RSSI=-9, SNR=7.75)"
+    },
+    {
+      "ts": "11:18:15.932",
+      "level": "INFO",
+      "msg": "LLM generated (1794ms, 21 tokens): \"The flood warning is active in Lawrence Township, NJ. Coordinate with the team t\""
+    },
+    {
+      "ts": "11:18:17.301",
+      "level": "INFO",
+      "msg": "LLM encoded (1368ms): \"The flood warning is active in Lawrence Township, NJ. The team must assess condi\""
+    },
+    {
+      "ts": "11:18:18.356",
+      "level": "INFO",
+      "msg": "TX Step 13: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (95B \u2192 49B, 1.94:1, 81% hit)"
+    },
+    {
+      "ts": "11:18:18.358",
+      "level": "INFO",
+      "msg": "RX Step 14: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:18:22.910",
+      "level": "INFO",
+      "msg": "RX Step 14: CODEC=\"you are asking for a 1 sentence response\" \u2192 LLM_DECODED=\"The flood warning is active in Lawrence \" (28B, 1400ms, RSSI=-7, SNR=8.0)"
+    },
+    {
+      "ts": "11:18:24.728",
+      "level": "INFO",
+      "msg": "LLM generated (1817ms, 21 tokens): \"The flood warning is active in Lawrence Township, NJ. Coordinate with the team t\""
+    },
+    {
+      "ts": "11:18:26.113",
+      "level": "INFO",
+      "msg": "LLM encoded (1386ms): \"The flood warning is active in Lawrence Township, NJ. The team must assess condi\""
+    },
+    {
+      "ts": "11:18:27.173",
+      "level": "INFO",
+      "msg": "TX Step 15: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (95B \u2192 49B, 1.94:1, 81% hit)"
+    },
+    {
+      "ts": "11:18:27.173",
+      "level": "INFO",
+      "msg": "RX Step 16: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:18:31.046",
+      "level": "INFO",
+      "msg": "RX Step 16: CODEC=\"answer thank you for your message\" \u2192 LLM_DECODED=\"The flood warning is active. Coordinate \" (13B, 1265ms, RSSI=-9, SNR=7.75)"
+    },
+    {
+      "ts": "11:18:32.889",
+      "level": "INFO",
+      "msg": "LLM generated (1842ms, 21 tokens): \"The flood warning is active in Lawrence Township, NJ. Coordinate with the team t\""
+    },
+    {
+      "ts": "11:18:34.365",
+      "level": "INFO",
+      "msg": "LLM encoded (1475ms): \"The flood warning is active in Lawrence Township, NJ. Coordinate with the team t\""
+    },
+    {
+      "ts": "11:18:35.425",
+      "level": "INFO",
+      "msg": "TX Step 17: NATURAL=\"The flood warning is active in Lawrence Township, \" \u2192 ENCODED=\"the flood warning is active in lawrence township n\" (98B \u2192 58B, 1.69:1, 76% hit)"
+    },
+    {
+      "ts": "11:18:35.429",
+      "level": "INFO",
+      "msg": "RX Step 18: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:18:40.321",
+      "level": "INFO",
+      "msg": "RX Step 18: CODEC=\"let me know if youd like me to tailor it\" \u2192 LLM_DECODED=\"The flood warning is active in Lawrence \" (31B, 1462ms, RSSI=-8, SNR=7.5)"
+    },
+    {
+      "ts": "11:18:40.372",
+      "level": "INFO",
+      "msg": "LLM generated (52ms, 0 tokens): \"\""
+    },
+    {
+      "ts": "11:18:43.845",
+      "level": "INFO",
+      "msg": "LLM encoded (3471ms): \"It seems like your message might be incomplete or missing a specific point. Coul\""
+    },
+    {
+      "ts": "11:18:44.906",
+      "level": "INFO",
+      "msg": "TX Step 19: \"it seems like your message might be incomplete or missing a \" (143B \u2192 74B, 1.93:1, 1 pg, 81% hit)"
+    },
+    {
+      "ts": "11:18:44.906",
+      "level": "INFO",
+      "msg": "RX Step 20: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:18:48.878",
+      "level": "INFO",
+      "msg": "RX Step 20: CODEC=\"you would respond with a concise message\" \u2192 LLM_DECODED=\"Understood. Please provide the specific \" (24B, 1303ms, RSSI=-8, SNR=7.0)"
+    },
+    {
+      "ts": "11:18:48.974",
+      "level": "INFO",
+      "msg": "Log written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-d-phase2-mux-grid-log_20260305_111848.md"
+    },
+    {
+      "ts": "11:18:48.980",
+      "level": "INFO",
+      "msg": "Log written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-d-phase2-huffman-log_20260305_111848.md"
+    },
+    {
+      "ts": "11:18:48.993",
+      "level": "INFO",
+      "msg": "Comparison written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-d-phase2-comparison_20260305_111848.md"
+    }
+  ]
+}

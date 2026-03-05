@@ -1,4 +1,4 @@
-# ─── CyberMesh Experiment D Configuration ───
+# ─── CyberMesh Experiment E Configuration ───
 # Same file on both laptops. Only change 'port' if auto-detect fails.
 
 # Serial port: "auto" scans for Meshtastic device, or set explicit (COM6, COM3, /dev/ttyUSB0)
@@ -14,10 +14,17 @@ trigger_word: "Hi"
 # Budget: LLM inference (x2 for Phase 2) + LoRa TX/ACK + margin
 timeout_s: 45
 
-# ─── Experiment D: LLM Conversation + LLM Codec ───
+# ─── LLM Backend (Lemonade Server) ───
 
-# Ollama model (must be pre-installed on both laptops)
-model: "gemma3:latest"
+# Model name — must match what Lemonade Server reports in /api/v1/models.
+# Hot-swap: change this value and restart the experiment. No code changes needed.
+# Both laptops use the same alias so backends/download names don't matter.
+model_name: "test01"
+
+# LLM server base URL (no trailing slash).
+# Lemonade Server default: http://localhost:8000
+# Ollama fallback:         http://localhost:11434
+llm_base_url: "http://localhost:8000"
 
 # Messages per node (total conversation = 2x this number)
 messages_per_node: 10
@@ -37,16 +44,16 @@ conversation_seed: |
   - Use simple, common English words.
   - Be direct and specific. Include numbers when reporting data.
 
-# ─── Experiment D Phase Control ───
+# ─── Experiment E Phase Control ───
 
 # Phase 1 (pretokenizer only): normalize text before encoding
-# Always enabled for Experiment D
+# Always enabled for Experiment E
 pretokenizer: true
 
 # Phase 2 (LLM codec): LLM rewrites output to codebook vocabulary before encoding
-# false = Experiment D Phase 1 only (pretokenizer + raw codec)
-# true  = Experiment D Phase 2 (pretokenizer + LLM encode/decode + codec)
-llm_codec: true
+# false = Phase 1 only (pretokenizer + raw codec)
+# true  = Phase 2 (pretokenizer + LLM encode/decode + codec)
+llm_codec: false
 
 # Fallback threshold: if LLM encode hit rate < this, skip encode and use raw text
 # Only applies when llm_codec: true

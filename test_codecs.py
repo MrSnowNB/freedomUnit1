@@ -6,7 +6,7 @@ Validates:
   1-5: Original codec tests (Experiment B)
   6:   Pre-tokenizer normalize() function
   7:   Pre-tokenizer + codec roundtrip (normalized text through both codecs)
-  8:   LLM codec module loads (no Ollama required)
+  8:   LLM codec module loads (no Lemonade Server required)
 
 Run before any live transmission: python test_codecs.py
 Halt if any test fails.
@@ -331,7 +331,7 @@ def test_pretokenizer_codec_roundtrip():
 
 
 def test_llm_codec_module():
-    """Test that llm_codec.py loads and codebook is accessible (no Ollama needed)."""
+    """Test that llm_codec.py loads and codebook is accessible (no Lemonade Server needed)."""
     print("=" * 70)
     print("  TEST 8: LLM Codec Module — Load + Codebook Access")
     print("=" * 70)

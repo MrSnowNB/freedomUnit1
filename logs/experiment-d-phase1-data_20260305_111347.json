@@ -1,0 +1,1761 @@
+{
+  "experiment": "D",
+  "phase": "phase1",
+  "timestamp": "2026-03-05T16:13:47.990109+00:00",
+  "node": "!0408a160",
+  "peer": "!07c01855",
+  "role": "B",
+  "model": "test01",
+  "pretokenizer": true,
+  "llm_codec": false,
+  "fallback_threshold": 0.7,
+  "runs": {
+    "mux_grid": [
+      {
+        "step": 1,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj two sensors are operational one is not responding we need to investigate",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 124,
+        "comp_bytes": 92,
+        "ratio": 1.3478260869565217,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1565.377950668335,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 25,
+        "pages": 1,
+        "hit_pct": 71.42857142857143,
+        "esc_count": 6,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "2 sensors are working one is offline im checking the status now sensor a is 85 functional sensor b is 60 ill need backup power for b soon we should contact the main office for support",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 70,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -27,
+        "snr": 5.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors are operational one is offline and may need backup power we should contact the main office for support",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 142,
+        "comp_bytes": 55,
+        "ratio": 2.581818181818182,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1763.3514404296875,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 28,
+        "pages": 1,
+        "hit_pct": 92.0,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "911 dispatch is on standby ill send a status report to the control center please keep an eye on the situation",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 47,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -27,
+        "snr": 5.25,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors are operational one is offline and may need backup power well contact the main office for support",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 137,
+        "comp_bytes": 55,
+        "ratio": 2.4909090909090907,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1918.2074069976807,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 28,
+        "pages": 1,
+        "hit_pct": 91.66666666666666,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "911 is ready ill relay updates every 5 minutes stay alert for new sensor readings",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 50,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -27,
+        "snr": 6.25,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors are operational one is offline and may need backup power well keep monitoring and contact the main office for updates",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 157,
+        "comp_bytes": 59,
+        "ratio": 2.6610169491525424,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1956.3157558441162,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 31,
+        "pages": 1,
+        "hit_pct": 92.5925925925926,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "100 monitoring progress youll notify me if conditions change thank you for your cooperation",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 30,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -27,
+        "snr": 6.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors are operational one is offline and may need backup power well keep monitoring and contact the main office for updates",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 157,
+        "comp_bytes": 59,
+        "ratio": 2.6610169491525424,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2014.9016380310059,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 31,
+        "pages": 1,
+        "hit_pct": 92.5925925925926,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "911 will continue tracking this situation stay safe",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 20,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -29,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors are operational one is offline and may need backup power well keep monitoring and contact the main office for updates",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 157,
+        "comp_bytes": 59,
+        "ratio": 2.6610169491525424,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2126.758337020874,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 31,
+        "pages": 1,
+        "hit_pct": 92.5925925925926,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "911 is active ill be in touch thank you for your attention",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 27,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -28,
+        "snr": 7.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active two sensors are operational one is offline and may need backup power well keep monitoring and contact the main office for updates",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 157,
+        "comp_bytes": 59,
+        "ratio": 2.6610169491525424,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 2154.3478965759277,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 31,
+        "pages": 1,
+        "hit_pct": 92.5925925925926,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "911 remains on standby ill provide updates as they become available stay safe",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 39,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -28,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "direction": "B\u2192A",
+        "original": "",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 0,
+        "comp_bytes": 3,
+        "ratio": 0.0,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 51.2845516204834,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 0,
+        "pages": 1,
+        "hit_pct": 100,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "911 has been notified we will assist further if needed",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 30,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -36,
+        "snr": 6.25,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "direction": "B\u2192A",
+        "original": "were monitoring the situation and will keep you updated",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 55,
+        "comp_bytes": 15,
+        "ratio": 3.6666666666666665,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 828.9937973022461,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 10,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "911 is monitoring thank you for your patience",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 27,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -37,
+        "snr": 6.25,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "direction": "B\u2192A",
+        "original": "were handling the flood warning and will keep you informed",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 58,
+        "comp_bytes": 17,
+        "ratio": 3.411764705882353,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 876.9986629486084,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 11,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "911 is on standby and ready for further updates stay safe",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 31,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -39,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      }
+    ],
+    "huffman": [
+      {
+        "step": 1,
+        "direction": "B\u2192A",
+        "original": "the flood warning is active in lawrence township nj two sensors are working one is offline and needs backup power well contact the main office for support",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 154,
+        "comp_bytes": 64,
+        "ratio": 2.40625,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1690.953254699707,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 32,
+        "pages": 1,
+        "hit_pct": 88.88888888888889,
+        "esc_count": 3,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "2 sensors are working and im trying to connect to the backup router to get more coverage lets check status now",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 47,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -42,
+        "snr": 7.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "direction": "B\u2192A",
+        "original": "were checking sensor status and will coordinate backup power lets stay connected",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 80,
+        "comp_bytes": 38,
+        "ratio": 2.1052631578947367,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1308.4392547607422,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 15,
+        "pages": 1,
+        "hit_pct": 83.33333333333334,
+        "esc_count": 2,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "30 seconds left before backup power activates we should move to the nearest safe zone",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 44,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -31,
+        "snr": 7.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "direction": "B\u2192A",
+        "original": "well keep monitoring and prepare for backup power activation",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 60,
+        "comp_bytes": 28,
+        "ratio": 2.142857142857143,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1079.7040462493896,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 10,
+        "pages": 1,
+        "hit_pct": 88.88888888888889,
+        "esc_count": 1,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "10 minutes until the system recovers fully ill update you then stay safe",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 37,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -33,
+        "snr": 5.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "direction": "B\u2192A",
+        "original": "were monitoring the situation and will keep you updated",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 55,
+        "comp_bytes": 17,
+        "ratio": 3.235294117647059,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1218.1236743927002,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 10,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 5,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -26,
+        "snr": 7.25,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "direction": "B\u2192A",
+        "original": "were handling the flood warning and will keep you informed",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 58,
+        "comp_bytes": 19,
+        "ratio": 3.0526315789473686,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1253.8321018218994,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 11,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "5 more minutes remaining",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 13,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -26,
+        "snr": 6.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "direction": "B\u2192A",
+        "original": "were keeping an eye on the situation and will update you soon",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 61,
+        "comp_bytes": 21,
+        "ratio": 2.9047619047619047,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1332.7133655548096,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 13,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "15 minutes left ill confirm the backup is ready",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 23,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -26,
+        "snr": 6.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "direction": "B\u2192A",
+        "original": "were keeping an eye on the situation and will update you soon",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 61,
+        "comp_bytes": 21,
+        "ratio": 2.9047619047619047,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1461.5943431854248,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 13,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "30 minutes from now the system should be fully operational",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 31,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -26,
+        "snr": 6.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "direction": "B\u2192A",
+        "original": "were monitoring the situation and will keep you updated",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 55,
+        "comp_bytes": 17,
+        "ratio": 3.235294117647059,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1243.0341243743896,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 10,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 5,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -26,
+        "snr": 6.5,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "direction": "B\u2192A",
+        "original": "were keeping an eye on the situation and will update you soon",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 61,
+        "comp_bytes": 21,
+        "ratio": 2.9047619047619047,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1531.0661792755127,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 13,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "10 minutes left ill check again",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 19,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -25,
+        "snr": 6.75,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "direction": "B\u2192A",
+        "original": "were keeping an eye on the situation and will update you soon",
+        "natural": null,
+        "encoded": null,
+        "decoded_by_llm": null,
+        "raw_bytes": 61,
+        "comp_bytes": 21,
+        "ratio": 2.9047619047619047,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "gen_ms": 1384.0632438659668,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": 13,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "direction": "A\u2192B",
+        "original": null,
+        "natural": null,
+        "encoded": "5 minutes from now ill send a status report",
+        "decoded_by_llm": null,
+        "raw_bytes": null,
+        "comp_bytes": 23,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -37,
+        "snr": 6.0,
+        "gen_ms": null,
+        "enc_ms": null,
+        "dec_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "fallback": false
+      }
+    ]
+  },
+  "transcripts": {
+    "mux_grid": [
+      {
+        "step": 1,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Two sensors are operational, one is not responding. We need to investigate.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "2 sensors are working one is offline im checking the status now sensor a is 85 functional sensor b is 60 ill need backup power for b soon we should contact the main office for support",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors are operational; one is offline and may need backup power. We should contact the main office for support.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "911 dispatch is on standby ill send a status report to the control center please keep an eye on the situation",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors are operational; one is offline and may need backup power. We\u2019ll contact the main office for support.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "911 is ready ill relay updates every 5 minutes stay alert for new sensor readings",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors are operational; one is offline and may need backup power. We\u2019ll keep monitoring and contact the main office for updates.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "100 monitoring progress youll notify me if conditions change thank you for your cooperation",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors are operational; one is offline and may need backup power. We\u2019ll keep monitoring and contact the main office for updates.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "911 will continue tracking this situation stay safe",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors are operational; one is offline and may need backup power. We\u2019ll keep monitoring and contact the main office for updates.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "911 is active ill be in touch thank you for your attention",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "sender": "Role B",
+        "natural": "The flood warning is active. Two sensors are operational; one is offline and may need backup power. We\u2019ll keep monitoring and contact the main office for updates.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "911 remains on standby ill provide updates as they become available stay safe",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "sender": "Role B",
+        "natural": "",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "911 has been notified we will assist further if needed",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "sender": "Role B",
+        "natural": "We\u2019re monitoring the situation and will keep you updated.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "911 is monitoring thank you for your patience",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "sender": "Role B",
+        "natural": "We\u2019re handling the flood warning and will keep you informed.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "911 is on standby and ready for further updates stay safe",
+        "decoded": null,
+        "fallback": false
+      }
+    ],
+    "huffman": [
+      {
+        "step": 1,
+        "sender": "Role B",
+        "natural": "The flood warning is active in Lawrence Township, NJ. Two sensors are working, one is offline and needs backup power. We\u2019ll contact the main office for support.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 2,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "2 sensors are working and im trying to connect to the backup router to get more coverage lets check status now",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 3,
+        "sender": "Role B",
+        "natural": "We\u2019re checking sensor status and will coordinate backup power. Let\u2019s stay connected.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 4,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "30 seconds left before backup power activates we should move to the nearest safe zone",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 5,
+        "sender": "Role B",
+        "natural": "We\u2019ll keep monitoring and prepare for backup power activation.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 6,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "10 minutes until the system recovers fully ill update you then stay safe",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 7,
+        "sender": "Role B",
+        "natural": "We\u2019re monitoring the situation and will keep you updated.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 8,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 9,
+        "sender": "Role B",
+        "natural": "We\u2019re handling the flood warning and will keep you informed.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 10,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "5 more minutes remaining",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 11,
+        "sender": "Role B",
+        "natural": "We\u2019re keeping an eye on the situation and will update you soon.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 12,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "15 minutes left ill confirm the backup is ready",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 13,
+        "sender": "Role B",
+        "natural": "We\u2019re keeping an eye on the situation and will update you soon.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 14,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "30 minutes from now the system should be fully operational",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 15,
+        "sender": "Role B",
+        "natural": "We\u2019re monitoring the situation and will keep you updated.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 16,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 17,
+        "sender": "Role B",
+        "natural": "We\u2019re keeping an eye on the situation and will update you soon.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 18,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "10 minutes left ill check again",
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 19,
+        "sender": "Role B",
+        "natural": "We\u2019re keeping an eye on the situation and will update you soon.",
+        "encoded": null,
+        "decoded": null,
+        "fallback": false
+      },
+      {
+        "step": 20,
+        "sender": "Role A",
+        "natural": null,
+        "encoded": "5 minutes from now ill send a status report",
+        "decoded": null,
+        "fallback": false
+      }
+    ]
+  },
+  "log_entries": [
+    {
+      "ts": "11:11:12.210",
+      "level": "INFO",
+      "msg": "Node: Liberty-Node-02  (!0408a160)"
+    },
+    {
+      "ts": "11:11:12.210",
+      "level": "INFO",
+      "msg": "Waiting for 'Hi' trigger DM..."
+    },
+    {
+      "ts": "11:11:12.210",
+      "level": "INFO",
+      "msg": "Warming up model 'test01' on http://localhost:8000..."
+    },
+    {
+      "ts": "11:11:13.016",
+      "level": "INFO",
+      "msg": "Model 'test01' loaded in 0.8s"
+    },
+    {
+      "ts": "11:11:13.016",
+      "level": "INFO",
+      "msg": "Waiting for trigger..."
+    },
+    {
+      "ts": "11:11:26.308",
+      "level": "INFO",
+      "msg": "TRIGGER received from !07c01855: \"Hi\""
+    },
+    {
+      "ts": "11:11:26.690",
+      "level": "INFO",
+      "msg": "Role assigned: B  |  Peer: !07c01855"
+    },
+    {
+      "ts": "11:11:26.690",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "11:11:26.690",
+      "level": "INFO",
+      "msg": "RUN 1 OF 2: MUX GRID CODEC \u2014 Phase 1 (Pre-Tokenizer)"
+    },
+    {
+      "ts": "11:11:26.690",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "11:11:26.764",
+      "level": "INFO",
+      "msg": "=== RUN: MUX_GRID === Codec ID: 0x02, Codebook: 4095 words, 20 messages, Pretokenizer: ON, LLM Codec: OFF"
+    },
+    {
+      "ts": "11:11:28.330",
+      "level": "INFO",
+      "msg": "LLM generated (1565ms, 25 tokens): \"The flood warning is active in Lawrence Township, NJ. Two sensors are operationa\""
+    },
+    {
+      "ts": "11:11:29.387",
+      "level": "INFO",
+      "msg": "TX Step 1: \"the flood warning is active in lawrence township nj two sens\" (124B \u2192 92B, 1.35:1, 1 pg, 71% hit)"
+    },
+    {
+      "ts": "11:11:29.387",
+      "level": "INFO",
+      "msg": "RX Step 2: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:11:33.851",
+      "level": "INFO",
+      "msg": "RX Step 2: \"2 sensors are working one is offline im checking the status \" (70B, RSSI=-27, SNR=5.5)"
+    },
+    {
+      "ts": "11:11:35.615",
+      "level": "INFO",
+      "msg": "LLM generated (1763ms, 28 tokens): \"The flood warning is active. Two sensors are operational; one is offline and may\""
+    },
+    {
+      "ts": "11:11:36.682",
+      "level": "INFO",
+      "msg": "TX Step 3: \"the flood warning is active two sensors are operational one \" (142B \u2192 55B, 2.58:1, 1 pg, 92% hit)"
+    },
+    {
+      "ts": "11:11:36.682",
+      "level": "INFO",
+      "msg": "RX Step 4: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:11:40.247",
+      "level": "INFO",
+      "msg": "RX Step 4: \"911 dispatch is on standby ill send a status report to the c\" (47B, RSSI=-27, SNR=5.25)"
+    },
+    {
+      "ts": "11:11:42.166",
+      "level": "INFO",
+      "msg": "LLM generated (1918ms, 28 tokens): \"The flood warning is active. Two sensors are operational; one is offline and may\""
+    },
+    {
+      "ts": "11:11:43.224",
+      "level": "INFO",
+      "msg": "TX Step 5: \"the flood warning is active two sensors are operational one \" (137B \u2192 55B, 2.49:1, 1 pg, 92% hit)"
+    },
+    {
+      "ts": "11:11:43.224",
+      "level": "INFO",
+      "msg": "RX Step 6: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:11:46.780",
+      "level": "INFO",
+      "msg": "RX Step 6: \"911 is ready ill relay updates every 5 minutes stay alert fo\" (50B, RSSI=-27, SNR=6.25)"
+    },
+    {
+      "ts": "11:11:48.736",
+      "level": "INFO",
+      "msg": "LLM generated (1956ms, 31 tokens): \"The flood warning is active. Two sensors are operational; one is offline and may\""
+    },
+    {
+      "ts": "11:11:49.795",
+      "level": "INFO",
+      "msg": "TX Step 7: \"the flood warning is active two sensors are operational one \" (157B \u2192 59B, 2.66:1, 1 pg, 93% hit)"
+    },
+    {
+      "ts": "11:11:49.795",
+      "level": "INFO",
+      "msg": "RX Step 8: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:11:52.559",
+      "level": "INFO",
+      "msg": "RX Step 8: \"100 monitoring progress youll notify me if conditions change\" (30B, RSSI=-27, SNR=6.0)"
+    },
+    {
+      "ts": "11:11:54.574",
+      "level": "INFO",
+      "msg": "LLM generated (2015ms, 31 tokens): \"The flood warning is active. Two sensors are operational; one is offline and may\""
+    },
+    {
+      "ts": "11:11:55.644",
+      "level": "INFO",
+      "msg": "TX Step 9: \"the flood warning is active two sensors are operational one \" (157B \u2192 59B, 2.66:1, 1 pg, 93% hit)"
+    },
+    {
+      "ts": "11:11:55.644",
+      "level": "INFO",
+      "msg": "RX Step 10: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:11:58.568",
+      "level": "INFO",
+      "msg": "RX Step 10: \"911 will continue tracking this situation stay safe\" (20B, RSSI=-29, SNR=6.75)"
+    },
+    {
+      "ts": "11:12:00.695",
+      "level": "INFO",
+      "msg": "LLM generated (2127ms, 31 tokens): \"The flood warning is active. Two sensors are operational; one is offline and may\""
+    },
+    {
+      "ts": "11:12:01.755",
+      "level": "INFO",
+      "msg": "TX Step 11: \"the flood warning is active two sensors are operational one \" (157B \u2192 59B, 2.66:1, 1 pg, 93% hit)"
+    },
+    {
+      "ts": "11:12:01.755",
+      "level": "INFO",
+      "msg": "RX Step 12: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:12:04.522",
+      "level": "INFO",
+      "msg": "RX Step 12: \"911 is active ill be in touch thank you for your attention\" (27B, RSSI=-28, SNR=7.0)"
+    },
+    {
+      "ts": "11:12:06.676",
+      "level": "INFO",
+      "msg": "LLM generated (2154ms, 31 tokens): \"The flood warning is active. Two sensors are operational; one is offline and may\""
+    },
+    {
+      "ts": "11:12:07.744",
+      "level": "INFO",
+      "msg": "TX Step 13: \"the flood warning is active two sensors are operational one \" (157B \u2192 59B, 2.66:1, 1 pg, 93% hit)"
+    },
+    {
+      "ts": "11:12:07.744",
+      "level": "INFO",
+      "msg": "RX Step 14: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:12:11.146",
+      "level": "INFO",
+      "msg": "RX Step 14: \"911 remains on standby ill provide updates as they become av\" (39B, RSSI=-28, SNR=6.75)"
+    },
+    {
+      "ts": "11:12:11.197",
+      "level": "INFO",
+      "msg": "LLM generated (51ms, 0 tokens): \"\""
+    },
+    {
+      "ts": "11:12:12.263",
+      "level": "INFO",
+      "msg": "TX Step 15: \"\" (0B \u2192 3B, 0.00:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:12:12.263",
+      "level": "INFO",
+      "msg": "RX Step 16: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:12:18.763",
+      "level": "INFO",
+      "msg": "RX Step 16: \"911 has been notified we will assist further if needed\" (30B, RSSI=-36, SNR=6.25)"
+    },
+    {
+      "ts": "11:12:19.593",
+      "level": "INFO",
+      "msg": "LLM generated (829ms, 10 tokens): \"We\u2019re monitoring the situation and will keep you updated.\""
+    },
+    {
+      "ts": "11:12:20.657",
+      "level": "INFO",
+      "msg": "TX Step 17: \"were monitoring the situation and will keep you updated\" (55B \u2192 15B, 3.67:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:12:20.657",
+      "level": "INFO",
+      "msg": "RX Step 18: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:12:25.253",
+      "level": "INFO",
+      "msg": "RX Step 18: \"911 is monitoring thank you for your patience\" (27B, RSSI=-37, SNR=6.25)"
+    },
+    {
+      "ts": "11:12:26.131",
+      "level": "INFO",
+      "msg": "LLM generated (877ms, 11 tokens): \"We\u2019re handling the flood warning and will keep you informed.\""
+    },
+    {
+      "ts": "11:12:27.196",
+      "level": "INFO",
+      "msg": "TX Step 19: \"were handling the flood warning and will keep you informed\" (58B \u2192 17B, 3.41:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:12:27.196",
+      "level": "INFO",
+      "msg": "RX Step 20: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:12:32.212",
+      "level": "INFO",
+      "msg": "RX Step 20: \"911 is on standby and ready for further updates stay safe\" (31B, RSSI=-39, SNR=6.75)"
+    },
+    {
+      "ts": "11:12:32.212",
+      "level": "INFO",
+      "msg": "Run 1 complete. Pausing 5s before Run 2..."
+    },
+    {
+      "ts": "11:12:37.220",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "11:12:37.221",
+      "level": "INFO",
+      "msg": "RUN 2 OF 2: HUFFMAN CODEC (4K) \u2014 Phase 1 (Pre-Tokenizer)"
+    },
+    {
+      "ts": "11:12:37.222",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "11:12:37.339",
+      "level": "INFO",
+      "msg": "=== RUN: HUFFMAN === Codec ID: 0x01, Codebook: 4095 words, 20 messages, Pretokenizer: ON, LLM Codec: OFF"
+    },
+    {
+      "ts": "11:12:39.034",
+      "level": "INFO",
+      "msg": "LLM generated (1691ms, 32 tokens): \"The flood warning is active in Lawrence Township, NJ. Two sensors are working, o\""
+    },
+    {
+      "ts": "11:12:40.088",
+      "level": "INFO",
+      "msg": "TX Step 1: \"the flood warning is active in lawrence township nj two sens\" (154B \u2192 64B, 2.41:1, 1 pg, 89% hit)"
+    },
+    {
+      "ts": "11:12:40.090",
+      "level": "INFO",
+      "msg": "RX Step 2: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:12:44.783",
+      "level": "INFO",
+      "msg": "RX Step 2: \"2 sensors are working and im trying to connect to the backup\" (47B, RSSI=-42, SNR=7.0)"
+    },
+    {
+      "ts": "11:12:46.091",
+      "level": "INFO",
+      "msg": "LLM generated (1308ms, 15 tokens): \"We\u2019re checking sensor status and will coordinate backup power. Let\u2019s stay connec\""
+    },
+    {
+      "ts": "11:12:47.155",
+      "level": "INFO",
+      "msg": "TX Step 3: \"were checking sensor status and will coordinate backup power\" (80B \u2192 38B, 2.11:1, 1 pg, 83% hit)"
+    },
+    {
+      "ts": "11:12:47.155",
+      "level": "INFO",
+      "msg": "RX Step 4: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:12:59.761",
+      "level": "INFO",
+      "msg": "RX Step 4: \"30 seconds left before backup power activates we should move\" (44B, RSSI=-31, SNR=7.0)"
+    },
+    {
+      "ts": "11:13:00.841",
+      "level": "INFO",
+      "msg": "LLM generated (1080ms, 10 tokens): \"We\u2019ll keep monitoring and prepare for backup power activation.\""
+    },
+    {
+      "ts": "11:13:01.910",
+      "level": "INFO",
+      "msg": "TX Step 5: \"well keep monitoring and prepare for backup power activation\" (60B \u2192 28B, 2.14:1, 1 pg, 89% hit)"
+    },
+    {
+      "ts": "11:13:01.911",
+      "level": "INFO",
+      "msg": "RX Step 6: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:13:05.442",
+      "level": "INFO",
+      "msg": "RX Step 6: \"10 minutes until the system recovers fully ill update you th\" (37B, RSSI=-33, SNR=5.75)"
+    },
+    {
+      "ts": "11:13:06.660",
+      "level": "INFO",
+      "msg": "LLM generated (1218ms, 10 tokens): \"We\u2019re monitoring the situation and will keep you updated.\""
+    },
+    {
+      "ts": "11:13:07.721",
+      "level": "INFO",
+      "msg": "TX Step 7: \"were monitoring the situation and will keep you updated\" (55B \u2192 17B, 3.24:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:13:07.722",
+      "level": "INFO",
+      "msg": "RX Step 8: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:13:11.463",
+      "level": "INFO",
+      "msg": "RX Step 8: \"\" (5B, RSSI=-26, SNR=7.25)"
+    },
+    {
+      "ts": "11:13:12.720",
+      "level": "INFO",
+      "msg": "LLM generated (1254ms, 11 tokens): \"We\u2019re handling the flood warning and will keep you informed.\""
+    },
+    {
+      "ts": "11:13:13.788",
+      "level": "INFO",
+      "msg": "TX Step 9: \"were handling the flood warning and will keep you informed\" (58B \u2192 19B, 3.05:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:13:13.788",
+      "level": "INFO",
+      "msg": "RX Step 10: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:13:17.038",
+      "level": "INFO",
+      "msg": "RX Step 10: \"5 more minutes remaining\" (13B, RSSI=-26, SNR=6.5)"
+    },
+    {
+      "ts": "11:13:18.374",
+      "level": "INFO",
+      "msg": "LLM generated (1333ms, 13 tokens): \"We\u2019re keeping an eye on the situation and will update you soon.\""
+    },
+    {
+      "ts": "11:13:19.439",
+      "level": "INFO",
+      "msg": "TX Step 11: \"were keeping an eye on the situation and will update you soo\" (61B \u2192 21B, 2.90:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:13:19.439",
+      "level": "INFO",
+      "msg": "RX Step 12: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:13:22.368",
+      "level": "INFO",
+      "msg": "RX Step 12: \"15 minutes left ill confirm the backup is ready\" (23B, RSSI=-26, SNR=6.5)"
+    },
+    {
+      "ts": "11:13:23.831",
+      "level": "INFO",
+      "msg": "LLM generated (1462ms, 13 tokens): \"We\u2019re keeping an eye on the situation and will update you soon.\""
+    },
+    {
+      "ts": "11:13:24.902",
+      "level": "INFO",
+      "msg": "TX Step 13: \"were keeping an eye on the situation and will update you soo\" (61B \u2192 21B, 2.90:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:13:24.902",
+      "level": "INFO",
+      "msg": "RX Step 14: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:13:29.675",
+      "level": "INFO",
+      "msg": "RX Step 14: \"30 minutes from now the system should be fully operational\" (31B, RSSI=-26, SNR=6.5)"
+    },
+    {
+      "ts": "11:13:30.919",
+      "level": "INFO",
+      "msg": "LLM generated (1243ms, 10 tokens): \"We\u2019re monitoring the situation and will keep you updated.\""
+    },
+    {
+      "ts": "11:13:31.991",
+      "level": "INFO",
+      "msg": "TX Step 15: \"were monitoring the situation and will keep you updated\" (55B \u2192 17B, 3.24:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:13:31.992",
+      "level": "INFO",
+      "msg": "RX Step 16: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:13:35.619",
+      "level": "INFO",
+      "msg": "RX Step 16: \"\" (5B, RSSI=-26, SNR=6.5)"
+    },
+    {
+      "ts": "11:13:37.151",
+      "level": "INFO",
+      "msg": "LLM generated (1531ms, 13 tokens): \"We\u2019re keeping an eye on the situation and will update you soon.\""
+    },
+    {
+      "ts": "11:13:38.216",
+      "level": "INFO",
+      "msg": "TX Step 17: \"were keeping an eye on the situation and will update you soo\" (61B \u2192 21B, 2.90:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:13:38.221",
+      "level": "INFO",
+      "msg": "RX Step 18: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:13:41.484",
+      "level": "INFO",
+      "msg": "RX Step 18: \"10 minutes left ill check again\" (19B, RSSI=-25, SNR=6.75)"
+    },
+    {
+      "ts": "11:13:42.868",
+      "level": "INFO",
+      "msg": "LLM generated (1384ms, 13 tokens): \"We\u2019re keeping an eye on the situation and will update you soon.\""
+    },
+    {
+      "ts": "11:13:43.940",
+      "level": "INFO",
+      "msg": "TX Step 19: \"were keeping an eye on the situation and will update you soo\" (61B \u2192 21B, 2.90:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "11:13:43.942",
+      "level": "INFO",
+      "msg": "RX Step 20: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "11:13:47.938",
+      "level": "INFO",
+      "msg": "RX Step 20: \"5 minutes from now ill send a status report\" (23B, RSSI=-37, SNR=6.0)"
+    },
+    {
+      "ts": "11:13:47.964",
+      "level": "INFO",
+      "msg": "Log written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-d-phase1-mux-grid-log_20260305_111347.md"
+    },
+    {
+      "ts": "11:13:47.979",
+      "level": "INFO",
+      "msg": "Log written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-d-phase1-huffman-log_20260305_111347.md"
+    },
+    {
+      "ts": "11:13:47.986",
+      "level": "INFO",
+      "msg": "Comparison written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-d-phase1-comparison_20260305_111347.md"
+    }
+  ]
+}

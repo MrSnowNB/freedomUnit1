@@ -1,0 +1,93 @@
+# ─── CyberMesh Experiment F Configuration ───
+# Codec Harness — encode/decode validation against Lemonade Server
+# Architect-approved 2026-03-05. Do not modify without review.
+
+experiment: "F"
+version: "1.0"
+description: "Codec harness validation — SOUL.md prompts + deterministic hooks"
+
+# ─── Lemonade Server Backend ───
+
+# Model alias — must match Lemonade Server /api/v1/models output.
+# Same alias on both laptops (different backends, same model identity).
+model_name: "test01"
+
+# LLM server base URL (no trailing slash).
+# Lemonade Server default: http://localhost:8000
+llm_base_url: "http://localhost:8000"
+
+# API endpoint — Lemonade exposes Ollama-compatible /api/generate
+api_endpoint: "/api/generate"
+
+# ─── Sampling Parameters (Liquid AI recommended for LFM2.5-1.2B-Instruct) ───
+
+sampling:
+  temperature: 0.1          # Near-deterministic for codec tasks
+  top_k: 50                 # Focused token selection
+  repetition_penalty: 1.05  # Prevent n-gram loops
+  max_tokens: 80            # Hard cap — prevents noise appendages
+
+# ─── Context Budget (architect-specified, ~1,800 / 4,096 tokens) ───
+
+token_budget:
+  system_prompt: 300        # soul file (~300 tokens)
+  few_shot_examples: 400    # 2-3 input→output pairs
+  codebook_subset: 800      # ~200 frequency-ranked entries
+  user_message: 200         # input text
+  generation_headroom: 80   # max_tokens for output
+  total_budget: 1800        # sum — leaves ~2,200 margin in 4K context
+
+# ─── Codebook Configuration ───
+
+codebook:
+  path: "../mux_codebook.csv"       # relative to experiment_f/
+  subset_size: 200                   # top N frequency-ranked entries per call
+  injection_mode: "static"           # static frequency-ranked selection
+
+# ─── Soul Prompts ───
+
+souls:
+  encode: "encode.soul.md"
+  decode: "decode.soul.md"
+
+# ─── Post-Process Hooks ───
+
+hooks:
+  encode:
+    - "strip_encode_framing"         # Issue #2 fix
+    - "validate_codebook"            # token membership check
+    - "detect_meta_loop"             # Issue #1 detection
+  decode:
+    - "strip_decode_noise"           # Issue #3 fix
+    - "detect_meta_loop"             # Issue #1 detection
+
+# ─── Test Configuration ───
+
+test:
+  suite_file: "test_suite.yaml"
+  stress_count_per_node: 40          # 40 per node, 80 total
+  encode_count: 20                   # 20 encode test cases
+  decode_count: 20                   # 20 decode test cases
+
+# ─── Assistant Prefill (Liquid AI technique) ───
+# Start empty — iterate based on results per architect decision.
+
+assistant_prefill:
+  encode: ""                         # test empty first
+  decode: ""                         # test empty first
+
+# ─── Logging ───
+
+logging:
+  human_log: "harness.log"           # human-readable run log
+  machine_log: "harness_data.jsonl"  # machine-readable per-call data
+  report: "test_report.md"           # auto-generated summary
+  log_level: "DEBUG"                 # capture everything
+
+# ─── Fallback ───
+
+fallback_threshold: 0.70             # skip encode if hit rate < 70%
+
+# ─── HTTP ───
+
+http_timeout: 30                     # seconds per API call

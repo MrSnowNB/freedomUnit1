@@ -2,17 +2,17 @@
 """
 llm_codec.py — LLM-based encode/decode for CyberMesh codec pipeline
 =====================================================================
-Phase 2 of Experiment D: Uses the LLM as an active encoder and decoder.
+Phase 2 of Experiment E: Uses the LLM as an active encoder and decoder.
 
 Sender pipeline:
-  1. LLM generates natural response (Call 1 — same as Experiment C)
-  2. LLM ENCODES: rewrites using only codebook words (Call 2 — NEW)
+  1. LLM generates natural response (Call 1)
+  2. LLM ENCODES: rewrites using only codebook words (Call 2)
   3. Pre-tokenizer normalizes
   4. Codec encodes (MUX Grid or Huffman) — most/all words are codebook hits
 
 Receiver pipeline:
   1. Codec decodes
-  2. LLM DECODES: expands compressed text to natural English (Call 3 — NEW)
+  2. LLM DECODES: expands compressed text to natural English (Call 3)
   3. Natural text enters conversation history
 
 The encode prompt provides the top ~500 most common codebook words as
@@ -21,6 +21,9 @@ anything not shown.
 
 The decode prompt receives ONLY the codebook-constrained text — it never
 sees the original natural text.
+
+Backend: Lemonade Server (Ollama-compatible /api/generate endpoint).
+The base URL is passed per-call so it stays in sync with config.yaml.
 
 Author: Mark Snow, Jr. — Mindtech / CyberMesh / Liberty Mesh
 Date:   March 2026
@@ -32,7 +35,8 @@ import time
 import requests
 from typing import Optional
 
-OLLAMA_URL = "http://localhost:11434"
+# Default base URL — overridden per-call from huffman_mesh_poc.py config.
+DEFAULT_LLM_URL = "http://localhost:8000"
 
 
 def _load_codebook_words(codebook_csv_path: Optional[str] = None) -> list[str]:
@@ -110,8 +114,9 @@ def get_codebook_words(codebook_csv_path: Optional[str] = None) -> set:
 
 def llm_encode(
     natural_text: str,
-    model: str = "gemma3:latest",
-    codebook_csv_path: Optional[str] = None,
+    model: str = "test01",
+    base_url: str | None = None,
+    codebook_csv_path: str | None = None,
     timeout: int = 60,
 ) -> tuple[str, float]:
     """
@@ -119,7 +124,8 @@ def llm_encode(
 
     Args:
         natural_text: The natural language message to compress.
-        model: Ollama model name.
+        model: LLM model name (matches Lemonade Server model ID).
+        base_url: LLM server base URL. Defaults to DEFAULT_LLM_URL.
         codebook_csv_path: Path to mux_codebook.csv (optional).
         timeout: HTTP timeout in seconds.
 
@@ -127,11 +133,12 @@ def llm_encode(
         (encoded_text, inference_ms)
     """
     _ensure_loaded(codebook_csv_path)
+    url = base_url or DEFAULT_LLM_URL
 
     prompt = f'Message to rewrite:\n"{natural_text}"'
 
     start = time.time()
-    resp = requests.post(f"{OLLAMA_URL}/api/generate", json={
+    resp = requests.post(f"{url}/api/generate", json={
         "model": model,
         "system": _encode_prompt,
         "prompt": prompt,
@@ -153,7 +160,8 @@ def llm_encode(
 
 def llm_decode(
     encoded_text: str,
-    model: str = "gemma3:latest",
+    model: str = "test01",
+    base_url: str | None = None,
     timeout: int = 60,
 ) -> tuple[str, float]:
     """
@@ -164,18 +172,20 @@ def llm_decode(
 
     Args:
         encoded_text: The codebook-constrained compressed message.
-        model: Ollama model name.
+        model: LLM model name (matches Lemonade Server model ID).
+        base_url: LLM server base URL. Defaults to DEFAULT_LLM_URL.
         timeout: HTTP timeout in seconds.
 
     Returns:
         (decoded_text, inference_ms)
     """
     _ensure_loaded()
+    url = base_url or DEFAULT_LLM_URL
 
     prompt = f'Compressed message:\n"{encoded_text}"'
 
     start = time.time()
-    resp = requests.post(f"{OLLAMA_URL}/api/generate", json={
+    resp = requests.post(f"{url}/api/generate", json={
         "model": model,
         "system": _decode_prompt,
         "prompt": prompt,
@@ -196,12 +206,12 @@ def llm_decode(
 
 
 # ---------------------------------------------------------------------------
-# CLI — standalone test (requires Ollama running)
+# CLI — standalone test (requires Lemonade Server running)
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     print("\n" + "=" * 70)
     print("  LLM CODEC — Standalone Test")
-    print("  Requires Ollama running at localhost:11434")
+    print(f"  Requires Lemonade Server running at {DEFAULT_LLM_URL}")
     print("=" * 70)
 
     _ensure_loaded()
@@ -233,7 +243,7 @@ if __name__ == "__main__":
             print(f"  Decoded:  \"{decoded}\" ({dec_ms:.0f}ms)")
 
         except requests.exceptions.ConnectionError:
-            print(f"  SKIP: Cannot connect to Ollama at {OLLAMA_URL}")
+            print(f"  SKIP: Cannot connect to LLM server at {DEFAULT_LLM_URL}")
             break
         except Exception as e:
             print(f"  ERROR: {e}")

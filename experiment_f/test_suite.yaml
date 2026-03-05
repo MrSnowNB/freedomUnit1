@@ -1,0 +1,283 @@
+# ─── CyberMesh Experiment F — Test Suite ───
+# Reuses Experiment E scenario (Lawrence Township flood warning)
+# 20 encode + 20 decode + stress tests = 80 total per node
+# Architect decision: reuse Experiment E's message style for apples-to-apples
+
+metadata:
+  version: "1.0"
+  experiment: "F"
+  description: "Codec harness validation — encode/decode + stress"
+  scenario: "Lawrence Township flood warning — mesh network monitoring"
+  gate_threshold:
+    meta_loop_max: 0          # zero tolerance for persona breaks
+    encode_framing_max_pct: 10  # FAIL if >10% of raw outputs have framing
+    decode_noise_max_pct: 10    # FAIL if >10% of raw outputs have noise
+    codebook_hit_rate_min: 0.70 # minimum hit rate for encode outputs
+
+# ─── Encode Test Cases ───
+# Input: natural language messages (flood warning scenario)
+# Expected: space-separated codebook tokens ONLY
+# expect_no: patterns that MUST NOT appear in raw output
+
+encode:
+  - id: ENC-001
+    input: "Meet at north bridge 0900"
+    expect_no: ["Translated", "Encoded", "Here's", "Would you like"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-002
+    input: "All clear sector 7"
+    expect_no: ["Output:", "Result:", "The encoded"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-003
+    input: "Turbidity at Sensor 7 is now at 95 percent significantly above normal"
+    expect_no: ["Translated", "Here's", "Would you like", "I can"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-004
+    input: "Sensor 10 is at 7 point 5 feet all residents near the middle school should evacuate immediately"
+    expect_no: ["Encoded:", "Output:", "Let me", "Sure"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-005
+    input: "The backup power system is operational and battery levels are at 89 percent"
+    expect_no: ["Translated", "Result:", "Here is"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-006
+    input: "Water level rising fast at the south dam need emergency crews now"
+    expect_no: ["Would you like", "Shall I", "Let me"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-007
+    input: "Confirmed three families evacuated from River Road area"
+    expect_no: ["Encoded", "Here's", "Output:"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-008
+    input: "Road closed on Route 206 between Cherry Hill and Lawrenceville"
+    expect_no: ["Translated", "I can", "Would you"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-009
+    input: "Generator fuel level at 45 percent estimate 6 hours remaining"
+    expect_no: ["Result:", "Here's the", "Let me"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-010
+    input: "National Weather Service extended the flood warning until midnight"
+    expect_no: ["Encoded:", "Output:", "Translated"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-011
+    input: "All mesh nodes are responding with good signal strength"
+    expect_no: ["Here's", "Would you like", "I can also"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-012
+    input: "Need medical supplies at the community center by 1400"
+    expect_no: ["Translated", "Encoded", "Sure"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-013
+    input: "Bridge inspection complete no structural damage found"
+    expect_no: ["Output:", "Result:", "Here is"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-014
+    input: "Power outage reported in the downtown grid sector 3"
+    expect_no: ["Would you like", "Let me", "I'd be happy"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-015
+    input: "Requesting helicopter for aerial survey of the flood zone"
+    expect_no: ["Translated:", "Encoded:", "Here's"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-016
+    input: "Temperature dropping to 35 degrees tonight risk of ice on roads"
+    expect_no: ["Output:", "Result:", "Would you like"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-017
+    input: "Emergency shelter at the high school can hold 200 more people"
+    expect_no: ["Translated", "Here's the", "I can"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-018
+    input: "Sandbagging crew reports levee is holding at current water level"
+    expect_no: ["Encoded:", "Let me", "Sure"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-019
+    input: "Cell tower on Oak Street lost power switching to battery backup"
+    expect_no: ["Output:", "Result:", "Would you"]
+    expect_format: "space-separated tokens only"
+
+  - id: ENC-020
+    input: "Drone survey shows flooding has receded 2 feet in the last hour"
+    expect_no: ["Translated", "Here's", "I'd be happy"]
+    expect_format: "space-separated tokens only"
+
+# ─── Decode Test Cases ───
+# Input: codebook-constrained compressed text
+# Expected: natural English expansion
+# expect_no: patterns that MUST NOT appear in output
+
+decode:
+  - id: DEC-001
+    input: "meet at north point 9 hundred"
+    expect_no: ["Word count", "Note:", "Total:", "---"]
+    expect_format: "plain text only"
+
+  - id: DEC-002
+    input: "all clear area 7"
+    expect_no: ["(", ")", "Note", "Approximately"]
+    expect_format: "plain text only"
+
+  - id: DEC-003
+    input: "water level at point 7 is very high and bad"
+    expect_no: ["Word count", "Note:", "---", "==="]
+    expect_format: "plain text only"
+
+  - id: DEC-004
+    input: "point 10 is at 7 point 5 high all people near school must go now"
+    expect_no: ["(Note", "(Word", "Total:", "---"]
+    expect_format: "plain text only"
+
+  - id: DEC-005
+    input: "power system is working and level is at 89 percent"
+    expect_no: ["Word count", "Note:", "(The above"]
+    expect_format: "plain text only"
+
+  - id: DEC-006
+    input: "water going up fast at south wall need help now"
+    expect_no: ["Note:", "Total:", "---", "Word count"]
+    expect_format: "plain text only"
+
+  - id: DEC-007
+    input: "three family left from river road area"
+    expect_no: ["(", ")", "Note", "==="]
+    expect_format: "plain text only"
+
+  - id: DEC-008
+    input: "road closed on way 206 between two town"
+    expect_no: ["Word count", "Note:", "---"]
+    expect_format: "plain text only"
+
+  - id: DEC-009
+    input: "power fuel at 45 percent about 6 hour left"
+    expect_no: ["(Note", "(Word", "Total:"]
+    expect_format: "plain text only"
+
+  - id: DEC-010
+    input: "weather service made the water warning go until night"
+    expect_no: ["Note:", "---", "Word count", "==="]
+    expect_format: "plain text only"
+
+  - id: DEC-011
+    input: "all network point are working with good signal"
+    expect_no: ["(", ")", "Note", "Total"]
+    expect_format: "plain text only"
+
+  - id: DEC-012
+    input: "need medical help at center by 2 hundred"
+    expect_no: ["Word count", "Note:", "---"]
+    expect_format: "plain text only"
+
+  - id: DEC-013
+    input: "look at point complete no damage found"
+    expect_no: ["(Note", "(Word", "==="]
+    expect_format: "plain text only"
+
+  - id: DEC-014
+    input: "power out in town center area 3"
+    expect_no: ["Note:", "Total:", "---", "Word count"]
+    expect_format: "plain text only"
+
+  - id: DEC-015
+    input: "need air look at the water area"
+    expect_no: ["(", ")", "Note", "==="]
+    expect_format: "plain text only"
+
+  - id: DEC-016
+    input: "cold going to 35 at night risk of ice on road"
+    expect_no: ["Word count", "Note:", "---"]
+    expect_format: "plain text only"
+
+  - id: DEC-017
+    input: "safe place at the high school can hold 200 more people"
+    expect_no: ["(Note", "(Word", "Total:"]
+    expect_format: "plain text only"
+
+  - id: DEC-018
+    input: "sand team say wall is holding at current water level"
+    expect_no: ["Note:", "---", "Word count", "==="]
+    expect_format: "plain text only"
+
+  - id: DEC-019
+    input: "cell point on tree road lost power using other power"
+    expect_no: ["(", ")", "Note", "Total"]
+    expect_format: "plain text only"
+
+  - id: DEC-020
+    input: "air look show water has gone down 2 high in last hour"
+    expect_no: ["Word count", "Note:", "---"]
+    expect_format: "plain text only"
+
+# ─── Stress Tests ───
+# Rapid-fire sequences to detect persona drift across sustained load.
+# 40 per node (20 encode + 20 decode), 80 total across both nodes.
+
+stress:
+  description: "Rapid-fire encode/decode to detect persona drift under sustained load"
+  encode_messages:
+    - "Flood waters approaching the main power station"
+    - "Emergency crews dispatched to the east side"
+    - "Water pump station number 4 has failed"
+    - "Residents on Maple Avenue ordered to evacuate"
+    - "Bridge on Route 1 closed due to debris"
+    - "National Guard requested for sandbagging operations"
+    - "Hospital generator running on emergency fuel reserves"
+    - "Communication relay on hilltop operational"
+    - "School bus depot flooded vehicles cannot deploy"
+    - "Red Cross shelter accepting arrivals at township hall"
+    - "Sewer system overflow detected at junction 12"
+    - "Police checkpoint established at the county line"
+    - "Volunteer firefighters needed at the south levee"
+    - "Water treatment plant operating at reduced capacity"
+    - "Drone footage confirms new breach in north levee"
+    - "Propane tanks secured at the industrial park"
+    - "Ambulance response time increased to 25 minutes"
+    - "Ham radio operators providing backup communication"
+    - "Floodgates opened at the reservoir to reduce pressure"
+    - "All clear issued for the west side residential area"
+
+  decode_messages:
+    - "water near the main power place"
+    - "help team sent to east side"
+    - "water push place number 4 has stopped"
+    - "people on tree road told to go"
+    - "way on road 1 closed from things in water"
+    - "army help asked for sand work"
+    - "hospital power running on last fuel"
+    - "talk point on high place working"
+    - "school car place under water car can not go"
+    - "help place taking people at town building"
+    - "water system over flow found at point 12"
+    - "police stop set at the area line"
+    - "free fire help needed at south wall"
+    - "water clean place working at less than full"
+    - "air look say new break in north wall"
+    - "gas hold safe at the work area"
+    - "medical car time now 25 minute"
+    - "radio people giving other way to talk"
+    - "water gate open at the water hold to help"
+    - "all clear for west side home area"
+
+  checks:
+    - "no meta-loop phrases in any response"
+    - "no encode framing in any encode response"
+    - "no decode noise in any decode response"
+    - "persona consistent across full sequence"
