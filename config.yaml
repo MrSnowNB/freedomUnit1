@@ -51,7 +51,7 @@ radio:
   node_name: Liberty-Node-02
 
 experiment:
-  name: F                      # experiment letter for log filenames
+  name: G                      # experiment letter for log filenames
   messages_per_node: 10
   runs: 2                      # number of codec comparison runs
 

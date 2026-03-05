@@ -48,6 +48,31 @@ def load_frequencies(csv_path: str) -> dict[str, int]:
     return freq
 
 
+# Control tokens — must match huffman_codec.py exactly
+_ESC     = "\x00ESC"
+_NUM     = "\x00NUM"
+_PUNCT   = "\x00PUN"
+_NOSPACE = "\x00NSP"
+_EOF     = "\x00EOF"
+
+
+def add_control_tokens(freq: dict[str, int]) -> dict[str, int]:
+    """
+    Add control tokens to frequency table BEFORE building the Huffman tree.
+
+    This ensures the .bin file contains codes for all control tokens,
+    eliminating the need to rebuild the tree at load time.
+    """
+    word_freqs = sorted(freq.values(), reverse=True)
+    mid = word_freqs[len(word_freqs) // 2] if word_freqs else 1_000_000
+    freq[_NOSPACE] = mid * 3
+    freq[_NUM]     = mid * 2
+    freq[_PUNCT]   = mid * 2
+    freq[_ESC]     = mid
+    freq[_EOF]     = 1
+    return freq
+
+
 def build_tree(freq: dict[str, int]) -> HuffmanNode:
     """Build standard Huffman tree using heapq priority queue."""
     # Use a tie-breaker counter to ensure stable ordering for equal frequencies
@@ -119,6 +144,11 @@ def main():
     print(f"\n  Loading frequencies from {os.path.basename(input_csv)}...")
     freq = load_frequencies(input_csv)
     print(f"  Loaded: {len(freq):,} words with count > 0")
+
+    # Step 1b: Add control tokens BEFORE building tree
+    freq = add_control_tokens(freq)
+    print(f"  Added 5 control tokens (ESC, NUM, PUNCT, NOSPACE, EOF)")
+    print(f"  Total symbols: {len(freq):,}")
 
     # Step 2: Build Huffman tree
     print("  Building Huffman tree...")
@@ -193,11 +223,17 @@ def main():
     print(f"  CSV: {csv_size:,} bytes ({csv_size / 1024 / 1024:.1f} MB)")
 
     # Step 7: Serialize tree and lookup tables to .bin
+    # Separate word-only codes from control codes for the .bin
+    word_codes = {k: v for k, v in codes.items() if not k.startswith("\x00")}
+    control_codes = {k: v for k, v in codes.items() if k.startswith("\x00")}
     print(f"  Writing {os.path.basename(output_bin)}...")
+    print(f"  Word codes: {len(word_codes):,}, Control codes: {len(control_codes)}")
     bin_data = {
-        "word_to_code": codes,
-        "code_to_word": {v: k for k, v in codes.items()},
-        "total_words": len(codes),
+        "word_to_code": word_codes,
+        "code_to_word": {v: k for k, v in word_codes.items()},
+        "control_codes": control_codes,  # ESC, NUM, PUNCT, NOSPACE, EOF
+        "all_codes": codes,              # word + control codes combined
+        "total_words": len(word_codes),
         "max_code_length": max_len,
     }
     with open(output_bin, "wb") as f:
@@ -210,9 +246,10 @@ def main():
     t_rt = time.perf_counter()
     rt_pass = 0
     rt_fail = 0
-    code_to_word = bin_data["code_to_word"]
+    # Use all_codes reverse map for complete round-trip (words + controls)
+    all_code_to_word = {v: k for k, v in codes.items()}
     for word, code in codes.items():
-        decoded = code_to_word.get(code)
+        decoded = all_code_to_word.get(code)
         if decoded == word:
             rt_pass += 1
         else:

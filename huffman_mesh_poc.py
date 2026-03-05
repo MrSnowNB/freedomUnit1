@@ -2,7 +2,7 @@
 """
 huffman_mesh_poc.py — CyberMesh v7.0 "Smart Router" Harness
 =============================================================
-Experiment F: Smart Router — Huffman/MUX + Keyword/Strict routing over LoRa.
+Experiment G: Smart Router — Huffman/MUX + Keyword/Strict routing over LoRa.
 
 Architecture:
   - config.yaml       — full v7.0 config
@@ -97,6 +97,66 @@ def log(msg: str, level: str = "INFO") -> None:
         LOG_ENTRIES.append(entry)
     prefix = {"INFO": "  ", "WARN": "  W", "ERROR": "  E", "DEBUG": "  D"}.get(level, "  ")
     print(f"{prefix} [{ts}] {msg}", flush=True)
+
+
+# =============================================================================
+# CODEBOOK GUARD
+# =============================================================================
+
+def ensure_codebooks() -> None:
+    """
+    Check that 333K codebook .bin files exist. If missing, attempt to
+    build them by running the build scripts. If the build fails or the
+    source CSV is missing, exit with a clear message.
+    """
+    base = os.path.dirname(os.path.abspath(__file__))
+    codebooks_dir = os.path.join(base, "codebooks")
+    huff_bin = os.path.join(codebooks_dir, "huffman_333k.bin")
+    mux_bin  = os.path.join(codebooks_dir, "mux_333k.bin")
+
+    missing = []
+    if not os.path.exists(huff_bin):
+        missing.append(("huffman_333k.bin", "build_huffman_codebook_333k.py"))
+    if not os.path.exists(mux_bin):
+        missing.append(("mux_333k.bin", "build_mux_codebook_333k.py"))
+
+    if not missing:
+        return  # All good
+
+    # Check source CSV exists
+    src_csv = os.path.join(base, "english_unigram_freq.csv")
+    if not os.path.exists(src_csv):
+        log("FATAL: 333K codebook .bin files missing and source CSV "
+            f"(english_unigram_freq.csv) not found in {base}", "ERROR")
+        log("Download the Kaggle unigram frequency dataset first.", "ERROR")
+        sys.exit(1)
+
+    # Auto-build missing codebooks
+    import subprocess
+    for bin_name, script_name in missing:
+        script_path = os.path.join(base, script_name)
+        if not os.path.exists(script_path):
+            log(f"FATAL: {bin_name} missing and build script {script_name} "
+                "not found.", "ERROR")
+            sys.exit(1)
+
+        log(f"Building {bin_name} (first run)... this takes ~10s")
+        try:
+            result = subprocess.run(
+                [sys.executable, script_path],
+                cwd=base, capture_output=True, text=True, timeout=120,
+            )
+            if result.returncode != 0:
+                log(f"Build script {script_name} failed:\n{result.stderr}",
+                    "ERROR")
+                sys.exit(1)
+            log(f"Built {bin_name} successfully.")
+        except subprocess.TimeoutExpired:
+            log(f"Build script {script_name} timed out (120s).", "ERROR")
+            sys.exit(1)
+        except Exception as exc:
+            log(f"Build script {script_name} error: {exc}", "ERROR")
+            sys.exit(1)
 
 
 # =============================================================================
@@ -917,11 +977,8 @@ class RunRunner:
             else:
                 self._do_rx(step)
 
-        # Remove our callback (clean up before next run)
-        try:
-            self.radio._rx_callbacks.remove(self._on_receive)
-        except ValueError:
-            pass
+        # Hard-reset RX callbacks to prevent stacking across runs
+        self.radio._rx_callbacks = []
 
         return self.tx_records, self.rx_records
 
@@ -1287,6 +1344,11 @@ def main() -> None:
     # CLI overrides
     if args.mock:
         cfg.setdefault("testing", {})["mock_llm"] = True
+
+    # ── Ensure codebooks exist (auto-build on first run) ──────────────────────
+    codebook_size = cfg.get("codec", {}).get("codebook_size", "4k")
+    if codebook_size == "333k":
+        ensure_codebooks()
 
     # ── Banner ────────────────────────────────────────────────────────────────
     print_banner(cfg)

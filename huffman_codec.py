@@ -121,7 +121,12 @@ class MeshHuffmanCodec:
         )
 
     def _init_333k(self, base: str):
-        """Load pre-built 333K codebook from .bin file."""
+        """Load pre-built 333K codebook from .bin file.
+
+        The .bin file contains both word codes AND control token codes
+        (ESC, NUM, PUNCT, NOSPACE, EOF), baked in at build time by
+        build_huffman_codebook_333k.py. No tree rebuild needed.
+        """
         bin_path = os.path.join(base, "codebooks", "huffman_333k.bin")
         if not os.path.exists(bin_path):
             raise FileNotFoundError(
@@ -137,23 +142,25 @@ class MeshHuffmanCodec:
         self._333k_code_to_word: dict[str, str] = data["code_to_word"]
         self.codebook_source = "huffman_333k"
 
-        # Build the full encode/decode tables for text mode:
-        # Start with all 333K word codes
-        self.encode_table: dict[str, str] = dict(self._333k_word_to_code)
-
-        # Add control tokens — assign codes that don't collide with word codes
-        # Use the same frequency-based approach as 4K but with 333K scale
-        # We need short codes for controls, so we rebuild a small combined tree
-        # Actually, for 333K mode we need control tokens too.
-        # Approach: use dedicated prefix codes that cannot appear in the Huffman tree.
-        # Since the 333K tree already uses all prefix-free codes, we use a simple
-        # escape mechanism: a reserved word acts as the ESC marker.
-        # For v7.0, keywords don't need control tokens (they're just word codes).
-        # Full text mode still needs them — so we rebuild the tree with controls added.
-        self._build_333k_text_tables()
-
-        logger.info("Huffman 333K loaded: %d words in %.0f ms",
-                     len(self._333k_word_to_code), load_ms)
+        # Check if .bin has pre-baked control tokens (v7.0.1+)
+        if "all_codes" in data:
+            # New format: control tokens baked into the tree at build time.
+            # No rebuild needed — just use all_codes directly.
+            self.encode_table = dict(data["all_codes"])
+            self.decode_table = {v: k for k, v in self.encode_table.items()}
+            logger.info("Huffman 333K loaded (with controls): %d words + %d controls in %.0f ms",
+                         len(self._333k_word_to_code),
+                         len(data.get("control_codes", {})),
+                         load_ms)
+        else:
+            # Legacy .bin format (pre-v7.0.1): no control tokens baked in.
+            # Must rebuild the tree to add control tokens.
+            logger.warning("Legacy .bin detected — rebuilding tree with controls. "
+                           "Re-run build_huffman_codebook_333k.py to fix.")
+            self.encode_table = dict(self._333k_word_to_code)
+            self._build_333k_text_tables()
+            logger.info("Huffman 333K loaded (legacy rebuild): %d words in %.0f ms",
+                         len(self._333k_word_to_code), load_ms)
 
     def _build_333k_text_tables(self):
         """
@@ -496,16 +503,12 @@ class MeshHuffmanCodec:
                 bits += lookup[kw_lower]
             else:
                 # ESC fallback: encode as raw ASCII
-                # Use a marker that the decoder can recognize
-                if _ESC in self.encode_table:
-                    bits += self.encode_table[_ESC]
-                    bits += self._encode_raw(kw_lower)
-                else:
-                    # No ESC token available — use raw encoding with length prefix
-                    raw = kw_lower.encode("utf-8")
-                    bits += format(len(raw), "08b")
-                    for b in raw:
-                        bits += format(b, "08b")
+                if _ESC not in self.encode_table:
+                    raise RuntimeError(
+                        f"ESC token missing from encode_table — cannot encode "
+                        f"unknown keyword '{kw_lower}'. Rebuild codebooks.")
+                bits += self.encode_table[_ESC]
+                bits += self._encode_raw(kw_lower)
                 esc_count += 1
                 logger.debug("Huffman keyword ESC: '%s'", kw_lower)
 

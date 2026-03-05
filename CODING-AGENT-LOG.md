@@ -895,3 +895,50 @@ generation.
 
 - **Status**: v7.0 build complete. All 12 files created/modified. Harness validated
   in mock mode. Ready for live testing on Strix Halo + Nvidia hardware.
+
+---
+
+## Entry 023 — v7.0 QA Bugfix Round (Strix Halo Live Testing)
+
+**Date**: 2026-03-05
+**Trigger**: Mark ran v7.0 on Strix Halo, hit FileNotFoundError on missing codebooks/huffman_333k.bin, then filed a 7-bug QA report with priority rankings.
+
+### Bugs Fixed
+
+| # | Severity | Bug | Fix |
+|---|----------|-----|-----|
+| 1 | CRITICAL | codebooks/ dir missing from repo, no guard in harness | Added `ensure_codebooks()` guard in huffman_mesh_poc.py — auto-builds .bin files from CSV on first run via subprocess, exits with clear message if CSV missing |
+| 2 | MINOR | experiment.name "F" vs "G" mismatch | Updated config.yaml experiment.name: F → G, updated huffman_mesh_poc.py docstring |
+| 3 | MEDIUM | 333K tree rebuilt at init defeats .bin cache | Baked 5 control tokens (ESC, NUM, PUNCT, NOSPACE, EOF) into .bin at build time via `add_control_tokens()` in build_huffman_codebook_333k.py. Rewrote `_init_333k()` in huffman_codec.py to use `all_codes` key from .bin — no rebuild needed. Legacy fallback preserved for old .bin format. |
+| 4 | MEDIUM | MUX decode called with codec.decode(payload, 0) for codec_id 0x02 | VERIFIED NON-BUG: MuxGridCodec.decode(payload, padding_bits) signature at line 260 accepts exactly (payload, padding_bits). The call is correct. |
+| 6 | MINOR | RX callback stacking across runs via list.remove() | Replaced try/except remove() with hard reset: `self.radio._rx_callbacks = []` |
+| 7 | MINOR | ESC else branch in encode_keywords() used incompatible raw encoding | Removed else branch (lines 510-515), replaced with RuntimeError if ESC token missing from encode_table |
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| huffman_mesh_poc.py | ensure_codebooks() guard (~55 lines), wired into main(). Docstring "Experiment F" → "Experiment G". RX callback hard reset. |
+| huffman_codec.py | _init_333k() rewritten for new .bin format with all_codes. ESC else branch → RuntimeError. |
+| build_huffman_codebook_333k.py | add_control_tokens() adds 5 control tokens to freq table before tree build. .bin serialization includes all_codes and control_codes keys. Round-trip validation uses all_codes reverse map. |
+| config.yaml | experiment.name: F → G |
+
+### Codebook Rebuild Results
+
+- **Huffman 333K**: 333,338 codes (333,333 words + 5 controls), prefix-free PASS, 100% round-trip PASS, .bin = 17.9 MB
+- **MUX 333K**: 333,333 words, 700×700 grid, 100% round-trip PASS, .bin = 9.4 MB
+
+### Validation Results
+
+- **py_compile**: huffman_mesh_poc.py PASS, huffman_codec.py PASS, build_huffman_codebook_333k.py PASS
+- **Mock mode**: 4/4 runs complete, 80 messages, zero errors
+- **Runs**: huffman-333k-keyword, mux_grid-333k-keyword, huffman-333k-strict, mux_grid-333k-strict
+
+### Key Decisions
+
+- Bug 4 verified as non-bug after source inspection of mux_codec.py line 260
+- Bug 5 was not in Mark's original report (numbering gap)
+- Control tokens get medium-frequency weights to place them mid-tree (short but not shortest codes)
+- Legacy .bin format detection preserved: if `all_codes` key missing, falls back to expensive tree rebuild with warning
+
+- **Status**: All 6 bugs fixed (1 verified non-bug), codebooks rebuilt, mock mode validated. Ready for Mark to re-test on Strix Halo.
