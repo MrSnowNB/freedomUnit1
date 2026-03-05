@@ -1,0 +1,53 @@
+# ─── CyberMesh Experiment D Configuration ───
+# Same file on both laptops. Only change 'port' if auto-detect fails.
+
+# Serial port: "auto" scans for Meshtastic device, or set explicit (COM6, COM3, /dev/ttyUSB0)
+port: auto
+
+# Custom portnum for compressed data (256 = PRIVATE_APP)
+custom_portnum: 256
+
+# Trigger word — the DM text that starts the experiment
+trigger_word: "Hi"
+
+# Timeout waiting for a response (seconds)
+# Budget: LLM inference (x2 for Phase 2) + LoRa TX/ACK + margin
+timeout_s: 45
+
+# ─── Experiment D: LLM Conversation + LLM Codec ───
+
+# Ollama model (must be pre-installed on both laptops)
+model: "gemma3:latest"
+
+# Messages per node (total conversation = 2x this number)
+messages_per_node: 10
+
+# System prompt — identical on both nodes
+# The LLM generates responses within this scenario context.
+# No token/word count constraint — just "be concise" in the prompt.
+conversation_seed: |
+  You are a mesh network monitoring agent for Lawrence Township, NJ.
+  A flood warning has been issued for the area.
+  Coordinate with the other agent to check sensor status, assess conditions, and plan emergency response.
+
+  RULES:
+  - Be concise. Respond in one or two short sentences.
+  - Plain text only. No markdown, no bullet points, no special formatting.
+  - No quotation marks around your response.
+  - Use simple, common English words.
+  - Be direct and specific. Include numbers when reporting data.
+
+# ─── Experiment D Phase Control ───
+
+# Phase 1 (pretokenizer only): normalize text before encoding
+# Always enabled for Experiment D
+pretokenizer: true
+
+# Phase 2 (LLM codec): LLM rewrites output to codebook vocabulary before encoding
+# false = Experiment D Phase 1 only (pretokenizer + raw codec)
+# true  = Experiment D Phase 2 (pretokenizer + LLM encode/decode + codec)
+llm_codec: true
+
+# Fallback threshold: if LLM encode hit rate < this, skip encode and use raw text
+# Only applies when llm_codec: true
+fallback_threshold: 0.70

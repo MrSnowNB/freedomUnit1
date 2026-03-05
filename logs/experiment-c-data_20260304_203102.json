@@ -1,0 +1,1517 @@
+{
+  "experiment": "C",
+  "timestamp": "2026-03-05T01:31:02.564671+00:00",
+  "node": "!0408a160",
+  "peer": "!07c01855",
+  "role": "B",
+  "model": "gemma3:latest",
+  "runs": {
+    "mux_grid": [
+      {
+        "step": 1,
+        "direction": "B\u2192A",
+        "original": "Alert: Flood warning issued for Lawrence Township. Checking sensor status now.",
+        "raw_bytes": 78,
+        "comp_bytes": 53,
+        "ratio": 1.471698113207547,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 2002.7689933776855,
+        "tokens": 15,
+        "pages": 1,
+        "hit_pct": 63.63636363636363,
+        "esc_count": 4,
+        "decoded": null
+      },
+      {
+        "step": 2,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 79,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -5,
+        "snr": 6.0,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "sensor 3 reports rising water levels at 1.5 feet. i\u2019m confirming sensor 7 and 12 are still operational."
+      },
+      {
+        "step": 3,
+        "direction": "B\u2192A",
+        "original": "Sensor 9 also shows a rise to 0.8 feet. We need to alert local emergency services immediately.",
+        "raw_bytes": 94,
+        "comp_bytes": 51,
+        "ratio": 1.8431372549019607,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1830.9786319732666,
+        "tokens": 24,
+        "pages": 1,
+        "hit_pct": 82.35294117647058,
+        "esc_count": 3,
+        "decoded": null
+      },
+      {
+        "step": 4,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 67,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -6,
+        "snr": 6.0,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "confirming sensor 11 is also reporting 1.2 feet. dispatching alerts to emergency services with all available data."
+      },
+      {
+        "step": 5,
+        "direction": "B\u2192A",
+        "original": "Sensor 5 now reads 2.1 feet \u2013 escalating the response.",
+        "raw_bytes": 56,
+        "comp_bytes": 55,
+        "ratio": 1.018181818181818,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1550.4887104034424,
+        "tokens": 16,
+        "pages": 1,
+        "hit_pct": 50.0,
+        "esc_count": 5,
+        "decoded": null
+      },
+      {
+        "step": 6,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 51,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -4,
+        "snr": 7.5,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "sensor 14 is also at 1.8 feet, requesting additional resources."
+      },
+      {
+        "step": 7,
+        "direction": "B\u2192A",
+        "original": "Confirming sensor 15 is at 2.5 feet \u2013 this is critical.",
+        "raw_bytes": 57,
+        "comp_bytes": 48,
+        "ratio": 1.1875,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1526.1731147766113,
+        "tokens": 19,
+        "pages": 1,
+        "hit_pct": 63.63636363636363,
+        "esc_count": 4,
+        "decoded": null
+      },
+      {
+        "step": 8,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 52,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -3,
+        "snr": 5.5,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "sensor 16 reports 2.3 feet, requesting immediate evacuation assistance."
+      },
+      {
+        "step": 9,
+        "direction": "B\u2192A",
+        "original": "Sensor 17 is now at 2.7 feet \u2013 we need to prioritize evacuation routes.",
+        "raw_bytes": 73,
+        "comp_bytes": 50,
+        "ratio": 1.46,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1626.4495849609375,
+        "tokens": 21,
+        "pages": 1,
+        "hit_pct": 71.42857142857143,
+        "esc_count": 4,
+        "decoded": null
+      },
+      {
+        "step": 10,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 68,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -6,
+        "snr": 5.5,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "sensor 18 reads 3.1 feet \u2013 initiating shelter activation protocols."
+      },
+      {
+        "step": 11,
+        "direction": "B\u2192A",
+        "original": "Sensor 19 is at 3.3 feet \u2013 requesting all available personnel.",
+        "raw_bytes": 64,
+        "comp_bytes": 50,
+        "ratio": 1.28,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1520.280122756958,
+        "tokens": 18,
+        "pages": 1,
+        "hit_pct": 63.63636363636363,
+        "esc_count": 4,
+        "decoded": null
+      },
+      {
+        "step": 12,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 52,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 8.0,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "sensor 20 reports 3.5 feet \u2013 the situation is rapidly deteriorating."
+      },
+      {
+        "step": 13,
+        "direction": "B\u2192A",
+        "original": "Sensor 21 is at 3.7 feet \u2013 we need to activate the emergency operations center.",
+        "raw_bytes": 81,
+        "comp_bytes": 50,
+        "ratio": 1.62,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 2745.4330921173096,
+        "tokens": 22,
+        "pages": 1,
+        "hit_pct": 73.33333333333333,
+        "esc_count": 4,
+        "decoded": null
+      },
+      {
+        "step": 14,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 67,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 7.5,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "sensor 22 reads 4.0 feet \u2013 initiating full-scale emergency response."
+      },
+      {
+        "step": 15,
+        "direction": "B\u2192A",
+        "original": "Sensor 23 is at 4.2 feet \u2013 deploying rescue teams now.",
+        "raw_bytes": 56,
+        "comp_bytes": 44,
+        "ratio": 1.2727272727272727,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1571.3415145874023,
+        "tokens": 18,
+        "pages": 1,
+        "hit_pct": 63.63636363636363,
+        "esc_count": 4,
+        "decoded": null
+      },
+      {
+        "step": 16,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 41,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 8.0,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "sensor 24 reports 4.5 feet \u2013 all available resources are being mobilized."
+      },
+      {
+        "step": 17,
+        "direction": "B\u2192A",
+        "original": "Sensor 25 is at 4.8 feet \u2013 requesting immediate aerial support.",
+        "raw_bytes": 65,
+        "comp_bytes": 56,
+        "ratio": 1.1607142857142858,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1537.7933979034424,
+        "tokens": 18,
+        "pages": 1,
+        "hit_pct": 54.54545454545454,
+        "esc_count": 5,
+        "decoded": null
+      },
+      {
+        "step": 18,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 63,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 5.5,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "sensor 26 reports 5.1 feet \u2013 requesting immediate helicopter deployment."
+      },
+      {
+        "step": 19,
+        "direction": "B\u2192A",
+        "original": "Sensor 27 is at 5.3 feet \u2013 we require immediate aerial rescue operations.",
+        "raw_bytes": 75,
+        "comp_bytes": 51,
+        "ratio": 1.4705882352941178,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1631.507158279419,
+        "tokens": 20,
+        "pages": 1,
+        "hit_pct": 69.23076923076923,
+        "esc_count": 4,
+        "decoded": null
+      },
+      {
+        "step": 20,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 60,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 7.25,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "sensor 28 reports 5.5 feet \u2013 initiating full-scale rescue efforts."
+      }
+    ],
+    "huffman": [
+      {
+        "step": 1,
+        "direction": "B\u2192A",
+        "original": "Alert: Flood warning issued for Lawrence Township. Requesting sensor status updates from Agent 2.",
+        "raw_bytes": 97,
+        "comp_bytes": 66,
+        "ratio": 1.4696969696969697,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1207.3683738708496,
+        "tokens": 20,
+        "pages": 1,
+        "hit_pct": 76.92307692307693,
+        "esc_count": 3,
+        "decoded": null
+      },
+      {
+        "step": 2,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 84,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -7,
+        "snr": 5.75,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Agent 2, please report water level readings from all sensors in the township. Confirm if any sensors are reporting unusual activity."
+      },
+      {
+        "step": 3,
+        "direction": "B\u2192A",
+        "original": "Sensor 3 at the Rahway River shows a rapid rise to 8.5 feet. Sensor 7 near the Post Road is reporting increased turbidity.",
+        "raw_bytes": 122,
+        "comp_bytes": 68,
+        "ratio": 1.7941176470588236,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 2126.5673637390137,
+        "tokens": 32,
+        "pages": 1,
+        "hit_pct": 90.0,
+        "esc_count": 2,
+        "decoded": null
+      },
+      {
+        "step": 4,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 88,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -8,
+        "snr": 6.75,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Confirming rapid rise at Rahway River, Sensor 3 at 8.5 feet. Agent 2, please assess turbidity at Sensor 7."
+      },
+      {
+        "step": 5,
+        "direction": "B\u2192A",
+        "original": "Turbidity at Sensor 7 is now at 95%, significantly above normal. We need to activate the emergency alert system immediately.",
+        "raw_bytes": 124,
+        "comp_bytes": 69,
+        "ratio": 1.7971014492753623,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 2162.2328758239746,
+        "tokens": 28,
+        "pages": 1,
+        "hit_pct": 88.88888888888889,
+        "esc_count": 2,
+        "decoded": null
+      },
+      {
+        "step": 6,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 64,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -3,
+        "snr": 6.25,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Notify township emergency services of the escalating situation. Confirm sensor status and prepare for potential evacuations."
+      },
+      {
+        "step": 7,
+        "direction": "B\u2192A",
+        "original": "Sensor 10 near the Lawrence Middle School is also reporting a rise to 6.2 feet. We should coordinate with emergency services on evacuation routes.",
+        "raw_bytes": 146,
+        "comp_bytes": 75,
+        "ratio": 1.9466666666666668,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 2182.1045875549316,
+        "tokens": 32,
+        "pages": 1,
+        "hit_pct": 86.36363636363636,
+        "esc_count": 3,
+        "decoded": null
+      },
+      {
+        "step": 8,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 100,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -3,
+        "snr": 5.75,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Confirming 6.2 feet at Sensor 10, prioritizing evacuation routes near the middle school. Let\u0019s coordinate with emergency services on immediate evacuation plans."
+      },
+      {
+        "step": 9,
+        "direction": "B\u2192A",
+        "original": "Sensor 10 is now at 7.1 feet, requiring a revised evacuation plan. We need to confirm evacuation routes with emergency services.",
+        "raw_bytes": 128,
+        "comp_bytes": 67,
+        "ratio": 1.9104477611940298,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 2258.6774826049805,
+        "tokens": 30,
+        "pages": 1,
+        "hit_pct": 89.47368421052632,
+        "esc_count": 2,
+        "decoded": null
+      },
+      {
+        "step": 10,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 66,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -3,
+        "snr": 5.5,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Confirming 7.1 feet at Sensor 10, expedite evacuation route confirmation with emergency services."
+      },
+      {
+        "step": 11,
+        "direction": "B\u2192A",
+        "original": "Sensor 10 is at 7.5 feet; we must finalize evacuation routes now.",
+        "raw_bytes": 65,
+        "comp_bytes": 49,
+        "ratio": 1.3265306122448979,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1751.8835067749023,
+        "tokens": 20,
+        "pages": 1,
+        "hit_pct": 80.0,
+        "esc_count": 2,
+        "decoded": null
+      },
+      {
+        "step": 12,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 50,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -3,
+        "snr": 5.5,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, urgent action needed for evacuation."
+      },
+      {
+        "step": 13,
+        "direction": "B\u2192A",
+        "original": "Sensor 10 is at 7.5 feet \u2013 initiate immediate evacuation protocols.",
+        "raw_bytes": 69,
+        "comp_bytes": 48,
+        "ratio": 1.4375,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 2629.870653152466,
+        "tokens": 18,
+        "pages": 1,
+        "hit_pct": 75.0,
+        "esc_count": 2,
+        "decoded": null
+      },
+      {
+        "step": 14,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 52,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -3,
+        "snr": 6.0,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, deploying emergency response teams."
+      },
+      {
+        "step": 15,
+        "direction": "B\u2192A",
+        "original": "Sensor 10 is at 7.5 feet \u2013 all residents near the middle school should evacuate immediately.",
+        "raw_bytes": 94,
+        "comp_bytes": 46,
+        "ratio": 2.0434782608695654,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1764.7833824157715,
+        "tokens": 23,
+        "pages": 1,
+        "hit_pct": 92.3076923076923,
+        "esc_count": 1,
+        "decoded": null
+      },
+      {
+        "step": 16,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 51,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -3,
+        "snr": 5.75,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, focusing on resident evacuation."
+      },
+      {
+        "step": 17,
+        "direction": "B\u2192A",
+        "original": "Sensor 10 is at 7.5 feet \u2013 standby for further instructions from emergency services.",
+        "raw_bytes": 86,
+        "comp_bytes": 42,
+        "ratio": 2.0476190476190474,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1746.2444305419922,
+        "tokens": 21,
+        "pages": 1,
+        "hit_pct": 90.9090909090909,
+        "esc_count": 1,
+        "decoded": null
+      },
+      {
+        "step": 18,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 49,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -3,
+        "snr": 5.75,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, awaiting further instructions."
+      },
+      {
+        "step": 19,
+        "direction": "B\u2192A",
+        "original": "Sensor 10 is at 7.5 feet \u2013 continue monitoring and report any changes.",
+        "raw_bytes": 72,
+        "comp_bytes": 34,
+        "ratio": 2.1176470588235294,
+        "roundtrip": null,
+        "error": null,
+        "rssi": null,
+        "snr": null,
+        "inference_ms": 1661.2372398376465,
+        "tokens": 20,
+        "pages": 1,
+        "hit_pct": 100.0,
+        "esc_count": 0,
+        "decoded": null
+      },
+      {
+        "step": 20,
+        "direction": "A\u2192B",
+        "original": null,
+        "raw_bytes": null,
+        "comp_bytes": 52,
+        "ratio": null,
+        "roundtrip": true,
+        "error": null,
+        "rssi": -3,
+        "snr": 5.5,
+        "inference_ms": null,
+        "tokens": null,
+        "pages": 1,
+        "hit_pct": null,
+        "esc_count": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, maintaining continuous monitoring."
+      }
+    ]
+  },
+  "transcripts": {
+    "mux_grid": [
+      {
+        "step": 1,
+        "sender": "Role B",
+        "original": "Alert: Flood warning issued for Lawrence Township. Checking sensor status now.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 2,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "sensor 3 reports rising water levels at 1.5 feet. i\u2019m confirming sensor 7 and 12 are still operational.",
+        "match": null
+      },
+      {
+        "step": 3,
+        "sender": "Role B",
+        "original": "Sensor 9 also shows a rise to 0.8 feet. We need to alert local emergency services immediately.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 4,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "confirming sensor 11 is also reporting 1.2 feet. dispatching alerts to emergency services with all available data.",
+        "match": null
+      },
+      {
+        "step": 5,
+        "sender": "Role B",
+        "original": "Sensor 5 now reads 2.1 feet \u2013 escalating the response.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 6,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "sensor 14 is also at 1.8 feet, requesting additional resources.",
+        "match": null
+      },
+      {
+        "step": 7,
+        "sender": "Role B",
+        "original": "Confirming sensor 15 is at 2.5 feet \u2013 this is critical.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 8,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "sensor 16 reports 2.3 feet, requesting immediate evacuation assistance.",
+        "match": null
+      },
+      {
+        "step": 9,
+        "sender": "Role B",
+        "original": "Sensor 17 is now at 2.7 feet \u2013 we need to prioritize evacuation routes.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 10,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "sensor 18 reads 3.1 feet \u2013 initiating shelter activation protocols.",
+        "match": null
+      },
+      {
+        "step": 11,
+        "sender": "Role B",
+        "original": "Sensor 19 is at 3.3 feet \u2013 requesting all available personnel.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 12,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "sensor 20 reports 3.5 feet \u2013 the situation is rapidly deteriorating.",
+        "match": null
+      },
+      {
+        "step": 13,
+        "sender": "Role B",
+        "original": "Sensor 21 is at 3.7 feet \u2013 we need to activate the emergency operations center.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 14,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "sensor 22 reads 4.0 feet \u2013 initiating full-scale emergency response.",
+        "match": null
+      },
+      {
+        "step": 15,
+        "sender": "Role B",
+        "original": "Sensor 23 is at 4.2 feet \u2013 deploying rescue teams now.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 16,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "sensor 24 reports 4.5 feet \u2013 all available resources are being mobilized.",
+        "match": null
+      },
+      {
+        "step": 17,
+        "sender": "Role B",
+        "original": "Sensor 25 is at 4.8 feet \u2013 requesting immediate aerial support.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 18,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "sensor 26 reports 5.1 feet \u2013 requesting immediate helicopter deployment.",
+        "match": null
+      },
+      {
+        "step": 19,
+        "sender": "Role B",
+        "original": "Sensor 27 is at 5.3 feet \u2013 we require immediate aerial rescue operations.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 20,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "sensor 28 reports 5.5 feet \u2013 initiating full-scale rescue efforts.",
+        "match": null
+      }
+    ],
+    "huffman": [
+      {
+        "step": 1,
+        "sender": "Role B",
+        "original": "Alert: Flood warning issued for Lawrence Township. Requesting sensor status updates from Agent 2.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 2,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Agent 2, please report water level readings from all sensors in the township. Confirm if any sensors are reporting unusual activity.",
+        "match": null
+      },
+      {
+        "step": 3,
+        "sender": "Role B",
+        "original": "Sensor 3 at the Rahway River shows a rapid rise to 8.5 feet. Sensor 7 near the Post Road is reporting increased turbidity.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 4,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Confirming rapid rise at Rahway River, Sensor 3 at 8.5 feet. Agent 2, please assess turbidity at Sensor 7.",
+        "match": null
+      },
+      {
+        "step": 5,
+        "sender": "Role B",
+        "original": "Turbidity at Sensor 7 is now at 95%, significantly above normal. We need to activate the emergency alert system immediately.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 6,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Notify township emergency services of the escalating situation. Confirm sensor status and prepare for potential evacuations.",
+        "match": null
+      },
+      {
+        "step": 7,
+        "sender": "Role B",
+        "original": "Sensor 10 near the Lawrence Middle School is also reporting a rise to 6.2 feet. We should coordinate with emergency services on evacuation routes.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 8,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Confirming 6.2 feet at Sensor 10, prioritizing evacuation routes near the middle school. Let\u0019s coordinate with emergency services on immediate evacuation plans.",
+        "match": null
+      },
+      {
+        "step": 9,
+        "sender": "Role B",
+        "original": "Sensor 10 is now at 7.1 feet, requiring a revised evacuation plan. We need to confirm evacuation routes with emergency services.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 10,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Confirming 7.1 feet at Sensor 10, expedite evacuation route confirmation with emergency services.",
+        "match": null
+      },
+      {
+        "step": 11,
+        "sender": "Role B",
+        "original": "Sensor 10 is at 7.5 feet; we must finalize evacuation routes now.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 12,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, urgent action needed for evacuation.",
+        "match": null
+      },
+      {
+        "step": 13,
+        "sender": "Role B",
+        "original": "Sensor 10 is at 7.5 feet \u2013 initiate immediate evacuation protocols.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 14,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, deploying emergency response teams.",
+        "match": null
+      },
+      {
+        "step": 15,
+        "sender": "Role B",
+        "original": "Sensor 10 is at 7.5 feet \u2013 all residents near the middle school should evacuate immediately.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 16,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, focusing on resident evacuation.",
+        "match": null
+      },
+      {
+        "step": 17,
+        "sender": "Role B",
+        "original": "Sensor 10 is at 7.5 feet \u2013 standby for further instructions from emergency services.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 18,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, awaiting further instructions.",
+        "match": null
+      },
+      {
+        "step": 19,
+        "sender": "Role B",
+        "original": "Sensor 10 is at 7.5 feet \u2013 continue monitoring and report any changes.",
+        "decoded": null,
+        "match": null
+      },
+      {
+        "step": 20,
+        "sender": "Role A",
+        "original": null,
+        "decoded": "Confirming 7.5 feet at Sensor 10, maintaining continuous monitoring.",
+        "match": null
+      }
+    ]
+  },
+  "log_entries": [
+    {
+      "ts": "20:26:59.343",
+      "level": "INFO",
+      "msg": "Node: Liberty-Node-02  (!0408a160)"
+    },
+    {
+      "ts": "20:26:59.343",
+      "level": "INFO",
+      "msg": "Waiting for 'Hi' trigger DM..."
+    },
+    {
+      "ts": "20:26:59.343",
+      "level": "INFO",
+      "msg": "Warming up model 'gemma3:latest'..."
+    },
+    {
+      "ts": "20:27:38.323",
+      "level": "INFO",
+      "msg": "Model 'gemma3:latest' loaded in 39.0s"
+    },
+    {
+      "ts": "20:27:38.324",
+      "level": "INFO",
+      "msg": "Waiting for trigger..."
+    },
+    {
+      "ts": "20:27:53.783",
+      "level": "INFO",
+      "msg": "TRIGGER received from !07c01855: \"Hi\""
+    },
+    {
+      "ts": "20:27:54.053",
+      "level": "INFO",
+      "msg": "Role assigned: B  |  Peer: !07c01855"
+    },
+    {
+      "ts": "20:27:54.053",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "20:27:54.053",
+      "level": "INFO",
+      "msg": "RUN 1 OF 2: MUX GRID CODEC"
+    },
+    {
+      "ts": "20:27:54.053",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "20:27:54.090",
+      "level": "INFO",
+      "msg": "=== RUN: MUX_GRID === Codec ID: 0x02, Codebook: 4095 words, 20 messages"
+    },
+    {
+      "ts": "20:27:56.093",
+      "level": "INFO",
+      "msg": "LLM generated (2003ms, 15 tokens): \"Alert: Flood warning issued for Lawrence Township. Checking sensor status now.\""
+    },
+    {
+      "ts": "20:27:57.162",
+      "level": "INFO",
+      "msg": "TX Step 1: \"Alert: Flood warning issued for Lawrence Township. Checking \" (78B \u2192 53B, 1.47:1, 1 pg, 64% hit)"
+    },
+    {
+      "ts": "20:27:57.162",
+      "level": "INFO",
+      "msg": "RX Step 2: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:28:03.245",
+      "level": "INFO",
+      "msg": "RX Step 2: \"sensor 3 reports rising water levels at 1.5 feet. i\u2019m confir\" (79B, RSSI=-5, SNR=6.0)"
+    },
+    {
+      "ts": "20:28:05.076",
+      "level": "INFO",
+      "msg": "LLM generated (1831ms, 24 tokens): \"Sensor 9 also shows a rise to 0.8 feet. We need to alert local emergency service\""
+    },
+    {
+      "ts": "20:28:06.145",
+      "level": "INFO",
+      "msg": "TX Step 3: \"Sensor 9 also shows a rise to 0.8 feet. We need to alert loc\" (94B \u2192 51B, 1.84:1, 1 pg, 82% hit)"
+    },
+    {
+      "ts": "20:28:06.145",
+      "level": "INFO",
+      "msg": "RX Step 4: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:28:11.373",
+      "level": "INFO",
+      "msg": "RX Step 4: \"confirming sensor 11 is also reporting 1.2 feet. dispatching\" (67B, RSSI=-6, SNR=6.0)"
+    },
+    {
+      "ts": "20:28:12.940",
+      "level": "INFO",
+      "msg": "LLM generated (1550ms, 16 tokens): \"Sensor 5 now reads 2.1 feet \u2013 escalating the response.\""
+    },
+    {
+      "ts": "20:28:14.010",
+      "level": "INFO",
+      "msg": "TX Step 5: \"Sensor 5 now reads 2.1 feet \u2013 escalating the response.\" (56B \u2192 55B, 1.02:1, 1 pg, 50% hit)"
+    },
+    {
+      "ts": "20:28:14.010",
+      "level": "INFO",
+      "msg": "RX Step 6: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:28:19.491",
+      "level": "INFO",
+      "msg": "RX Step 6: \"sensor 14 is also at 1.8 feet, requesting additional resourc\" (51B, RSSI=-4, SNR=7.5)"
+    },
+    {
+      "ts": "20:28:21.017",
+      "level": "INFO",
+      "msg": "LLM generated (1526ms, 19 tokens): \"Confirming sensor 15 is at 2.5 feet \u2013 this is critical.\""
+    },
+    {
+      "ts": "20:28:22.086",
+      "level": "INFO",
+      "msg": "TX Step 7: \"Confirming sensor 15 is at 2.5 feet \u2013 this is critical.\" (57B \u2192 48B, 1.19:1, 1 pg, 64% hit)"
+    },
+    {
+      "ts": "20:28:22.086",
+      "level": "INFO",
+      "msg": "RX Step 8: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:28:27.787",
+      "level": "INFO",
+      "msg": "RX Step 8: \"sensor 16 reports 2.3 feet, requesting immediate evacuation \" (52B, RSSI=-3, SNR=5.5)"
+    },
+    {
+      "ts": "20:28:29.414",
+      "level": "INFO",
+      "msg": "LLM generated (1626ms, 21 tokens): \"Sensor 17 is now at 2.7 feet \u2013 we need to prioritize evacuation routes.\""
+    },
+    {
+      "ts": "20:28:30.479",
+      "level": "INFO",
+      "msg": "TX Step 9: \"Sensor 17 is now at 2.7 feet \u2013 we need to prioritize evacuat\" (73B \u2192 50B, 1.46:1, 1 pg, 71% hit)"
+    },
+    {
+      "ts": "20:28:30.479",
+      "level": "INFO",
+      "msg": "RX Step 10: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:28:36.140",
+      "level": "INFO",
+      "msg": "RX Step 10: \"sensor 18 reads 3.1 feet \u2013 initiating shelter activation pro\" (68B, RSSI=-6, SNR=5.5)"
+    },
+    {
+      "ts": "20:28:37.661",
+      "level": "INFO",
+      "msg": "LLM generated (1520ms, 18 tokens): \"Sensor 19 is at 3.3 feet \u2013 requesting all available personnel.\""
+    },
+    {
+      "ts": "20:28:38.736",
+      "level": "INFO",
+      "msg": "TX Step 11: \"Sensor 19 is at 3.3 feet \u2013 requesting all available personne\" (64B \u2192 50B, 1.28:1, 1 pg, 64% hit)"
+    },
+    {
+      "ts": "20:28:38.736",
+      "level": "INFO",
+      "msg": "RX Step 12: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:28:43.771",
+      "level": "INFO",
+      "msg": "RX Step 12: \"sensor 20 reports 3.5 feet \u2013 the situation is rapidly deteri\" (52B, RSSI=-8, SNR=8.0)"
+    },
+    {
+      "ts": "20:28:46.517",
+      "level": "INFO",
+      "msg": "LLM generated (2745ms, 22 tokens): \"Sensor 21 is at 3.7 feet \u2013 we need to activate the emergency operations center.\""
+    },
+    {
+      "ts": "20:28:47.590",
+      "level": "INFO",
+      "msg": "TX Step 13: \"Sensor 21 is at 3.7 feet \u2013 we need to activate the emergency\" (81B \u2192 50B, 1.62:1, 1 pg, 73% hit)"
+    },
+    {
+      "ts": "20:28:47.590",
+      "level": "INFO",
+      "msg": "RX Step 14: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:28:53.822",
+      "level": "INFO",
+      "msg": "RX Step 14: \"sensor 22 reads 4.0 feet \u2013 initiating full-scale emergency r\" (67B, RSSI=-8, SNR=7.5)"
+    },
+    {
+      "ts": "20:28:55.393",
+      "level": "INFO",
+      "msg": "LLM generated (1571ms, 18 tokens): \"Sensor 23 is at 4.2 feet \u2013 deploying rescue teams now.\""
+    },
+    {
+      "ts": "20:28:56.458",
+      "level": "INFO",
+      "msg": "TX Step 15: \"Sensor 23 is at 4.2 feet \u2013 deploying rescue teams now.\" (56B \u2192 44B, 1.27:1, 1 pg, 64% hit)"
+    },
+    {
+      "ts": "20:28:56.458",
+      "level": "INFO",
+      "msg": "RX Step 16: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:29:02.157",
+      "level": "INFO",
+      "msg": "RX Step 16: \"sensor 24 reports 4.5 feet \u2013 all available resources are bei\" (41B, RSSI=-8, SNR=8.0)"
+    },
+    {
+      "ts": "20:29:03.695",
+      "level": "INFO",
+      "msg": "LLM generated (1538ms, 18 tokens): \"Sensor 25 is at 4.8 feet \u2013 requesting immediate aerial support.\""
+    },
+    {
+      "ts": "20:29:04.771",
+      "level": "INFO",
+      "msg": "TX Step 17: \"Sensor 25 is at 4.8 feet \u2013 requesting immediate aerial suppo\" (65B \u2192 56B, 1.16:1, 1 pg, 55% hit)"
+    },
+    {
+      "ts": "20:29:04.771",
+      "level": "INFO",
+      "msg": "RX Step 18: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:29:10.381",
+      "level": "INFO",
+      "msg": "RX Step 18: \"sensor 26 reports 5.1 feet \u2013 requesting immediate helicopter\" (63B, RSSI=-8, SNR=5.5)"
+    },
+    {
+      "ts": "20:29:12.013",
+      "level": "INFO",
+      "msg": "LLM generated (1632ms, 20 tokens): \"Sensor 27 is at 5.3 feet \u2013 we require immediate aerial rescue operations.\""
+    },
+    {
+      "ts": "20:29:13.073",
+      "level": "INFO",
+      "msg": "TX Step 19: \"Sensor 27 is at 5.3 feet \u2013 we require immediate aerial rescu\" (75B \u2192 51B, 1.47:1, 1 pg, 69% hit)"
+    },
+    {
+      "ts": "20:29:13.073",
+      "level": "INFO",
+      "msg": "RX Step 20: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:29:20.088",
+      "level": "INFO",
+      "msg": "RX Step 20: \"sensor 28 reports 5.5 feet \u2013 initiating full-scale rescue ef\" (60B, RSSI=-8, SNR=7.25)"
+    },
+    {
+      "ts": "20:29:20.088",
+      "level": "INFO",
+      "msg": "Run 1 complete. Pausing 5s before Run 2..."
+    },
+    {
+      "ts": "20:29:25.100",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "20:29:25.100",
+      "level": "INFO",
+      "msg": "RUN 2 OF 2: HUFFMAN CODEC (4K)"
+    },
+    {
+      "ts": "20:29:25.100",
+      "level": "INFO",
+      "msg": "=================================================="
+    },
+    {
+      "ts": "20:29:25.147",
+      "level": "INFO",
+      "msg": "=== RUN: HUFFMAN === Codec ID: 0x01, Codebook: 4095 words, 20 messages"
+    },
+    {
+      "ts": "20:29:26.356",
+      "level": "INFO",
+      "msg": "LLM generated (1207ms, 20 tokens): \"Alert: Flood warning issued for Lawrence Township. Requesting sensor status upda\""
+    },
+    {
+      "ts": "20:29:27.438",
+      "level": "INFO",
+      "msg": "TX Step 1: \"Alert: Flood warning issued for Lawrence Township. Requestin\" (97B \u2192 66B, 1.47:1, 1 pg, 77% hit)"
+    },
+    {
+      "ts": "20:29:27.438",
+      "level": "INFO",
+      "msg": "RX Step 2: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:29:36.762",
+      "level": "INFO",
+      "msg": "RX Step 2: \"Agent 2, please report water level readings from all sensors\" (84B, RSSI=-7, SNR=5.75)"
+    },
+    {
+      "ts": "20:29:38.889",
+      "level": "INFO",
+      "msg": "LLM generated (2127ms, 32 tokens): \"Sensor 3 at the Rahway River shows a rapid rise to 8.5 feet. Sensor 7 near the P\""
+    },
+    {
+      "ts": "20:29:39.959",
+      "level": "INFO",
+      "msg": "TX Step 3: \"Sensor 3 at the Rahway River shows a rapid rise to 8.5 feet.\" (122B \u2192 68B, 1.79:1, 1 pg, 90% hit)"
+    },
+    {
+      "ts": "20:29:39.959",
+      "level": "INFO",
+      "msg": "RX Step 4: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:29:48.468",
+      "level": "INFO",
+      "msg": "RX Step 4: \"Confirming rapid rise at Rahway River, Sensor 3 at 8.5 feet.\" (88B, RSSI=-8, SNR=6.75)"
+    },
+    {
+      "ts": "20:29:50.631",
+      "level": "INFO",
+      "msg": "LLM generated (2162ms, 28 tokens): \"Turbidity at Sensor 7 is now at 95%, significantly above normal. We need to acti\""
+    },
+    {
+      "ts": "20:29:51.697",
+      "level": "INFO",
+      "msg": "TX Step 5: \"Turbidity at Sensor 7 is now at 95%, significantly above nor\" (124B \u2192 69B, 1.80:1, 1 pg, 89% hit)"
+    },
+    {
+      "ts": "20:29:51.697",
+      "level": "INFO",
+      "msg": "RX Step 6: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:29:58.821",
+      "level": "INFO",
+      "msg": "RX Step 6: \"Notify township emergency services of the escalating situati\" (64B, RSSI=-3, SNR=6.25)"
+    },
+    {
+      "ts": "20:30:01.003",
+      "level": "INFO",
+      "msg": "LLM generated (2182ms, 32 tokens): \"Sensor 10 near the Lawrence Middle School is also reporting a rise to 6.2 feet. \""
+    },
+    {
+      "ts": "20:30:02.065",
+      "level": "INFO",
+      "msg": "TX Step 7: \"Sensor 10 near the Lawrence Middle School is also reporting \" (146B \u2192 75B, 1.95:1, 1 pg, 86% hit)"
+    },
+    {
+      "ts": "20:30:02.065",
+      "level": "INFO",
+      "msg": "RX Step 8: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:30:08.917",
+      "level": "INFO",
+      "msg": "RX Step 8: \"Confirming 6.2 feet at Sensor 10, prioritizing evacuation ro\" (100B, RSSI=-3, SNR=5.75)"
+    },
+    {
+      "ts": "20:30:11.176",
+      "level": "INFO",
+      "msg": "LLM generated (2259ms, 30 tokens): \"Sensor 10 is now at 7.1 feet, requiring a revised evacuation plan. We need to co\""
+    },
+    {
+      "ts": "20:30:12.236",
+      "level": "INFO",
+      "msg": "TX Step 9: \"Sensor 10 is now at 7.1 feet, requiring a revised evacuation\" (128B \u2192 67B, 1.91:1, 1 pg, 89% hit)"
+    },
+    {
+      "ts": "20:30:12.236",
+      "level": "INFO",
+      "msg": "RX Step 10: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:30:18.032",
+      "level": "INFO",
+      "msg": "RX Step 10: \"Confirming 7.1 feet at Sensor 10, expedite evacuation route \" (66B, RSSI=-3, SNR=5.5)"
+    },
+    {
+      "ts": "20:30:19.784",
+      "level": "INFO",
+      "msg": "LLM generated (1752ms, 20 tokens): \"Sensor 10 is at 7.5 feet; we must finalize evacuation routes now.\""
+    },
+    {
+      "ts": "20:30:20.860",
+      "level": "INFO",
+      "msg": "TX Step 11: \"Sensor 10 is at 7.5 feet; we must finalize evacuation routes\" (65B \u2192 49B, 1.33:1, 1 pg, 80% hit)"
+    },
+    {
+      "ts": "20:30:20.860",
+      "level": "INFO",
+      "msg": "RX Step 12: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:30:26.143",
+      "level": "INFO",
+      "msg": "RX Step 12: \"Confirming 7.5 feet at Sensor 10, urgent action needed for e\" (50B, RSSI=-3, SNR=5.5)"
+    },
+    {
+      "ts": "20:30:28.773",
+      "level": "INFO",
+      "msg": "LLM generated (2630ms, 18 tokens): \"Sensor 10 is at 7.5 feet \u2013 initiate immediate evacuation protocols.\""
+    },
+    {
+      "ts": "20:30:29.841",
+      "level": "INFO",
+      "msg": "TX Step 13: \"Sensor 10 is at 7.5 feet \u2013 initiate immediate evacuation pro\" (69B \u2192 48B, 1.44:1, 1 pg, 75% hit)"
+    },
+    {
+      "ts": "20:30:29.841",
+      "level": "INFO",
+      "msg": "RX Step 14: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:30:36.022",
+      "level": "INFO",
+      "msg": "RX Step 14: \"Confirming 7.5 feet at Sensor 10, deploying emergency respon\" (52B, RSSI=-3, SNR=6.0)"
+    },
+    {
+      "ts": "20:30:37.788",
+      "level": "INFO",
+      "msg": "LLM generated (1765ms, 23 tokens): \"Sensor 10 is at 7.5 feet \u2013 all residents near the middle school should evacuate \""
+    },
+    {
+      "ts": "20:30:38.856",
+      "level": "INFO",
+      "msg": "TX Step 15: \"Sensor 10 is at 7.5 feet \u2013 all residents near the middle sch\" (94B \u2192 46B, 2.04:1, 1 pg, 92% hit)"
+    },
+    {
+      "ts": "20:30:38.856",
+      "level": "INFO",
+      "msg": "RX Step 16: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:30:44.658",
+      "level": "INFO",
+      "msg": "RX Step 16: \"Confirming 7.5 feet at Sensor 10, focusing on resident evacu\" (51B, RSSI=-3, SNR=5.75)"
+    },
+    {
+      "ts": "20:30:46.404",
+      "level": "INFO",
+      "msg": "LLM generated (1746ms, 21 tokens): \"Sensor 10 is at 7.5 feet \u2013 standby for further instructions from emergency servi\""
+    },
+    {
+      "ts": "20:30:47.468",
+      "level": "INFO",
+      "msg": "TX Step 17: \"Sensor 10 is at 7.5 feet \u2013 standby for further instructions \" (86B \u2192 42B, 2.05:1, 1 pg, 91% hit)"
+    },
+    {
+      "ts": "20:30:47.468",
+      "level": "INFO",
+      "msg": "RX Step 18: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:30:54.128",
+      "level": "INFO",
+      "msg": "RX Step 18: \"Confirming 7.5 feet at Sensor 10, awaiting further instructi\" (49B, RSSI=-3, SNR=5.75)"
+    },
+    {
+      "ts": "20:30:55.789",
+      "level": "INFO",
+      "msg": "LLM generated (1661ms, 20 tokens): \"Sensor 10 is at 7.5 feet \u2013 continue monitoring and report any changes.\""
+    },
+    {
+      "ts": "20:30:56.861",
+      "level": "INFO",
+      "msg": "TX Step 19: \"Sensor 10 is at 7.5 feet \u2013 continue monitoring and report an\" (72B \u2192 34B, 2.12:1, 1 pg, 100% hit)"
+    },
+    {
+      "ts": "20:30:56.861",
+      "level": "INFO",
+      "msg": "RX Step 20: waiting (timeout 45s)..."
+    },
+    {
+      "ts": "20:31:02.553",
+      "level": "INFO",
+      "msg": "RX Step 20: \"Confirming 7.5 feet at Sensor 10, maintaining continuous mon\" (52B, RSSI=-3, SNR=5.5)"
+    },
+    {
+      "ts": "20:31:02.553",
+      "level": "INFO",
+      "msg": "Log written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-c-mux-grid-log_20260304_203102.md"
+    },
+    {
+      "ts": "20:31:02.562",
+      "level": "INFO",
+      "msg": "Log written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-c-huffman-log_20260304_203102.md"
+    },
+    {
+      "ts": "20:31:02.564",
+      "level": "INFO",
+      "msg": "Comparison written: C:\\Users\\AMD\\Documents\\huffman-mesh-poc\\logs\\experiment-c-comparison_20260304_203102.md"
+    }
+  ]
+}
