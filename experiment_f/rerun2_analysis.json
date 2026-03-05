@@ -1,0 +1,348 @@
+{
+  "data": {
+    "run_date": "2026-03-05",
+    "run_id": "rerun-2",
+    "nvidia": {
+      "node": "Liberty-Node-04 (!07c01855)",
+      "role": "A",
+      "hardware": "Nvidia laptop",
+      "model_warmup_ms": 1400,
+      "phase1_mux": {
+        "messages_tx": 10,
+        "messages_rx": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "raw_bytes_tx": 806,
+        "compressed_bytes_tx": 371,
+        "ratio": 2.17,
+        "hit_rate": 82.5,
+        "avg_esc": 2.4,
+        "avg_gen_ms": 544,
+        "pages_gt1": 0
+      },
+      "phase1_huffman": {
+        "messages_tx": 10,
+        "messages_rx": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "raw_bytes_tx": 470,
+        "compressed_bytes_tx": 247,
+        "ratio": 1.9,
+        "hit_rate": 90.3,
+        "avg_esc": 1.0,
+        "avg_gen_ms": 512,
+        "pages_gt1": 0,
+        "notes": "2 empty responses (steps 8, 16), model collapsed to 0-1 tokens twice"
+      },
+      "phase2_mux": {
+        "messages_tx": 10,
+        "messages_rx": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "raw_bytes_tx": 584,
+        "compressed_bytes_tx": 236,
+        "ratio": 2.47,
+        "hit_rate": 93.4,
+        "avg_esc": 0.8,
+        "avg_gen_ms": 363,
+        "avg_enc_ms": 222,
+        "avg_dec_ms": 463,
+        "fallback_events": 2,
+        "pages_gt1": 0,
+        "meta_loop_count": 5,
+        "encode_framing_count": 3,
+        "decode_noise_count": 5
+      },
+      "phase2_huffman": {
+        "messages_tx": 10,
+        "messages_rx": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "raw_bytes_tx": 439,
+        "compressed_bytes_tx": 215,
+        "ratio": 2.04,
+        "hit_rate": 91.1,
+        "avg_esc": 0.8,
+        "avg_gen_ms": 115,
+        "avg_enc_ms": 305,
+        "avg_dec_ms": 396,
+        "fallback_events": 0,
+        "pages_gt1": 0,
+        "meta_loop_count": 4,
+        "encode_framing_count": 3,
+        "decode_noise_count": 5,
+        "notes": "SEVERE COLLAPSE: 8/10 generate outputs were '1 short response.' Model stuck in meta-loop on GENERATE step, not just encode"
+      }
+    },
+    "strix": {
+      "node": "Liberty-Node-02 (!0408a160)",
+      "role": "B",
+      "hardware": "AMD Strix Halo 395",
+      "model_warmup_ms": 800,
+      "phase1_mux": {
+        "messages_tx": 10,
+        "messages_rx": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "raw_bytes_tx": 1144,
+        "compressed_bytes_tx": 473,
+        "ratio": 2.42,
+        "hit_rate": 92.5,
+        "avg_esc": 1.8,
+        "avg_gen_ms": 1526,
+        "pages_gt1": 0,
+        "notes": "Messages 3-13 all generated nearly identical text: 'The flood warning is active. Two sensors are operational; one is offline...' \u2014 repetition loop on GENERATE (not encode)"
+      },
+      "phase1_huffman": {
+        "messages_tx": 10,
+        "messages_rx": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "raw_bytes_tx": 706,
+        "compressed_bytes_tx": 267,
+        "ratio": 2.64,
+        "hit_rate": 96.1,
+        "avg_esc": 0.6,
+        "avg_gen_ms": 1350,
+        "pages_gt1": 0,
+        "notes": "Messages 7-19 mostly 'We're monitoring/keeping an eye/handling...' \u2014 repetition convergence"
+      },
+      "phase2_mux": {
+        "messages_tx": 10,
+        "messages_rx": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "raw_bytes_tx": 1404,
+        "compressed_bytes_tx": 777,
+        "ratio": 1.81,
+        "hit_rate": 79.4,
+        "avg_esc": 4.8,
+        "avg_gen_ms": 1345,
+        "avg_enc_ms": 1718,
+        "avg_dec_ms": 1437,
+        "fallback_events": 0,
+        "pages_gt1": 0,
+        "meta_loop_count": 0,
+        "encode_framing_count": 0,
+        "decode_noise_count": 4,
+        "notes": "Strix RECEIVED Nvidia's meta-loop outputs. Its own encodes were cleaner but repetitive. All 10 encodes were variations of 'the flood warning is active in lawrence township...'"
+      },
+      "phase2_huffman": {
+        "messages_tx": 10,
+        "messages_rx": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "raw_bytes_tx": 1070,
+        "compressed_bytes_tx": 556,
+        "ratio": 1.92,
+        "hit_rate": 80.7,
+        "avg_esc": 3.5,
+        "avg_gen_ms": 1448,
+        "avg_enc_ms": 1577,
+        "avg_dec_ms": 1256,
+        "fallback_events": 0,
+        "pages_gt1": 0,
+        "meta_loop_count": 1,
+        "encode_framing_count": 0,
+        "decode_noise_count": 0,
+        "notes": "Strix RECEIVED Nvidia's '1 short response' collapse outputs. Its own encodes were 'the flood warning is active...' repeated. 2 empty generates (steps 1, 19)"
+      }
+    }
+  },
+  "issues": {
+    "issue_1_meta_loop": {
+      "description": "RLHF helpfulness bias \u2014 model breaks codec persona",
+      "nvidia_phase2_mux": {
+        "count": 5,
+        "examples": [
+          "Would you like me to also help with a more technical or formal version?",
+          "If you meant to clarify or rephrase the sentence, here's a more polished version",
+          "Would you like me to help you rephrase this message for a different audience",
+          "But you want a more natural, polished version:",
+          "Would you like me to make this sound more formal or more casual?"
+        ]
+      },
+      "nvidia_phase2_huffman": {
+        "count": 4,
+        "examples": [
+          "I will provide a concise and clear response.",
+          "I understand your request. Here are two short responses:",
+          "You're asking for a 1-sentence response. Here it is:",
+          "Let me know if you'd like me to tailor it further!"
+        ]
+      },
+      "strix_phase2_mux": {
+        "count": 0,
+        "examples": []
+      },
+      "strix_phase2_huffman": {
+        "count": 1,
+        "examples": [
+          "It seems like your message might be incomplete or missing a specific point."
+        ]
+      },
+      "total": 10,
+      "severity": "CRITICAL",
+      "note": "Nvidia shows worse meta-loop than Strix. This may correlate with Nvidia's faster inference (less 'thinking time' = less constraint adherence). Or it may be that Nvidia's Role A receives meta-loop outputs from Strix's encode, creating a feedback loop."
+    },
+    "issue_2_encode_framing": {
+      "description": "LLM adds pedagogical labels to encode output",
+      "nvidia_phase2_mux": {
+        "count": 3,
+        "examples": [
+          "Translation:",
+          "Explanation:",
+          "---"
+        ]
+      },
+      "nvidia_phase2_huffman": {
+        "count": 3,
+        "examples": [
+          "Answer: \"Thank you for your message.\"",
+          "I understand your request. Here are two short responses:",
+          "You would respond with a concise message, such as:"
+        ]
+      },
+      "strix_phase2_mux": {
+        "count": 0,
+        "examples": []
+      },
+      "strix_phase2_huffman": {
+        "count": 0,
+        "examples": []
+      },
+      "total": 6,
+      "severity": "HIGH",
+      "note": "Only Nvidia produces framing artifacts. Strix encodes are clean but repetitive."
+    },
+    "issue_3_decode_noise": {
+      "description": "LLM appends meta-commentary to decode output",
+      "nvidia_phase2_mux": {
+        "count": 5,
+        "examples": [
+          "(Word count: 28)",
+          "(Note: The actual technical details about...)",
+          "(Word count: 45)",
+          "(Word count: 27)",
+          "(Note: The exact wording and structure may...)"
+        ]
+      },
+      "nvidia_phase2_huffman": {
+        "count": 5,
+        "examples": [
+          "(Word count: 54)",
+          "(Word count: 27)",
+          "(Word count: 27)",
+          "(Note: The exact coordinates and team details...)",
+          "Expanded: The flood warning has been issued..."
+        ]
+      },
+      "strix_phase2_mux": {
+        "count": 4,
+        "examples": [
+          "Certainly! Here's a more formal and technical...",
+          "Would you like me to adjust this message...",
+          "Would you like me to provide a more formal...",
+          "Would you like me to adjust the tone of..."
+        ]
+      },
+      "strix_phase2_huffman": {
+        "count": 0,
+        "examples": []
+      },
+      "total": 14,
+      "severity": "HIGH",
+      "note": "Nvidia's decode noise is systematic '(Word count: N)' pattern. Strix's decode noise comes from decoding Nvidia's meta-loop encode outputs \u2014 the noise propagates across nodes."
+    },
+    "issue_4_generate_collapse": {
+      "description": "NEW ISSUE: LLM generates near-identical or degenerate text across multiple turns",
+      "nvidia_phase1_huffman": {
+        "count": 2,
+        "examples": [
+          "Empty response (0 tokens) at steps 8, 16"
+        ]
+      },
+      "nvidia_phase2_huffman": {
+        "count": 8,
+        "examples": [
+          "8/10 generates were '1 short response.' \u2014 model collapsed into self-referential loop",
+          "Generate step itself broke, not just encode"
+        ]
+      },
+      "strix_phase1_mux": {
+        "count": 7,
+        "examples": [
+          "Messages 3-13: 'The flood warning is active. Two sensors are operational; one is offline...' (near-identical)"
+        ]
+      },
+      "strix_phase1_huffman": {
+        "count": 5,
+        "examples": [
+          "Messages 7-19: variations of 'We're monitoring/keeping an eye/handling...'"
+        ]
+      },
+      "strix_phase2_mux": {
+        "count": 8,
+        "examples": [
+          "Messages 3-17: all 'The flood warning is active in Lawrence Township...' repeated"
+        ]
+      },
+      "strix_phase2_huffman": {
+        "count": 8,
+        "examples": [
+          "Messages 3-17: all 'The flood warning is active...' with minor variations",
+          "2 empty generates (steps 1, 19)"
+        ]
+      },
+      "total": "pervasive",
+      "severity": "HIGH",
+      "note": "This is a NEW issue not in the original 3. The repetition_penalty=1.05 is insufficient to prevent conversation-level repetition. The model converges to a 'safe' response and repeats it. This affects GENERATE, not just encode. Experiment F's SOUL.md prompts address encode/decode but not the conversation generate step."
+    }
+  },
+  "hardware": {
+    "phase1": {
+      "mux_gen": {
+        "nvidia": 544,
+        "strix": 1526,
+        "ratio": 2.8
+      },
+      "huffman_gen": {
+        "nvidia": 512,
+        "strix": 1350,
+        "ratio": 2.6
+      }
+    },
+    "phase2": {
+      "mux_gen": {
+        "nvidia": 363,
+        "strix": 1345,
+        "ratio": 3.7
+      },
+      "mux_enc": {
+        "nvidia": 222,
+        "strix": 1718,
+        "ratio": 7.7
+      },
+      "mux_dec": {
+        "nvidia": 463,
+        "strix": 1437,
+        "ratio": 3.1
+      },
+      "huffman_gen": {
+        "nvidia": 115,
+        "strix": 1448,
+        "ratio": 12.6
+      },
+      "huffman_enc": {
+        "nvidia": 305,
+        "strix": 1577,
+        "ratio": 5.2
+      },
+      "huffman_dec": {
+        "nvidia": 396,
+        "strix": 1256,
+        "ratio": 3.2
+      }
+    }
+  }
+}

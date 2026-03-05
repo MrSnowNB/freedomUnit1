@@ -1,6 +1,6 @@
 ---
 title: "CyberMesh Codec POC"
-version: 6.0.0
+version: 7.0.0
 date: 2026-03-05
 status: build
 lifecycle_stage: build
@@ -17,10 +17,10 @@ LFM2.5-1.2B kernel via Lemonade Server, zero internet.
 
 ## What This Proves
 
-Six experiments progressively prove that LLM kernel–generated messages can be
+Seven experiments progressively prove that LLM kernel–generated messages can be
 compressed, transmitted over LoRa radio, and decompressed with full fidelity —
-culminating in an LLM kernel that rewrites its own output to maximize
-compression before transmission, validated by a deterministic codec harness.
+culminating in Smart Router architecture with 333K codebooks, keyword compression,
+and a 4-run experiment matrix validated by a deterministic codec harness.
 
 | Experiment | Codec | Codebook | LLM Kernel | Status |
 |-----------|-------|----------|------------|--------|
@@ -31,14 +31,16 @@ compression before transmission, validated by a deterministic codec harness.
 | D-Ph2 | LLM kernel encode/decode + both codecs | 4,096 shared | Gemma3 4B / Ollama | Built, ready for live test |
 | E | Full codec pipeline + Lemonade backend | 4,096 shared | LFM2.5-1.2B / Lemonade | Validated: 80/80, Huffman 1.94:1, hit 91.8% |
 | F | Codec harness validation (SOUL.md + hooks) | 4,096 shared | LFM2.5-1.2B / Lemonade | Built, ready for live test |
+| G (v7.0) | Smart Router: 333K codebooks + keyword codec | 333,333 words | LFM2.5-1.2B / Lemonade | Built, mock-validated |
 
 ```
 Laptop A                    LoRa 915 MHz                    Laptop B
 ┌──────────┐                                          ┌──────────┐
-│ LFM2.5   │  generate → [kernel encode] → normalize()│ LFM2.5   │
-│ 1.2B     │  → codec.encode() → sendData(raw)        │ 1.2B     │
-│ +codecs  │  → [3B hdr + data] → LoRa →              │ +codecs  │
-│ Lemonade │  codec.decode() → [kernel decode] → hist  │ Lemonade │
+│ LFM2.5   │  generate → pretokenize → smart_route() │ LFM2.5   │
+│ 1.2B     │  strict: encode → packet(0x01|02) → TX  │ 1.2B     │
+│ +codecs  │  lossy:  extract_kw → encode_kw → TX   │ +codecs  │
+│ 333K     │  paginate: chunk → multi-pkt TX         │ 333K     │
+│ Lemonade │  RX: decode → (reconstruct) → history    │ Lemonade │
 └──────────┘                                          └──────────┘
         Heltec V3 ◄────── LoRa ──────► Heltec V3
 ```
@@ -56,8 +58,9 @@ The system follows the **codec pipeline** architecture defined in
   post-processing hooks, accepts or retries based on validation. Not agentic.
 - **Codec Pipeline**: Full encode/decode path — plaintext → kernel encode →
   pretokenizer → codec compress → paginator → TX (and reverse on RX).
-- **Codec ID Byte**: `0x01` = Huffman, `0x02` = MUX Grid. Wire protocol
-  constant implementing PPA Claim 24 (Adaptive Multiplexer).
+- **Codec ID Byte**: `0x01` = Huffman strict, `0x02` = MUX Grid strict,
+  `0x03` = Huffman keyword, `0x04` = MUX Grid keyword. Wire protocol
+  constants implementing PPA Claim 24 (Adaptive Multiplexer).
 - **Vendor/Hardware/Software Agnostic**: Any model behind an
   OpenAI-compatible chat completions endpoint is a valid kernel. Swapping
   inference servers is a `config.yaml` change.
@@ -69,20 +72,41 @@ The system follows the **codec pipeline** architecture defined in
 - 2 laptops (Windows/Linux/Mac)
 - 2 Heltec V3 Meshtastic nodes (USB serial)
 - Python 3.10+
-- `pip install meshtastic pyyaml requests`
-- Lemonade Server with Liquid LFM2.5-1.2B model aliased as `test01` (Experiments E–F)
+- `pip install meshtastic pyyaml requests pypubsub`
+- Lemonade Server with Liquid LFM2.5-1.2B model aliased as `test01` (Experiments E–G)
 - Legacy: Ollama with `gemma3:latest` (Experiments C & D)
 
 ### Run
 
 ```bash
-# Both laptops — same command
-python huffman_mesh_poc.py
+# v7.0 Smart Router (Experiment G) — mock mode
+python huffman_mesh_poc.py --mock --role B
+
+# v7.0 Smart Router — live with real LLM
+python huffman_mesh_poc.py --role auto
+
+# Run a single experiment (1-4)
+python huffman_mesh_poc.py --run 1 --mock
 ```
 
-Both scripts enter LISTENING mode. Pick up one Heltec unit and send `Hi` as
-a DM to the other node. One "Hi" trigger runs both codec runs automatically
-(MUX Grid → Huffman → comparison table).
+In live mode, both scripts enter LISTENING mode. Pick up one Heltec unit and send
+`Hi` as a DM to the other node. The "Hi" trigger runs all 4 experiment runs
+automatically (Huffman keyword → MUX keyword → Huffman strict → MUX strict →
+comparison table).
+
+### v7.0 Smart Router (Experiment G)
+
+```yaml
+# config.yaml — key v7.0 settings
+codec:
+  engine: huffman          # huffman | mux_grid
+  codebook_size: 333k      # 333k | 4k
+  mode: keyword            # keyword | strict_only
+router:
+  strict_threshold: 180    # bytes — above this, route to lossy or paginate
+testing:
+  mock_llm: true           # true = mock mode, false = live Lemonade
+```
 
 ### Phase Control (Experiment D)
 
@@ -120,49 +144,74 @@ See `experiment_f/TESTING-PROTOCOL.md` for the full 10-step run protocol.
 ### Output
 
 - Console: real-time TX/RX log with compression ratios, hit rates, inference timing
-- `logs/experiment-log_YYYYMMDD_HHMMSS.md`: full results with YAML frontmatter
-- `experiment_f/test_report.md`: codec harness validation results
+- `logs/experiment-*-log_*.md`: per-run markdown results with YAML frontmatter
+- `logs/experiment-*-log_*.json`: machine-readable JSON logs
+- `experiment_f/test_report.md`: codec harness validation results (Exp F)
 
 ## How It Works
 
-1. **Trigger**: You DM `Hi` from one physical Heltec to the other
+1. **Trigger**: You DM `Hi` from one physical Heltec to the other (or use `--role B --mock` for loopback)
 2. **Role assignment**: Receiver of `Hi` = Role B (sends first). Other node = Role A
 3. **LLM kernel generates** a response from conversation history (Liquid LFM2.5-1.2B via Lemonade Server)
-4. **LLM kernel encodes** (Phase 2 only): rewrites output using codebook words only
-5. **Pre-tokenizer normalizes**: lowercase, expand contractions, strip punctuation
-6. **Codec encodes**: Huffman or MUX Grid compress to binary
-7. **Transport**: `sendData(portNum=256)` — 3-byte header + compressed payload
-8. **Codec decodes**: receiver auto-detects codec from header Byte 0 (Codec ID)
-9. **LLM kernel decodes** (Phase 2 only): expands compressed text to natural English
+4. **Pre-tokenizer normalizes**: lowercase, expand contractions, strip punctuation
+5. **Codec encodes**: Huffman or MUX Grid compress to binary (333K codebook)
+6. **Smart Router decides**: strict (fits in 1 packet) / lossy (extract keywords) / paginate (multi-packet)
+7. **Transport**: `sendData(portNum=256)` — CyberMeshPacket header + compressed payload
+8. **Codec decodes**: receiver auto-detects codec from header Codec ID byte
+9. **Keyword reconstruction** (lossy only): LLM reconstructs from keywords
 10. **Conversation continues**: decoded text enters history for next kernel turn
 11. **Logging**: every message logged with full codec pipeline metrics
 
 ## The Codecs
 
-### Huffman — `mesh_huffman.py` v4 (Experiments A, C, D, E)
+### Huffman — `huffman_codec.py` v7 (Experiments A, C, D, E, G)
 
-- 4,095-word codebook from shared `huffman_codebook_4k.csv` (64×64 grid vocabulary)
-- Variable-length Huffman codes — frequent words get shorter codes (4-15 bits)
+- 333,333-word codebook from `codebooks/huffman_333k.csv` (built from Kaggle unigram data)
+- Variable-length Huffman codes — frequent words get shorter codes (5–25 bits)
+- Tight bit packing for keyword encoding (no per-keyword byte padding)
+- Legacy: 4,095-word codebook from `huffman_codebook_4k.csv` still supported
 - Implicit spaces between tokens (1-bit NOSPACE flag for exceptions)
 - Case encoding: 1-bit lowercase, 2-bit capitalized/UPPER
 - Number encoding: variable-width binary (8/16/32 bit)
 - Unknown words: ESC + 5-bit length + 7-bit ASCII fallback
 - Case-sensitive roundtrip
 
-### MUX Grid — `mux_codec.py` (Experiments B, C, D, E)
+### MUX Grid — `mux_codec.py` v7 (Experiments B, C, D, E, G)
 
-- 4,096-entry frequency-sorted codebook (`mux_codebook.csv`, 64×64 grid)
-- Tiered bit packing: 7-bit (top 64), 10-bit (next 192), 14-bit (rest)
-- ESC fallback for unknown words (index 4095)
+- 333,333-entry frequency-sorted codebook (`codebooks/mux_333k.csv`, 700×700 grid)
+- Fixed 3-byte encoding per word (row_high, row_low+col_high, col_low)
+- Legacy: 4,096-entry codebook (`mux_codebook.csv`, 64×64 grid) still supported
+- ESC fallback for unknown words (sentinel index)
 - Case-insensitive (all text lowercased at encode)
-- Generated by `build_mux_codebook.py` from Kaggle data
+- Generated by `build_mux_codebook_333k.py` from Kaggle data
 
-### Pre-Tokenizer — `pretokenizer.py` (Experiments D, E)
+### Pre-Tokenizer — `pretokenizer.py` (Experiments D, E, G)
 
 - Normalizes LLM kernel output before codec encoding: lowercase, expand contractions,
   split hyphens, strip punctuation, convert decimals ("2.1" → "2 point 1")
 - Reduces ESC-triggering patterns from Experiment C
 - `compute_hit_rate()` checks codebook coverage for fallback decisions
+
+### Keyword Codec — `keyword_codec.py` (Experiment G/v7.0)
+
+- LLM kernel extracts keywords from text for lossy compression
+- Receiver LLM reconstructs natural language from keywords
+- Max 20 keywords per message
+- Preserves numbers, negation, and proper names
+- Works with both Huffman and MUX codecs for keyword encoding
+
+### Smart Router — `smart_router.py` (Experiment G/v7.0)
+
+- Decides route for each message: strict (fits in 180B), lossy (keyword compression),
+  or paginate (multi-packet)
+- Uses LLM classification for keyword mode: briefing/status → lossy, command/data/narrative → strict
+- Strict-only mode skips LLM classification entirely
+
+### Context Manager — `context_manager.py` (Experiment G/v7.0)
+
+- Thread-safe per-sender sliding-window conversation history
+- Anchor-first: always keeps the first message in context
+- Configurable window size (default 4 messages)
 
 ### LLM Codec — `llm_codec.py` (Experiments D Phase 2, E)
 
@@ -203,6 +252,17 @@ See `experiment_f/TESTING-PROTOCOL.md` for the full 10-step run protocol.
 | Avg ESC/msg | 4.4 | 2.4 |
 | Delivery | 40/40 (100%) | 40/40 (100%) |
 
+**Experiment G (v7.0) Mock-Validated Results (333K Codebook, Loopback):**
+
+| Metric | Huffman 333K | MUX 333K |
+|--------|-------------|----------|
+| Codebook size | 333,333 words | 333,333 entries |
+| Encoding | 5–25 bits variable | 3 bytes/word fixed |
+| 8-keyword payload | 15 bytes | 24 bytes |
+| Keyword advantage | 38% smaller | baseline |
+| 4K backward compat | Yes | Yes |
+| Mock run | 20/20 messages | 20/20 messages |
+
 **Experiment E Live Results (40 msgs/codec, Live LoRa, LFM2.5-1.2B kernel):**
 
 | Metric | MUX Grid | Huffman 4K |
@@ -212,36 +272,50 @@ See `experiment_f/TESTING-PROTOCOL.md` for the full 10-step run protocol.
 | Avg ESC/msg | 2.6 | 2.6 |
 | Delivery | 40/40 (100%) | 40/40 (100%) |
 
-Winner on LLM kernel text: **Huffman 4K**. Codecs have complementary strengths
-depending on vocabulary predictability. LLM kernel encode (Exp E) boosted MUX
-compression by 35% over raw LLM output (Exp C).
+Winner on LLM kernel text: **Huffman** at both 4K and 333K scales. 333K codebook
+eliminates most ESC fallbacks. Keyword mode (v7.0) adds lossy compression for
+messages that exceed the LoRa MTU.
 
 ## Repo Structure
 
 ```
 huffman-mesh-poc/
 ├── README.md                  ← You are here
-├── PLAN.md                    ← Experiment design spec (A–F)
-├── CODING-AGENT-LOG.md        ← AI coding agent build decisions & rationale (21 entries)
+├── PLAN.md                    ← Experiment design spec (A–G)
+├── CODING-AGENT-LOG.md        ← AI coding agent build decisions & rationale (22 entries)
 ├── ARCHITECT-TO-CODING-AGENT-2026-03-05.md ← Authoritative terminology & architecture
+├── cybermesh_v7_build_spec.md  ← v7.0 Smart Router architecture spec (803 lines)
 ├── TROUBLESHOOTING.md         ← Living doc: known issues & fixes
 ├── REPLICATION-NOTES.md       ← Living doc: setup checklist & pitfalls
 ├── ISSUE.md                   ← Open issues requiring human input
 ├── HARNESS-DESIGN-DISCUSSION.md ← Codec harness research & design (Experiment F)
 ├── AGENTIC-RESEARCH-SYNTHESIS.md ← Prompt engineering research synthesis
-├── config.yaml                ← Ports, timing, LLM kernel, phase control
-├── huffman_mesh_poc.py        ← Main experiment script v5.0 (Experiments C–E)
-├── mesh_huffman.py            ← Huffman codec v4 (4,095-word shared codebook)
-├── mux_codec.py               ← MUX Grid codec (4,096-entry 64×64 grid) — FROZEN
+├── config.yaml                ← v7.0 config: codec/router/keyword/context/testing
+├── huffman_mesh_poc.py        ← Main experiment harness v7.0 (1,308 lines)
+├── llm_client.py              ← LLM client: mock + live Lemonade (v7.0)
+├── huffman_codec.py           ← Huffman codec v7 (4K + 333K + keyword encode)
+├── mux_codec.py               ← MUX Grid codec v7 (4K + 333K + keyword encode)
+├── keyword_codec.py           ← Keyword extract/reconstruct via LLM (v7.0)
+├── smart_router.py            ← Smart Router: size/classify/route (v7.0)
+├── packet.py                  ← CyberMeshPacket: encode/decode, codec IDs 0x01–0x04 (v7.0)
+├── context_manager.py         ← Per-sender context window (v7.0)
 ├── pretokenizer.py            ← Pre-tokenizer: normalize() + compute_hit_rate()
-├── llm_codec.py               ← LLM codec: llm_encode() + llm_decode() via Lemonade/Ollama
-├── paginator.py               ← Message pagination for LoRa chunks
+├── paginator.py               ← Text + binary pagination (v7.0: paginate_strict)
+├── llm_codec.py               ← LLM codec: llm_encode() + llm_decode() (Exp D–E)
+├── mesh_huffman.py            ← Huffman codec v4 (legacy copy, pre-rename)
 ├── mux_codebook.csv           ← Shared 4,096-entry vocabulary — FROZEN
 ├── huffman_codebook_4k.csv    ← Huffman tree built from shared vocabulary — FROZEN
-├── build_mux_codebook.py      ← MUX codebook generator
-├── build_huffman_codebook.py  ← Huffman codebook generator
-├── test_codecs.py             ← Unit tests (8 suites, both codecs + pretokenizer + llm_codec)
 ├── english_unigram_freq.csv   ← Kaggle word frequency data (333K words)
+├── build_huffman_codebook_333k.py ← 333K Huffman codebook generator (v7.0)
+├── build_mux_codebook_333k.py ← 333K MUX codebook generator (v7.0)
+├── build_mux_codebook.py      ← 4K MUX codebook generator (legacy)
+├── build_huffman_codebook.py  ← 4K Huffman codebook generator (legacy)
+├── test_codecs.py             ← Unit tests (both codecs + pretokenizer + llm_codec)
+├── codebooks/                 ← Generated 333K codebooks (v7.0)
+│   ├── huffman_333k.csv       ← 333,333 words, 5–25 bits (6.2 MB)
+│   ├── huffman_333k.bin       ← Serialized Huffman tree (14.8 MB)
+│   ├── mux_333k.csv           ← 333,333 words, 700×700 grid (7.5 MB)
+│   └── mux_333k.bin           ← Serialized MUX grid (9.4 MB)
 ├── experiment_f/              ← Codec harness (Experiment F)
 │   ├── config.yaml            ← API, sampling params, token budgets, hook config
 │   ├── encode.soul.md         ← Encoder SOUL.md prompt
@@ -311,7 +385,12 @@ Experiment F introduces the codec harness — deterministic Python scaffolding
 with SOUL.md-pattern prompts and post-processing hooks — to validate and
 harden the kernel's encode/decode behavior.
 
+Experiment G (v7.0 "Smart Router") is a new architectural generation: 333K
+codebooks from Kaggle unigram frequency data, Smart Router with
+strict/lossy/paginate routing, keyword compression via LLM extraction, binary
+pagination, per-sender context management, and a 4-run experiment matrix.
+
 ---
 
 *Mindtech Mesh Networks — Liberty Mesh Project*
-*CC BY-SA 4.0 v6.0*
+*CC BY-SA 4.0 v7.0*

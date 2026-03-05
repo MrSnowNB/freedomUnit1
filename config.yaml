@@ -1,37 +1,76 @@
-# ─── CyberMesh Experiment E Configuration ───
-# Same file on both laptops. Only change 'port' if auto-detect fails.
+# ─── CyberMesh v7.0 "Smart Router" Configuration ───
+# Identical on both nodes. A/B testing: change 'engine' and 'mode'.
 
-# Serial port: "auto" scans for Meshtastic device, or set explicit (COM6, COM3, /dev/ttyUSB0)
+codec:
+  engine: huffman              # OPTIONS: huffman | mux_grid
+  codebook_size: 333k          # OPTIONS: 4k | 333k
+  mode: keyword                # OPTIONS: keyword | strict_only | legacy
+                               # keyword    = Smart Router (strict + lossy)
+                               # strict_only = always lossless, paginate overflow
+                               # legacy     = v5.0 behavior (constrained rewrite)
+
+router:
+  strict_threshold: 180        # max encoded bytes before router fires
+  classify_categories:         # router classification labels
+    - command
+    - status
+    - narrative
+    - data
+    - briefing
+  lossy_categories:            # which categories use lossy keyword mode
+    - status
+    - briefing
+  lossless_categories:         # which categories paginate lossless
+    - command
+    - narrative
+    - data
+
+keyword:
+  max_keywords: 20             # max keywords extracted per message
+  preserve_numbers: true       # always pass numbers through exactly
+  preserve_negation: true      # always keep: not, no, never, none, dont, cant
+  preserve_names: true         # keep proper nouns (capitalized words)
+
+pagination:
+  max_packet_payload: 180      # usable bytes per LoRa packet (after headers)
+  inter_packet_delay_s: 10     # seconds between paginated chunks
+  page_format: bracket         # OPTIONS: bracket "[1/3]" | header_byte
+
+context:
+  window_size: 4               # conversation exchanges to keep per sender
+  anchor_first: true           # always keep first exchange (Operator pattern)
+
+lemonade:
+  base_url: http://localhost:8000
+  model: test01
+  timeout_s: 45
+  warmup_on_start: true
+
+radio:
+  port: auto                   # serial port or 'auto'
+  node_name: Liberty-Node-02
+
+experiment:
+  name: F                      # experiment letter for log filenames
+  messages_per_node: 10
+  runs: 2                      # number of codec comparison runs
+
+logging:
+  dir: ./logs
+  format: markdown             # OPTIONS: markdown | json | both
+
+testing:
+  mock_llm: false              # true = hardcoded LLM responses for CI/offline
+                               # false = live calls to Lemonade at base_url
+
+# ─── Legacy v5.0 compat fields (used when mode: legacy) ───
 port: auto
-
-# Custom portnum for compressed data (256 = PRIVATE_APP)
 custom_portnum: 256
-
-# Trigger word — the DM text that starts the experiment
 trigger_word: "Hi"
-
-# Timeout waiting for a response (seconds)
-# Budget: LLM inference (x2 for Phase 2) + LoRa TX/ACK + margin
 timeout_s: 45
-
-# ─── LLM Backend (Lemonade Server) ───
-
-# Model name — must match what Lemonade Server reports in /api/v1/models.
-# Hot-swap: change this value and restart the experiment. No code changes needed.
-# Both laptops use the same alias so backends/download names don't matter.
 model_name: "test01"
-
-# LLM server base URL (no trailing slash).
-# Lemonade Server default: http://localhost:8000
-# Ollama fallback:         http://localhost:11434
 llm_base_url: "http://localhost:8000"
-
-# Messages per node (total conversation = 2x this number)
 messages_per_node: 10
-
-# System prompt — identical on both nodes
-# The LLM generates responses within this scenario context.
-# No token/word count constraint — just "be concise" in the prompt.
 conversation_seed: |
   You are a mesh network monitoring agent for Lawrence Township, NJ.
   A flood warning has been issued for the area.
@@ -43,18 +82,6 @@ conversation_seed: |
   - No quotation marks around your response.
   - Use simple, common English words.
   - Be direct and specific. Include numbers when reporting data.
-
-# ─── Experiment E Phase Control ───
-
-# Phase 1 (pretokenizer only): normalize text before encoding
-# Always enabled for Experiment E
 pretokenizer: true
-
-# Phase 2 (LLM codec): LLM rewrites output to codebook vocabulary before encoding
-# false = Phase 1 only (pretokenizer + raw codec)
-# true  = Phase 2 (pretokenizer + LLM encode/decode + codec)
 llm_codec: false
-
-# Fallback threshold: if LLM encode hit rate < this, skip encode and use raw text
-# Only applies when llm_codec: true
 fallback_threshold: 0.70

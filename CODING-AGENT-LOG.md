@@ -1,6 +1,6 @@
 ---
 title: "Coding Agent Build Log"
-version: 6.0.0
+version: 7.0.0
 date: 2026-03-05
 status: in_progress
 lifecycle_stage: build
@@ -802,3 +802,96 @@ Full pipeline (generate + encode + codec) under 600ms on Nvidia.
   on whether to update the architect doc itself.
 
 - **Status**: All docs updated, terminology aligned, ready for GitHub push.
+
+---
+
+## Entry 022 — v7.0 "Smart Router" Full Build
+
+- **Date**: 2026-03-05
+- **Phase**: Build
+- **Lifecycle**: Plan → **Build** → Validate → Review → Release
+- **Spec**: `cybermesh_v7_build_spec.md` (803-line Architecture Agent spec)
+- **Version bump**: v6.0 → v7.0
+
+### Overview
+
+Complete ground-up build of v7.0 "Smart Router" architecture. Seven build steps
+executed sequentially with validation gates between each. The v7.0 spec explicitly
+supersedes the prior mux_codec.py freeze directive — this is a new architectural
+generation.
+
+### Build Steps Executed
+
+| Step | Task | Result |
+|------|------|--------|
+| 1 | config.yaml v7.0 rewrite + llm_client.py (mock/live) | PASS — all imports, mock warmup |
+| 1b | Rename mesh_huffman.py → huffman_codec.py, fix imports | PASS — compiles clean |
+| 2 | Build 333K codebook generators + generate codebooks | PASS — Huffman 333,333 words (5-25 bits, depth 25), MUX 700×700 grid (68% util) |
+| 3 | huffman_codec.py + mux_codec.py 333K + keyword encode/decode | PASS — 4/4 tests (Huffman 333K kw, MUX 333K kw, Huffman 4K legacy, MUX 4K legacy) |
+| 4 | keyword_codec.py (LLM extract/reconstruct) | PASS — 5/5 emergency messages |
+| 5 | packet.py + smart_router.py (codec IDs + routing) | PASS — all 4 codec IDs, routing logic |
+| 6 | context_manager.py + paginator.py (strict binary) | PASS — window trimming, pagination, thread safety |
+| 7 | huffman_mesh_poc.py v7.0 harness (1,308 lines) | PASS — compile + mock mode 4/4 runs, 80 message exchanges |
+
+### Files Created
+
+| File | Lines | Purpose |
+|------|-------|---------|
+| config.yaml | ~80 | v7.0 config: codec/router/keyword/pagination/context/lemonade/testing |
+| llm_client.py | ~120 | Raw HTTP to Lemonade, mock mode via config flag, generate/classify/warmup |
+| huffman_codec.py | ~400 | Renamed from mesh_huffman.py. Added 333K codebook support, encode/decode_keywords (tight bit packing) |
+| mux_codec.py | ~350 | Added 333K 3-byte grid encoding, encode/decode_keywords, ESC sentinel |
+| keyword_codec.py | ~130 | LLM extract/reconstruct with exact spec prompts |
+| smart_router.py | ~100 | Size check → classify → route (strict/lossy/paginate) |
+| packet.py | ~100 | CyberMeshPacket encode/decode, codec IDs 0x01-0x04 |
+| context_manager.py | ~80 | Thread-safe per-sender history with anchor-first window |
+| paginator.py | ~150 | Added paginate_strict(), reassemble_strict() for binary payloads |
+| huffman_mesh_poc.py | 1,308 | v7.0 harness — 4-run experiment matrix, loopback, markdown/JSON logs |
+| build_huffman_codebook_333k.py | ~80 | Builds Huffman tree from english_unigram_freq.csv |
+| build_mux_codebook_333k.py | ~60 | Builds 700×700 MUX grid from english_unigram_freq.csv |
+
+### Codebooks Generated
+
+| File | Size | Stats |
+|------|------|-------|
+| codebooks/huffman_333k.csv | 6.2 MB | 333,333 words, 5-25 bits, depth 25, 100% round-trip |
+| codebooks/huffman_333k.bin | 14.8 MB | Serialized Huffman tree for fast load |
+| codebooks/mux_333k.csv | 7.5 MB | 333,333 words, 700×700 grid, 68% utilization |
+| codebooks/mux_333k.bin | 9.4 MB | Serialized MUX grid for fast load |
+
+### Key Design Decisions
+
+1. **mux_codec.py override**: Standing freeze directive superseded by v7.0 spec
+   (new architectural generation). Mark confirmed: "The v7.0 spec explicitly
+   supersedes that directive." mux_codebook.csv still FROZEN.
+2. **Tight bit packing**: Huffman encode_keywords() packs bits continuously across
+   keyword boundaries — no per-keyword byte padding. Mark directive: "make sure the
+   Huffman codec packs bits tightly across keyword boundaries."
+3. **File rename**: mesh_huffman.py → huffman_codec.py. Clean break for v7.0 major
+   version bump. Original mesh_huffman.py kept for backward reference.
+4. **Spec matches repo**: Kaggle dataset path in spec updated to match actual repo
+   path (english_unigram_freq.csv, not kaggle/unigram_freq.csv).
+5. **Mock/live split**: testing.mock_llm config flag controls LLM client behavior.
+6. **333K advantage**: Huffman 15 bytes vs MUX 24 bytes for 8 keywords (38% advantage).
+   Weighted average: Huffman 10.09 bits vs MUX 24 bits per keyword.
+7. **4K backward compatibility**: All legacy 4K paths preserved and tested.
+
+### Validation Results
+
+- **Compile**: huffman_mesh_poc.py py_compile PASS
+- **Mock mode**: 4/4 runs complete (huffman-333k-keyword, mux_grid-333k-keyword,
+  huffman-333k-strict, mux_grid-333k-strict), 80 message exchanges, all decode clean
+- **Logs**: 4 markdown experiment logs auto-generated in logs/
+- **Comparison table**: Printed at end of run with per-run avg compression, keywords,
+  reconstruction time, packet counts
+
+### Standing Directives Preserved
+
+- mux_codebook.csv: FROZEN
+- huffman_codebook_4k.csv: FROZEN
+- 4K legacy paths: FUNCTIONAL
+- VERSION = "7.0", CODENAME = "Smart Router" at top of harness
+- All files have proper logging (per Mark directive)
+
+- **Status**: v7.0 build complete. All 12 files created/modified. Harness validated
+  in mock mode. Ready for live testing on Strix Halo + Nvidia hardware.

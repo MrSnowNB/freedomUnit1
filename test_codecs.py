@@ -107,7 +107,7 @@ def test_huffman_with_header():
     print("  TEST 3: Huffman Codec — Full packet with 3-byte header (retrofit)")
     print("=" * 70)
 
-    from mesh_huffman import MeshHuffmanCodec
+    from huffman_codec import MeshHuffmanCodec
 
     huffman = MeshHuffmanCodec()
     passed = 0
@@ -153,7 +153,7 @@ def test_cross_codec_detection():
     print("  TEST 4: Cross-codec detection from Codec ID byte")
     print("=" * 70)
 
-    from mesh_huffman import MeshHuffmanCodec
+    from huffman_codec import MeshHuffmanCodec
 
     huffman = MeshHuffmanCodec()
     mux = MuxGridCodec()
@@ -286,7 +286,7 @@ def test_pretokenizer_codec_roundtrip():
     print("=" * 70)
 
     from pretokenizer import normalize
-    from mesh_huffman import MeshHuffmanCodec
+    from huffman_codec import MeshHuffmanCodec
 
     mux = MuxGridCodec()
     huffman = MeshHuffmanCodec()

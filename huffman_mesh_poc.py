@@ -1,318 +1,214 @@
 #!/usr/bin/env python3
 """
-huffman_mesh_poc.py — Experiment E: Lemonade Backend + LFM2 on LoRa
-=========================================================================
-v5.0: Swaps Ollama for Lemonade Server. Model name is config-driven
-for hot-swap between backends/hardware without code changes.
+huffman_mesh_poc.py — CyberMesh v7.0 "Smart Router" Harness
+=============================================================
+Experiment F: Smart Router — Huffman/MUX + Keyword/Strict routing over LoRa.
 
-Config-driven behavior:
-  llm_codec: false  → Phase 1 (pretokenizer + raw codec)
-  llm_codec: true   → Phase 2 (pretokenizer + LLM encode/decode + codec)
+Architecture:
+  - config.yaml       — full v7.0 config
+  - llm_client.py     — LLMClient (generate, classify, warmup)
+  - huffman_codec.py  — MeshHuffmanCodec (4k | 333k codebook)
+  - mux_codec.py      — MuxGridCodec     (4k | 333k codebook)
+  - keyword_codec.py  — KeywordCodec (extract, reconstruct via LLM)
+  - smart_router.py   — SmartRouter (route: strict / lossy / paginate)
+  - packet.py         — CyberMeshPacket (encode/decode, codec IDs 0x01-0x04)
+  - paginator.py      — paginate_strict(), reassemble_strict()
+  - context_manager.py — ContextManager (per-sender sliding-window history)
+  - pretokenizer.py   — normalize() (always applied before encoding)
 
-One "Hi" DM triggers the full experiment:
-  Phase 1: Run 1: MUX Grid + pretokenizer → Run 2: Huffman + pretokenizer
-  Phase 2: Run 1: MUX Grid + LLM codec   → Run 2: Huffman + LLM codec
+Experiment matrix (runs sequentially):
+  Run 1: huffman  + 333k + keyword
+  Run 2: mux_grid + 333k + keyword
+  Run 3: huffman  + 333k + strict_only
+  Run 4: mux_grid + 333k + strict_only
 
-Each message pipeline:
-  Phase 1 (Sender): LLM generate → normalize() → codec.encode() → TX
-  Phase 2 (Sender): LLM generate → LLM encode → normalize() → codec.encode() → TX
-  Phase 2 (Receiver): codec.decode() → LLM decode → conversation history
+!ping interrupt: handled before pipeline — replies "PONG", never touches
+context or codec pipeline.
 
-Transport: sendData() with PRIVATE_APP portNum 256 (raw bytes).
-Logging: Full conversation transcript + per-message metrics + comparison + JSON.
+Transport: sendData() with PRIVATE_APP portNum 256 (raw bytes) for compressed
+payloads; TEXT_MESSAGE_APP for control messages (!ping / PONG).
 
 Author: Mark Snow, Jr. — Mindtech / CyberMesh / Liberty Mesh
 Date:   March 2026
 """
 
+# ── Standard library ──────────────────────────────────────────────────────────
 import os
 import sys
-import time
 import json
-import yaml
+import math
+import time
+import queue
+import logging
 import threading
-import requests
 from datetime import datetime, timezone
+
+# ── Third-party ───────────────────────────────────────────────────────────────
+import yaml
 from pubsub import pub
 
-# ── Meshtastic imports ──
+# ── Meshtastic (optional — falls back to loopback) ────────────────────────────
 try:
     import meshtastic
     import meshtastic.serial_interface
+    MESHTASTIC_AVAILABLE = True
 except ImportError:
-    print("ERROR: meshtastic package not installed.")
-    print("  pip install meshtastic")
-    sys.exit(1)
+    MESHTASTIC_AVAILABLE = False
 
-# ── Local imports ──
-from mesh_huffman import MeshHuffmanCodec
-from mux_codec import MuxGridCodec, CODEC_ID_HUFFMAN, CODEC_ID_MUX_GRID
-from paginator import paginate, reassemble
-from pretokenizer import normalize, compute_hit_rate
-from llm_codec import llm_encode, llm_decode, get_codebook_words
+# ── Local modules ─────────────────────────────────────────────────────────────
+from llm_client import LLMClient
+from huffman_codec import MeshHuffmanCodec
+from mux_codec import MuxGridCodec
+from keyword_codec import KeywordCodec
+from smart_router import SmartRouter
+from packet import CyberMeshPacket
+from paginator import paginate_strict, reassemble_strict
+from context_manager import ContextManager
+from pretokenizer import normalize
 
-VERSION = "5.0"
-EXPERIMENT = "E"
+# =============================================================================
+# VERSION
+# =============================================================================
 
+VERSION  = "7.0"
+CODENAME = "Smart Router"
 
-# ==========================================
+# =============================================================================
 # LOGGING
-# ==========================================
+# =============================================================================
 
-LOG_ENTRIES = []
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    datefmt="%H:%M:%S",
+)
+logger = logging.getLogger("harness")
 
-def log(msg: str, level: str = "INFO"):
-    """Structured log with timestamp."""
+# In-memory structured log entries (for markdown export)
+LOG_ENTRIES: list[dict] = []
+LOG_LOCK = threading.Lock()
+
+
+def log(msg: str, level: str = "INFO") -> None:
+    """Timestamped console log with structured storage."""
     ts = datetime.now().strftime("%H:%M:%S.%f")[:-3]
     entry = {"ts": ts, "level": level, "msg": msg}
-    LOG_ENTRIES.append(entry)
-    prefix = {"INFO": "  ", "WARN": "  ⚠", "ERROR": "  ✗", "DEBUG": "  [DBG]"}.get(level, "  ")
-    print(f"{prefix} [{ts}] {msg}")
+    with LOG_LOCK:
+        LOG_ENTRIES.append(entry)
+    prefix = {"INFO": "  ", "WARN": "  W", "ERROR": "  E", "DEBUG": "  D"}.get(level, "  ")
+    print(f"{prefix} [{ts}] {msg}", flush=True)
 
 
-# ==========================================
-# CONFIGURATION
-# ==========================================
+# =============================================================================
+# CONFIG LOADER
+# =============================================================================
 
 def load_config() -> dict:
-    """Load config.yaml from script directory."""
+    """Load config.yaml from the script directory."""
     cfg_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.yaml")
-    if os.path.exists(cfg_path):
-        with open(cfg_path, "r", encoding="utf-8") as f:
-            return yaml.safe_load(f)
-    raise FileNotFoundError(f"config.yaml not found at {cfg_path}")
+    if not os.path.exists(cfg_path):
+        raise FileNotFoundError(f"config.yaml not found at {cfg_path}")
+    with open(cfg_path, "r", encoding="utf-8") as f:
+        cfg = yaml.safe_load(f)
+    log(f"Config loaded from {cfg_path}")
+    return cfg
 
 
-# ==========================================
-# LLM INTEGRATION — Lemonade Server
-# ==========================================
+# =============================================================================
+# STARTUP BANNER
+# =============================================================================
 
-# Populated from config.yaml at startup. Module-level so warmup/generate can use it.
-LLM_BASE_URL = "http://localhost:8000"   # overwritten by config["llm_base_url"]
-MODEL_NAME   = "test01"                  # overwritten by config["model_name"]
+def print_banner(cfg: dict) -> None:
+    codec_cfg  = cfg.get("codec", {})
+    lem_cfg    = cfg.get("lemonade", {})
+    radio_cfg  = cfg.get("radio", {})
+    exp_cfg    = cfg.get("experiment", {})
+    test_cfg   = cfg.get("testing", {})
 
-def warmup_model(model_name: str) -> float:
-    """Force model into memory. Returns warmup time in seconds."""
-    log(f"Warming up model '{model_name}' on {LLM_BASE_URL}...")
-    start = time.time()
-    try:
-        resp = requests.post(f"{LLM_BASE_URL}/api/generate", json={
-            "model": model_name,
-            "prompt": "warmup",
-            "options": {"num_predict": 1},
-            "stream": False
-        }, timeout=120)
-        elapsed = time.time() - start
-        if resp.status_code == 200:
-            log(f"Model '{model_name}' loaded in {elapsed:.1f}s")
-            return elapsed
-        else:
-            raise RuntimeError(f"LLM server returned {resp.status_code}: {resp.text[:200]}")
-    except requests.exceptions.ConnectionError:
-        raise RuntimeError(f"Cannot connect to LLM server at {LLM_BASE_URL}. Is Lemonade running?")
+    width = 70
+    print("\n" + "=" * width)
+    print(f"  CyberMesh v{VERSION}  \"{CODENAME}\"")
+    print(f"  Mindtech / Liberty Mesh — Experiment {exp_cfg.get('name', '?')}")
+    print("─" * width)
+    print(f"  Engine     : {codec_cfg.get('engine', '?')}  |  Codebook: {codec_cfg.get('codebook_size', '?')}")
+    print(f"  Mode       : {codec_cfg.get('mode', '?')}")
+    print(f"  Model      : {lem_cfg.get('model', '?')}  @  {lem_cfg.get('base_url', '?')}")
+    print(f"  Radio port : {radio_cfg.get('port', 'auto')}")
+    print(f"  Mock LLM   : {test_cfg.get('mock_llm', False)}")
+    print(f"  Warmup     : {lem_cfg.get('warmup_on_start', True)}")
+    print(f"  Msgs/node  : {exp_cfg.get('messages_per_node', 10)}")
+    print("=" * width + "\n")
 
 
-def generate_response(model: str, system_prompt: str,
-                      conversation_history: list[dict]) -> tuple[str, float, int]:
+# =============================================================================
+# CODEC FACTORY
+# =============================================================================
+
+def build_codec(engine: str, codebook_size: str):
     """
-    Generate an LLM response given the conversation history.
+    Instantiate the correct codec based on config.codec.engine and
+    config.codec.codebook_size.
 
-    Returns: (text, inference_ms, token_count)
+    Returns: (codec_instance, engine_name)
     """
-    full_prompt = system_prompt + "\n\nConversation so far:\n"
-    for entry in conversation_history:
-        role = "You" if entry["sent"] else "Them"
-        full_prompt += f"{role}: {entry['text']}\n"
-    full_prompt += "You: "
-
-    start = time.time()
-    resp = requests.post(f"{LLM_BASE_URL}/api/generate", json={
-        "model": model,
-        "prompt": full_prompt,
-        "options": {"temperature": 0.7},
-        "stream": False
-    }, timeout=60)
-    elapsed_ms = (time.time() - start) * 1000
-
-    data = resp.json()
-    text = data.get("response", "").strip()
-
-    # Clean up: remove quotes, markdown, multiline
-    text = text.strip('"\'')
-    if '\n' in text:
-        text = text.split('\n')[0].strip()
-
-    token_count = data.get("eval_count", len(text.split()))
-
-    return text, elapsed_ms, token_count
+    engine = engine.lower()
+    if engine == "huffman":
+        codec = MeshHuffmanCodec(codebook_size=codebook_size)
+        log(f"Codec: MeshHuffmanCodec ({codebook_size})")
+    elif engine == "mux_grid":
+        codec = MuxGridCodec(codebook_size=codebook_size)
+        log(f"Codec: MuxGridCodec ({codebook_size})")
+    else:
+        raise ValueError(f"Unknown codec engine: {engine!r}")
+    return codec, engine
 
 
-# ==========================================
-# CODEC WRAPPER
-# ==========================================
+# =============================================================================
+# MESHTASTIC RADIO INTERFACE  (with loopback fallback)
+# =============================================================================
 
-class CodecWrapper:
-    """Wraps Huffman or MUX Grid codec with unified 3-byte packet header."""
-
-    def __init__(self, codec_name: str):
-        self.codec_name = codec_name.lower()
-        if self.codec_name == "huffman":
-            self.huffman = MeshHuffmanCodec()
-            self.mux = None
-            self.codec_id = CODEC_ID_HUFFMAN
-        elif self.codec_name == "mux_grid":
-            self.huffman = None
-            self.mux = MuxGridCodec()
-            self.codec_id = CODEC_ID_MUX_GRID
-        else:
-            raise ValueError(f"Unknown codec: {codec_name}")
-
-        # Both decoders for auto-detection on receive
-        self._huffman_decoder = MeshHuffmanCodec()
-        self._mux_decoder = MuxGridCodec()
-
-    def encode_packet(self, text: str, seq: int = 0) -> bytes:
-        if self.codec_name == "huffman":
-            payload = self.huffman.encode(text)
-            header = bytes([CODEC_ID_HUFFMAN, seq & 0xFF, 0])
-            return header + payload
-        else:
-            payload, padding = self.mux.encode(text)
-            header = bytes([CODEC_ID_MUX_GRID, seq & 0xFF, padding & 0x07])
-            return header + payload
-
-    def decode_packet(self, packet: bytes) -> tuple[str, int, int]:
-        if len(packet) < 3:
-            raise ValueError(f"Packet too short: {len(packet)} bytes")
-        codec_id = packet[0]
-        seq = packet[1]
-        padding = packet[2]
-        payload = packet[3:]
-        if codec_id == CODEC_ID_HUFFMAN:
-            decoded = self._huffman_decoder.decode(payload)
-            return decoded, codec_id, seq
-        elif codec_id == CODEC_ID_MUX_GRID:
-            decoded = self._mux_decoder.decode(payload, padding)
-            return decoded, codec_id, seq
-        else:
-            raise ValueError(f"Unknown Codec ID: 0x{codec_id:02X}")
-
-    def codebook_coverage(self, text: str) -> dict:
-        if self.codec_name == "huffman":
-            return self.huffman.codebook_coverage(text)
-        else:
-            return self.mux.codebook_coverage(text)
-
-    def stats(self) -> dict:
-        if self.codec_name == "huffman":
-            s = self.huffman.stats()
-            s["codec"] = "huffman"
-            s["codec_id"] = CODEC_ID_HUFFMAN
-            return s
-        else:
-            s = self.mux.stats()
-            s["codec"] = "mux_grid"
-            s["codec_id"] = CODEC_ID_MUX_GRID
-            return s
-
-
-# ==========================================
-# EXPERIMENT E — LEMONADE BACKEND + LLM CODEC
-# ==========================================
-
-class ExperimentRunner:
+class RadioInterface:
     """
-    Runs Experiment E: LLM conversation over LoRa with Lemonade backend,
-    pre-tokenizer, and optional LLM encode/decode codec.
+    Wraps Meshtastic serial interface with a local loopback fallback.
 
-    Config-driven:
-      llm_codec: false → Phase 1 (pretokenizer only)
-      llm_codec: true  → Phase 2 (pretokenizer + LLM encode/decode)
+    In loopback mode every sent packet is immediately placed on a receive
+    queue so tests can run without hardware.
     """
 
-    def __init__(self, config: dict):
-        self.cfg = config
+    def __init__(self, port: str = "auto"):
+        self.port = port
         self.interface = None
-
-        # Node identity
-        self.my_node_num = None
-        self.my_node_id = None
-        self.my_node_name = None
-        self.peer_id = None
-        self.role = None  # "A" or "B"
-
-        # LLM config — model name is a hot-swap variable
-        global LLM_BASE_URL, MODEL_NAME
-        LLM_BASE_URL = config.get("llm_base_url", "http://localhost:8000")
-        MODEL_NAME   = config.get("model_name", "test01")
-        self.model = MODEL_NAME
-        self.system_prompt = config.get("conversation_seed", "")
-        self.messages_per_node = config.get("messages_per_node", 10)
-        self.timeout_s = config.get("timeout_s", 45)
-
-        # Phase control
-        self.use_pretokenizer = config.get("pretokenizer", True)
-        self.use_llm_codec = config.get("llm_codec", False)
-        self.fallback_threshold = config.get("fallback_threshold", 0.70)
-
-        # Load codebook words for hit rate checking
-        self.codebook_words = get_codebook_words()
-
-        # Phase label for logging
-        if self.use_llm_codec:
-            self.phase_label = "Phase 2 (LLM Codec)"
-        else:
-            self.phase_label = "Phase 1 (Pre-Tokenizer)"
-
-        # Synchronization
-        self.msg_event = threading.Event()
-        self.last_received_data = None
-        self.last_received_packet = None
-        self.trigger_data_is_step1 = False
-
-        # Run results
-        self.runs = {}  # codec_name -> list of result dicts
-        self.transcripts = {}  # codec_name -> list of transcript entries
-
-        # State
-        self.state = "INIT"
-        self.seq_counter = 0
-        self.active_codec = None  # current CodecWrapper
-
-    # ── Connection ──
+        self.my_node_num: int = 0
+        self.my_node_id: str = "!00000000"
+        self.my_node_name: str = "LocalNode"
+        self._loopback = False
+        self._loopback_queue: queue.Queue = queue.Queue()
+        self._rx_callbacks: list = []
+        self._lock = threading.Lock()
 
     def connect(self) -> bool:
-        port = self.cfg.get("port", "auto")
-        dev_path = None if port == "auto" else port
+        if not MESHTASTIC_AVAILABLE:
+            log("Meshtastic not installed — using loopback mode", "WARN")
+            self._loopback = True
+            return True
 
-        print(f"\n{'=' * 65}")
-        print(f"  EXPERIMENT {EXPERIMENT} — {self.phase_label}")
-        print(f"  CyberMesh / Liberty Mesh — v{VERSION}")
-        print(f"  Model: {self.model}  |  Backend: {LLM_BASE_URL}")
-        print(f"  Messages/node: {self.messages_per_node}  |  Timeout: {self.timeout_s}s")
-        print(f"  Port: {port}  |  Pretok: {'ON' if self.use_pretokenizer else 'OFF'}  |  LLM Codec: {'ON' if self.use_llm_codec else 'OFF'}")
-        print(f"{'=' * 65}\n")
-
-        pub.subscribe(self._on_receive, "meshtastic.receive")
-
+        dev_path = None if self.port == "auto" else self.port
+        pub.subscribe(self._on_meshtastic_receive, "meshtastic.receive")
         try:
             if dev_path:
                 self.interface = meshtastic.serial_interface.SerialInterface(devPath=dev_path)
             else:
                 self.interface = meshtastic.serial_interface.SerialInterface()
-        except Exception as e:
-            log(f"Could not connect to Meshtastic: {e}", "ERROR")
-            return False
+        except Exception as exc:
+            log(f"Meshtastic connect failed: {exc} — using loopback mode", "WARN")
+            self._loopback = True
+            return True
 
         time.sleep(2)
-
-        self.my_node_num = self.interface.myInfo.my_node_num
-        self.my_node_id = f"!{self.my_node_num:08x}"
+        self.my_node_num  = self.interface.myInfo.my_node_num
+        self.my_node_id   = f"!{self.my_node_num:08x}"
         self.my_node_name = self._get_node_name(self.my_node_num)
-
-        log(f"Node: {self.my_node_name} ({self.my_node_id})")
-        log(f"Waiting for 'Hi' trigger DM...")
-        self.state = "LISTENING"
+        log(f"Radio online: {self.my_node_name} ({self.my_node_id})")
         return True
 
     def _get_node_name(self, node_num: int) -> str:
@@ -322,730 +218,1090 @@ class ExperimentRunner:
                     return node.get("user", {}).get("longName", f"!{node_num:08x}")
         return f"!{node_num:08x}"
 
-    def _is_my_packet(self, packet: dict) -> bool:
-        sender = packet.get("fromId", "")
-        if not sender:
-            return False
+    def register_rx_callback(self, cb) -> None:
+        """Register a callback(raw_bytes, sender_id, rssi, snr, packet)."""
+        self._rx_callbacks.append(cb)
+
+    def _on_meshtastic_receive(self, packet, interface) -> None:
+        """pubsub callback from Meshtastic library."""
+        decoded  = packet.get("decoded", {})
+        portnum  = decoded.get("portnum", "")
+        sender   = packet.get("fromId", "unknown")
+
+        # Ignore own packets
         try:
             sender_num = int(sender.replace("!", ""), 16) if sender.startswith("!") else None
-            return sender_num == self.my_node_num
-        except ValueError:
-            return False
-
-    # ── Packet handler ──
-
-    def _on_receive(self, packet, interface):
-        if self._is_my_packet(packet):
-            return
-
-        decoded = packet.get("decoded", {})
-        portnum = decoded.get("portnum", "")
-        sender = packet.get("fromId", "unknown")
-
-        # Text trigger
-        if self.state == "LISTENING" and portnum == "TEXT_MESSAGE_APP":
-            text = decoded.get("text", "")
-            trigger = self.cfg.get("trigger_word", "Hi")
-            if text.strip() == trigger:
-                log(f"TRIGGER received from {sender}: \"{text}\"")
-                self.peer_id = sender
-                self.role = "B"
-                self.state = "TRIGGERED"
-                self.msg_event.set()
+            if sender_num == self.my_node_num:
                 return
+        except ValueError:
+            pass
 
-        # Compressed data on PRIVATE_APP
-        pn_match = (portnum == "PRIVATE_APP" or portnum == "256")
-        if not pn_match:
-            raw_pn = decoded.get("portnum")
-            if isinstance(raw_pn, int) and raw_pn == 256:
-                pn_match = True
+        pn_match = (portnum in ("PRIVATE_APP", "256") or
+                    (isinstance(portnum, int) and portnum == 256))
 
         if pn_match:
-            raw_data = decoded.get("payload", b"")
-            if isinstance(raw_data, str):
-                raw_data = raw_data.encode("latin-1")
+            raw = decoded.get("payload", b"")
+            if isinstance(raw, str):
+                raw = raw.encode("latin-1")
+            rssi = packet.get("rxRssi", packet.get("rssi"))
+            snr  = packet.get("rxSnr",  packet.get("snr"))
+            for cb in self._rx_callbacks:
+                cb(raw, sender, rssi, snr, packet)
 
-            if self.state == "LISTENING":
-                log(f"First compressed message from {sender} — entering as Role A")
-                self.peer_id = sender
-                self.role = "A"
-                self.state = "TRIGGERED"
-                self.trigger_data_is_step1 = True
+        # Text messages (for !ping detection)
+        elif portnum == "TEXT_MESSAGE_APP":
+            text = decoded.get("text", "")
+            rssi = packet.get("rxRssi", packet.get("rssi"))
+            snr  = packet.get("rxSnr",  packet.get("snr"))
+            for cb in self._rx_callbacks:
+                cb(text.encode("utf-8"), sender, rssi, snr, packet)
 
-            self.last_received_data = raw_data
-            self.last_received_packet = packet
-            self.msg_event.set()
-
-    # ── Send / Receive ──
-
-    def _send_message(self, text: str, step: int, natural_text: str = None,
-                      encode_ms: float = None, fallback: bool = False) -> dict:
-        """
-        Paginate, compress, and send a message. Returns result dict.
-
-        Args:
-            text: The text to encode and send (may be LLM-encoded or raw).
-            step: Message step number.
-            natural_text: Original natural text before LLM encode (Phase 2 only).
-            encode_ms: LLM encode inference time (Phase 2 only).
-            fallback: Whether LLM encode was skipped due to low hit rate.
-        """
-        pages = paginate(text, max_chars=200)
-        total_comp = 0
-        raw_bytes = len(text.encode("utf-8"))
-
-        coverage = self.active_codec.codebook_coverage(text)
-        hit_pct = coverage["coverage"]
-        esc_count = len(coverage["missing"])
-
-        for i, page in enumerate(pages):
-            self.seq_counter = (self.seq_counter + 1) & 0xFF
-            packet = self.active_codec.encode_packet(page, seq=self.seq_counter)
-            total_comp += len(packet)
-
-            try:
-                self.interface.sendData(
-                    packet,
-                    destinationId=self.peer_id,
-                    portNum=256,
-                    wantAck=True,
-                )
-            except Exception as e:
-                log(f"TX Step {step}: SEND ERROR: {e}", "ERROR")
-                return {
-                    "step": step, "direction": f"{'B→A' if self.role == 'B' else 'A→B'}",
-                    "original": text, "natural": natural_text, "encoded": text if natural_text else None,
-                    "decoded_by_llm": None,
-                    "raw_bytes": raw_bytes, "comp_bytes": total_comp,
-                    "ratio": 0, "roundtrip": False, "error": str(e),
-                    "rssi": None, "snr": None,
-                    "gen_ms": None, "enc_ms": encode_ms, "dec_ms": None,
-                    "tokens": None, "pages": len(pages), "hit_pct": hit_pct,
-                    "esc_count": esc_count, "fallback": fallback,
-                }
-
-            if len(pages) > 1 and i < len(pages) - 1:
-                time.sleep(1.5)  # inter-page delay
-
-        ratio = raw_bytes / total_comp if total_comp else 0
-
-        # Build log message
-        fb_tag = " [FALLBACK]" if fallback else ""
-        if natural_text:
-            log(f"TX Step {step}: NATURAL=\"{natural_text[:50]}\" → ENCODED=\"{text[:50]}\" "
-                f"({raw_bytes}B → {total_comp}B, {ratio:.2f}:1, {hit_pct:.0f}% hit){fb_tag}")
-        else:
-            log(f"TX Step {step}: \"{text[:60]}\" ({raw_bytes}B → {total_comp}B, {ratio:.2f}:1, "
-                f"{len(pages)} pg, {hit_pct:.0f}% hit){fb_tag}")
-
-        return {
-            "step": step, "direction": f"{'B→A' if self.role == 'B' else 'A→B'}",
-            "original": text, "natural": natural_text, "encoded": text if natural_text else None,
-            "decoded_by_llm": None,
-            "raw_bytes": raw_bytes, "comp_bytes": total_comp,
-            "ratio": ratio, "roundtrip": None, "error": None,
-            "rssi": None, "snr": None,
-            "gen_ms": None, "enc_ms": encode_ms, "dec_ms": None,
-            "tokens": None, "pages": len(pages), "hit_pct": hit_pct,
-            "esc_count": esc_count, "fallback": fallback,
-        }
-
-    def _receive_message(self, step: int, pre_loaded: bool = False) -> dict:
-        """Wait for compressed message(s), decompress, reassemble. Returns result dict."""
-        if pre_loaded and self.last_received_data is not None:
-            log(f"RX Step {step}: pre-loaded from trigger")
-            got_it = True
-        else:
-            self.msg_event.clear()
-            self.last_received_data = None
-            self.last_received_packet = None
-            log(f"RX Step {step}: waiting (timeout {self.timeout_s}s)...")
-            got_it = self.msg_event.wait(timeout=self.timeout_s)
-
-        if not got_it or self.last_received_data is None:
-            log(f"RX Step {step}: TIMEOUT after {self.timeout_s}s", "WARN")
-            return {
-                "step": step, "direction": f"{'A→B' if self.role == 'B' else 'B→A'}",
-                "original": None, "natural": None, "encoded": None, "decoded_by_llm": None,
-                "raw_bytes": None, "comp_bytes": None,
-                "ratio": None, "roundtrip": False, "error": f"Timeout {self.timeout_s}s",
-                "rssi": None, "snr": None,
-                "gen_ms": None, "enc_ms": None, "dec_ms": None,
-                "tokens": None, "pages": 0, "hit_pct": None,
-                "esc_count": None, "fallback": False,
-            }
-
-        data = self.last_received_data
-        pkt = self.last_received_packet or {}
-        comp_bytes = len(data)
-
+    def send_data(self, raw: bytes, dest_id: str,
+                  port_num: int = 256, want_ack: bool = True) -> None:
+        """Send raw bytes. In loopback mode queues immediately for RX."""
+        if self._loopback:
+            # Simulate receive (own echo) — useful for local testing
+            self._loopback_queue.put(raw)
+            return
         try:
-            decoded, codec_id, seq = self.active_codec.decode_packet(data)
-        except Exception as e:
-            log(f"RX Step {step}: DECODE ERROR: {e}", "ERROR")
-            decoded = f"DECODE_ERROR: {e}"
+            self.interface.sendData(raw, destinationId=dest_id,
+                                    portNum=port_num, wantAck=want_ack)
+        except Exception as exc:
+            log(f"Radio TX error: {exc}", "ERROR")
 
-        rssi = pkt.get("rxRssi", pkt.get("rssi"))
-        snr = pkt.get("rxSnr", pkt.get("snr"))
+    def send_text(self, text: str, dest_id: str) -> None:
+        """Send plain text (used for PONG reply)."""
+        if self._loopback:
+            return
+        try:
+            self.interface.sendText(text, destinationId=dest_id)
+        except Exception as exc:
+            log(f"Radio text TX error: {exc}", "ERROR")
 
-        # Phase 2: LLM decode the codebook-constrained text to natural English
-        dec_ms = None
-        decoded_by_llm = None
-        if self.use_llm_codec and not decoded.startswith("DECODE_ERROR"):
+    def pop_loopback(self, timeout: float = 2.0) -> bytes | None:
+        """Pop a loopback-queued packet (for mock receive during tests)."""
+        try:
+            return self._loopback_queue.get(timeout=timeout)
+        except queue.Empty:
+            return None
+
+    def close(self) -> None:
+        if self.interface:
             try:
-                decoded_by_llm, dec_ms = llm_decode(decoded, model=self.model, base_url=LLM_BASE_URL)
-                log(f"RX Step {step}: CODEC=\"{decoded[:40]}\" → LLM_DECODED=\"{decoded_by_llm[:40]}\" "
-                    f"({comp_bytes}B, {dec_ms:.0f}ms, RSSI={rssi}, SNR={snr})")
-            except Exception as e:
-                log(f"RX Step {step}: LLM DECODE ERROR: {e}", "ERROR")
-                decoded_by_llm = decoded  # Fall back to raw decoded text
+                self.interface.close()
+            except Exception:
+                pass
+
+
+# =============================================================================
+# PAGE BUFFER  (for multi-page reassembly on RX)
+# =============================================================================
+
+class PageBuffer:
+    """
+    Thread-safe per-sender page accumulator.
+
+    Accumulates packets until total_pages are received, then returns the
+    reassembled payload.
+    """
+
+    def __init__(self):
+        self._buffers: dict[str, dict] = {}  # sender_id -> {pages: dict, total: int}
+        self._lock = threading.Lock()
+
+    def add(self, sender_id: str, pkt: CyberMeshPacket, raw_pkt: bytes
+            ) -> bytes | None:
+        """
+        Add a packet for sender_id.
+
+        Returns reassembled payload bytes if all pages are present,
+        otherwise returns None.
+        """
+        with self._lock:
+            key = sender_id
+            if key not in self._buffers:
+                self._buffers[key] = {"pages": {}, "total": pkt.total_pages,
+                                      "codec_id": pkt.codec_id}
+
+            buf = self._buffers[key]
+            buf["pages"][pkt.page_num] = raw_pkt
+
+            if len(buf["pages"]) == buf["total"]:
+                # All pages received — reassemble
+                ordered = [buf["pages"][i] for i in sorted(buf["pages"])]
+                result = reassemble_strict(ordered)
+                del self._buffers[key]
+                return result
+            return None
+
+    def clear(self, sender_id: str) -> None:
+        with self._lock:
+            self._buffers.pop(sender_id, None)
+
+
+# =============================================================================
+# EXPERIMENT RUN CONFIG
+# =============================================================================
+
+# Fixed experiment matrix (v7.0 spec requirement #6)
+EXPERIMENT_MATRIX = [
+    {"run": 1, "engine": "huffman",  "codebook_size": "333k", "mode": "keyword",     "name": "huffman-333k-keyword"},
+    {"run": 2, "engine": "mux_grid", "codebook_size": "333k", "mode": "keyword",     "name": "mux_grid-333k-keyword"},
+    {"run": 3, "engine": "huffman",  "codebook_size": "333k", "mode": "strict_only", "name": "huffman-333k-strict"},
+    {"run": 4, "engine": "mux_grid", "codebook_size": "333k", "mode": "strict_only", "name": "mux_grid-333k-strict"},
+]
+
+
+# =============================================================================
+# METRICS RECORD
+# =============================================================================
+
+def empty_metrics() -> dict:
+    return {
+        "route": None,
+        "raw_bytes": None,
+        "encoded_bytes": None,
+        "compression_ratio": None,
+        "codebook_hit_rate": None,
+        "ESC_count": None,
+        "keyword_count": None,
+        "extract_ms": None,
+        "classify_ms": None,
+        "reconstruct_ms": None,
+        "RSSI": None,
+        "SNR": None,
+        "packet_count": None,
+        "decoded_text": None,
+        "error": None,
+    }
+
+
+# =============================================================================
+# TRANSMIT FLOW
+# =============================================================================
+
+def transmit(
+    text: str,
+    sender_id: str,
+    engine: str,
+    codec,          # MeshHuffmanCodec | MuxGridCodec
+    keyword_codec: KeywordCodec,
+    smart_router: SmartRouter,
+    radio: RadioInterface,
+    cfg: dict,
+    dest_id: str,
+) -> dict:
+    """
+    Full transmit pipeline per v7.0 spec §3.
+
+    Returns metrics dict.
+    """
+    t_total = time.perf_counter()
+    metrics = empty_metrics()
+    mode = cfg.get("codec", {}).get("mode", "keyword")
+    inter_pkt_delay = cfg.get("pagination", {}).get("inter_packet_delay_s", 10)
+
+    # ── Step 1: Pretokenize (always) ──────────────────────────────────────────
+    pretok = normalize(text)
+
+    # ── Step 2: Encode strict ─────────────────────────────────────────────────
+    padding = 0
+    if engine == "huffman":
+        encoded = codec.encode(pretok)          # returns bytes
+    else:
+        encoded, padding = codec.encode(pretok)  # returns (bytes, padding)
+
+    metrics["raw_bytes"]     = len(pretok.encode("utf-8"))
+    metrics["encoded_bytes"] = len(encoded)
+
+    # Codebook coverage stats
+    try:
+        cov = codec.codebook_coverage(pretok)
+        metrics["codebook_hit_rate"] = round(cov.get("coverage", 0.0), 4)
+        metrics["ESC_count"]         = len(cov.get("missing", []))
+    except Exception:
+        pass
+
+    # ── Step 3: Route ─────────────────────────────────────────────────────────
+    strict_threshold = cfg.get("router", {}).get("strict_threshold", 180)
+
+    if mode == "keyword":
+        t_classify = time.perf_counter()
+        route = smart_router.route(encoded, text)
+        metrics["classify_ms"] = round((time.perf_counter() - t_classify) * 1000, 2)
+    elif mode == "strict_only":
+        route = "strict" if len(encoded) <= strict_threshold else "paginate"
+        metrics["classify_ms"] = 0.0
+    else:
+        # legacy — treat as strict; the old paginator handles overflow via
+        # the text-level paginate() call in the v5.0 style
+        route = "strict"
+        metrics["classify_ms"] = 0.0
+
+    metrics["route"] = route
+
+    # ── Step 4: Act on route ──────────────────────────────────────────────────
+    if route == "strict":
+        codec_id = 0x01 if engine == "huffman" else 0x02
+        pkt = CyberMeshPacket.encode(codec_id, encoded)
+        radio.send_data(pkt, dest_id)
+        metrics["packet_count"] = 1
+        log(f"TX strict: {len(encoded)}B → 1 pkt  codec=0x{codec_id:02X}  "
+            f"ratio={metrics['raw_bytes']/(len(encoded) or 1):.2f}:1")
+
+    elif route == "lossy":
+        t_extract = time.perf_counter()
+        keywords, extract_ms = keyword_codec.extract(text)
+        metrics["extract_ms"]   = round(extract_ms, 2)
+        metrics["keyword_count"] = len(keywords)
+
+        if engine == "huffman":
+            kw_encoded = codec.encode_keywords(keywords)
         else:
-            log(f"RX Step {step}: \"{decoded[:60]}\" ({comp_bytes}B, RSSI={rssi}, SNR={snr})")
+            kw_encoded = codec.encode_keywords(keywords)
 
-        return {
-            "step": step, "direction": f"{'A→B' if self.role == 'B' else 'B→A'}",
-            "original": None, "natural": None, "encoded": decoded,
-            "decoded_by_llm": decoded_by_llm,
-            "raw_bytes": None, "comp_bytes": comp_bytes,
-            "ratio": None, "roundtrip": True, "error": None,
-            "rssi": rssi, "snr": snr,
-            "gen_ms": None, "enc_ms": None, "dec_ms": dec_ms,
-            "tokens": None, "pages": 1, "hit_pct": None,
-            "esc_count": None, "fallback": False,
-        }
+        codec_id = 0x03 if engine == "huffman" else 0x04
+        pkt = CyberMeshPacket.encode(codec_id, kw_encoded,
+                                     keyword_count=len(keywords))
+        radio.send_data(pkt, dest_id)
+        metrics["packet_count"]  = 1
+        metrics["encoded_bytes"] = len(kw_encoded)
+        log(f"TX lossy: {len(keywords)} keywords → {len(kw_encoded)}B  "
+            f"codec=0x{codec_id:02X}  extract={extract_ms:.0f}ms")
 
-    # ── Single run (one codec) ──
+    elif route == "paginate":
+        codec_id = 0x01 if engine == "huffman" else 0x02
+        packets = paginate_strict(encoded, codec_id=codec_id)
+        metrics["packet_count"] = len(packets)
+        for i, pkt in enumerate(packets):
+            radio.send_data(pkt, dest_id)
+            if i < len(packets) - 1:
+                time.sleep(inter_pkt_delay)
+        log(f"TX paginate: {len(encoded)}B → {len(packets)} pkts  "
+            f"codec=0x{codec_id:02X}")
 
-    def _run_conversation(self, codec_name: str) -> tuple[list[dict], list[dict]]:
-        """
-        Run a full 20-message conversation with the given codec.
-        Returns (results, transcript).
-        """
-        self.active_codec = CodecWrapper(codec_name)
-        stats = self.active_codec.stats()
-        total_messages = self.messages_per_node * 2
-        conversation_history = []
-        results = []
-        transcript = []
+    else:
+        log(f"TX: unknown route {route!r} — dropping", "ERROR")
+        metrics["error"] = f"unknown route: {route}"
 
-        log(f"=== RUN: {codec_name.upper()} === Codec ID: 0x{stats.get('codec_id', 0):02X}, "
-            f"Codebook: {stats.get('codebook_size', '?')} words, {total_messages} messages, "
-            f"Pretokenizer: {'ON' if self.use_pretokenizer else 'OFF'}, "
-            f"LLM Codec: {'ON' if self.use_llm_codec else 'OFF'}")
+    # Compression ratio
+    if metrics["raw_bytes"] and metrics["encoded_bytes"]:
+        metrics["compression_ratio"] = round(
+            metrics["raw_bytes"] / metrics["encoded_bytes"], 4)
 
-        for step in range(1, total_messages + 1):
-            is_my_tx = self._is_my_tx_step(step)
+    metrics["_total_tx_ms"] = round((time.perf_counter() - t_total) * 1000, 2)
+    return metrics
 
-            if is_my_tx:
-                # ── SENDER PIPELINE ──
 
-                # Call 1: Generate natural response
-                natural_text, gen_ms, tokens = generate_response(
-                    self.model, self.system_prompt, conversation_history
-                )
-                log(f"LLM generated ({gen_ms:.0f}ms, {tokens} tokens): \"{natural_text[:80]}\"")
+# =============================================================================
+# RECEIVE FLOW
+# =============================================================================
 
-                # Phase 2: Call 2: LLM encode (rewrite to codebook words)
-                encode_ms = None
-                fallback = False
-                if self.use_llm_codec:
-                    try:
-                        encoded_text, encode_ms = llm_encode(natural_text, model=self.model, base_url=LLM_BASE_URL)
-                        log(f"LLM encoded ({encode_ms:.0f}ms): \"{encoded_text[:80]}\"")
+def receive(
+    raw_bytes: bytes,
+    sender_id: str,
+    engine: str,
+    codec,
+    keyword_codec: KeywordCodec,
+    page_buffer: PageBuffer,
+    rssi,
+    snr,
+) -> dict:
+    """
+    Full receive pipeline per v7.0 spec §4.
 
-                        # Check hit rate — fallback if below threshold
-                        if self.use_pretokenizer:
-                            check_text = normalize(encoded_text)
-                        else:
-                            check_text = encoded_text
-                        hit_rate = compute_hit_rate(check_text, self.codebook_words)
+    Returns metrics dict with 'decoded_text' populated.
+    """
+    metrics = empty_metrics()
+    metrics["RSSI"] = rssi
+    metrics["SNR"]  = snr
 
-                        if hit_rate < self.fallback_threshold:
-                            log(f"WARN: LLM encode hit rate {hit_rate:.0%}, "
-                                f"below threshold {self.fallback_threshold:.0%} — falling back to raw",
-                                "WARN")
-                            fallback = True
-                            text_to_send = natural_text
-                        else:
-                            text_to_send = encoded_text
-                    except Exception as e:
-                        log(f"LLM encode error: {e} — falling back to raw", "WARN")
-                        fallback = True
-                        text_to_send = natural_text
-                else:
-                    text_to_send = natural_text
+    try:
+        pkt = CyberMeshPacket.decode(raw_bytes)
+    except Exception as exc:
+        log(f"RX: packet decode error: {exc}", "ERROR")
+        metrics["error"] = str(exc)
+        return metrics
 
-                # Pre-tokenizer normalization (always for Experiment E)
-                if self.use_pretokenizer:
-                    text_to_send = normalize(text_to_send)
+    metrics["encoded_bytes"] = len(raw_bytes)
 
-                # Send
-                result = self._send_message(
-                    text_to_send, step,
-                    natural_text=natural_text if self.use_llm_codec else None,
-                    encode_ms=encode_ms,
-                    fallback=fallback,
-                )
-                result["gen_ms"] = gen_ms
-                result["tokens"] = tokens
-                results.append(result)
+    # ── Multi-page reassembly ─────────────────────────────────────────────────
+    if pkt.total_pages > 1:
+        log(f"RX page {pkt.page_num+1}/{pkt.total_pages} from {sender_id}")
+        reassembled = page_buffer.add(sender_id, pkt, raw_bytes)
+        if reassembled is None:
+            # Not all pages yet — caller must wait for more
+            metrics["_waiting_for_pages"] = True
+            return metrics
+        # All pages received — reassemble into a single payload
+        # Re-decode the reassembled data with a dummy single-page packet
+        # (reassembled is already the raw concatenated payload bytes)
+        payload = reassembled
+        codec_id = pkt.codec_id
+    else:
+        payload  = pkt.payload
+        codec_id = pkt.codec_id
 
-                # Add to conversation history (use natural text for context quality)
-                conversation_history.append({"sent": True, "text": natural_text})
-                transcript.append({
-                    "step": step, "sender": f"Role {self.role}",
-                    "natural": natural_text,
-                    "encoded": text_to_send if self.use_llm_codec else None,
-                    "decoded": None,
-                    "fallback": fallback,
-                })
+    metrics["packet_count"] = pkt.total_pages
 
+    # ── Decode by codec_id ────────────────────────────────────────────────────
+    if codec_id in (0x01, 0x02):
+        # Strict / lossless
+        try:
+            if codec_id == 0x01:
+                decoded = codec.decode(payload)
             else:
-                # ── RECEIVER PIPELINE ──
-                pre_loaded = (step == 1 and self.role == "A" and self.trigger_data_is_step1)
-                result = self._receive_message(step, pre_loaded=pre_loaded)
-                results.append(result)
+                decoded = codec.decode(payload, 0)  # 0 padding for 333k
+            metrics["decoded_text"] = decoded
+            metrics["route"] = "strict"
+            log(f"RX strict: {len(raw_bytes)}B → \"{decoded[:60]}\"  "
+                f"RSSI={rssi}  SNR={snr}")
+        except Exception as exc:
+            log(f"RX: strict decode error: {exc}", "ERROR")
+            metrics["error"] = str(exc)
 
-                if result.get("decoded_by_llm") and not str(result["decoded_by_llm"]).startswith("DECODE_ERROR"):
-                    # Phase 2: Use LLM-expanded text for conversation history
-                    history_text = result["decoded_by_llm"]
-                elif result.get("encoded") and not str(result["encoded"]).startswith("DECODE_ERROR"):
-                    # Phase 1 or fallback: Use raw decoded text
-                    history_text = result["encoded"]
-                else:
-                    history_text = None
+    elif codec_id in (0x03, 0x04):
+        # Lossy / keyword mode
+        try:
+            if codec_id == 0x03:
+                keywords = codec.decode_keywords(payload, pkt.keyword_count)
+            else:
+                keywords = codec.decode_keywords(payload, pkt.keyword_count)
 
-                if history_text:
-                    conversation_history.append({"sent": False, "text": history_text})
-                    transcript.append({
-                        "step": step, "sender": f"Role {'B' if self.role == 'A' else 'A'}",
-                        "natural": None,
-                        "encoded": result.get("encoded"),
-                        "decoded": result.get("decoded_by_llm"),
-                        "fallback": False,
-                    })
-                else:
-                    transcript.append({
-                        "step": step, "sender": f"Role {'B' if self.role == 'A' else 'A'}",
-                        "natural": None, "encoded": None,
-                        "decoded": result.get("error", "MISSING"),
-                        "fallback": False,
-                    })
+            metrics["keyword_count"] = len(keywords)
+            metrics["route"] = "lossy"
 
-        return results, transcript
+            t_recon = time.perf_counter()
+            reconstructed, recon_ms = keyword_codec.reconstruct(keywords)
+            metrics["reconstruct_ms"] = round(recon_ms, 2)
+            metrics["decoded_text"]   = reconstructed
+
+            log(f"RX lossy: {len(keywords)} kws → \"{reconstructed[:60]}\"  "
+                f"recon={recon_ms:.0f}ms  RSSI={rssi}  SNR={snr}")
+
+        except Exception as exc:
+            log(f"RX: lossy decode error: {exc}", "ERROR")
+            metrics["error"] = str(exc)
+    else:
+        log(f"RX: unknown codec_id 0x{codec_id:02X}", "ERROR")
+        metrics["error"] = f"unknown codec_id: 0x{codec_id:02X}"
+
+    return metrics
+
+
+# =============================================================================
+# PING HANDLER
+# =============================================================================
+
+PING_COMMAND = "!ping"
+PONG_REPLY   = "PONG"
+
+
+def handle_ping(raw_bytes: bytes, sender_id: str,
+                radio: RadioInterface) -> bool:
+    """
+    Check for !ping BEFORE any pipeline processing.
+
+    Returns True if packet was a ping (consumed); False otherwise.
+    The !ping NEVER enters context_manager or codec pipeline.
+    """
+    try:
+        text = raw_bytes.decode("utf-8").strip()
+    except UnicodeDecodeError:
+        return False
+
+    if text == PING_COMMAND:
+        log(f"PING from {sender_id} — replying PONG")
+        radio.send_text(PONG_REPLY, sender_id)
+        return True
+    return False
+
+
+# =============================================================================
+# LLM GENERATE (for experiment conversation turns)
+# =============================================================================
+
+def generate_turn(llm: LLMClient, system_prompt: str,
+                  history: list[dict]) -> tuple[str, float]:
+    """
+    Generate the next conversation turn using the LLM.
+
+    Builds a single user prompt from conversation history and generates
+    the next response.
+
+    Returns: (text, elapsed_ms)
+    """
+    if not history:
+        user_prompt = "Begin the conversation."
+    else:
+        lines = []
+        for msg in history:
+            role = "You" if msg["role"] == "assistant" else "Them"
+            lines.append(f"{role}: {msg['content']}")
+        user_prompt = "\n".join(lines) + "\nYou:"
+
+    text, elapsed_ms = llm.generate(
+        system_prompt=system_prompt,
+        user_prompt=user_prompt,
+        max_tokens=80,
+        temperature=0.7,
+    )
+
+    # Clean up: strip quotes, markdown, multiline artefacts
+    text = text.strip().strip('"\'')
+    if "\n" in text:
+        text = text.split("\n")[0].strip()
+
+    return text, elapsed_ms
+
+
+# =============================================================================
+# LOG WRITERS
+# =============================================================================
+
+def _make_log_dir(log_dir: str) -> str:
+    os.makedirs(log_dir, exist_ok=True)
+    return log_dir
+
+
+def write_markdown_log(
+    run_name: str,
+    exp_name: str,
+    role: str,
+    peer_id: str,
+    run_cfg: dict,
+    tx_records: list[dict],
+    rx_records: list[dict],
+    log_dir: str = "./logs",
+) -> str:
+    """Write a markdown experiment log. Returns the file path."""
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    fname = f"experiment-{exp_name}-{run_name}-log_{ts}.md"
+    fpath = os.path.join(_make_log_dir(log_dir), fname)
+
+    lines = [
+        f"# CyberMesh v{VERSION} \"{CODENAME}\" — Experiment {exp_name}",
+        f"",
+        f"**Run:**         `{run_name}`  ",
+        f"**Role:**        {role}  ",
+        f"**Peer:**        {peer_id}  ",
+        f"**Engine:**      {run_cfg['engine']}  ",
+        f"**Codebook:**    {run_cfg['codebook_size']}  ",
+        f"**Mode:**        {run_cfg['mode']}  ",
+        f"**Timestamp:**   {ts}  ",
+        f"",
+        f"---",
+        f"",
+        f"## TX Messages",
+        f"",
+        f"| # | route | raw_B | enc_B | ratio | hit_rate | ESC | kw | "
+        f"extract_ms | classify_ms | pkts | text |",
+        f"|---|-------|-------|-------|-------|----------|-----|----|"
+        f"-----------|-------------|------|------|",
+    ]
+
+    for i, r in enumerate(tx_records, 1):
+        lines.append(
+            f"| {i} "
+            f"| {r.get('route') or '—'} "
+            f"| {r.get('raw_bytes') or '—'} "
+            f"| {r.get('encoded_bytes') or '—'} "
+            f"| {r.get('compression_ratio') or '—'} "
+            f"| {r.get('codebook_hit_rate') or '—'} "
+            f"| {r.get('ESC_count') or '—'} "
+            f"| {r.get('keyword_count') or '—'} "
+            f"| {r.get('extract_ms') or '—'} "
+            f"| {r.get('classify_ms') or '—'} "
+            f"| {r.get('packet_count') or '—'} "
+            f"| `{str(r.get('_original_text', ''))[:60]}` |"
+        )
+
+    lines += [
+        f"",
+        f"## RX Messages",
+        f"",
+        f"| # | route | enc_B | kw | recon_ms | RSSI | SNR | pkts | decoded_text |",
+        f"|---|-------|-------|----|----------|------|-----|------|--------------|",
+    ]
+
+    for i, r in enumerate(rx_records, 1):
+        lines.append(
+            f"| {i} "
+            f"| {r.get('route') or '—'} "
+            f"| {r.get('encoded_bytes') or '—'} "
+            f"| {r.get('keyword_count') or '—'} "
+            f"| {r.get('reconstruct_ms') or '—'} "
+            f"| {r.get('RSSI') or '—'} "
+            f"| {r.get('SNR') or '—'} "
+            f"| {r.get('packet_count') or '—'} "
+            f"| `{str(r.get('decoded_text', ''))[:80]}` |"
+        )
+
+    lines += ["", "---", ""]
+
+    # Summary stats
+    valid_tx = [r for r in tx_records if r.get("compression_ratio")]
+    avg_ratio = (sum(r["compression_ratio"] for r in valid_tx) / len(valid_tx)
+                 if valid_tx else 0)
+    lines += [
+        f"## Summary",
+        f"",
+        f"- TX messages:       {len(tx_records)}",
+        f"- RX messages:       {len(rx_records)}",
+        f"- Avg compression:   {avg_ratio:.3f}:1",
+        f"",
+    ]
+
+    with open(fpath, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+
+    log(f"Log written: {fpath}")
+    return fpath
+
+
+def write_json_log(
+    run_name: str,
+    exp_name: str,
+    all_data: dict,
+    log_dir: str = "./logs",
+) -> str:
+    """Write a JSON experiment log. Returns the file path."""
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    fname = f"experiment-{exp_name}-{run_name}-log_{ts}.json"
+    fpath = os.path.join(_make_log_dir(log_dir), fname)
+    with open(fpath, "w", encoding="utf-8") as f:
+        json.dump(all_data, f, indent=2, default=str)
+    log(f"JSON log written: {fpath}")
+    return fpath
+
+
+# =============================================================================
+# SINGLE RUN  (one codec + mode combination)
+# =============================================================================
+
+class RunRunner:
+    """
+    Orchestrates one experiment run (codec + mode + messages_per_node).
+
+    Works in both live LoRa mode and loopback mock mode.
+    """
+
+    def __init__(
+        self,
+        run_cfg: dict,
+        global_cfg: dict,
+        llm: LLMClient,
+        radio: RadioInterface,
+        context_manager: ContextManager,
+        page_buffer: PageBuffer,
+        role: str,
+        peer_id: str,
+    ):
+        self.run_cfg = run_cfg
+        self.cfg     = global_cfg
+        self.llm     = llm
+        self.radio   = radio
+        self.ctx     = context_manager
+        self.page_buf = page_buffer
+        self.role    = role         # "A" (initiator) or "B" (responder)
+        self.peer_id = peer_id
+
+        # Override global codec/mode with run-specific values
+        self._engine   = run_cfg["engine"]
+        self._cb_size  = run_cfg["codebook_size"]
+        self._mode     = run_cfg["mode"]
+
+        # Build per-run codec and support objects
+        self.codec, _ = build_codec(self._engine, self._cb_size)
+
+        # Patch config for this run
+        patched_cfg = dict(global_cfg)
+        patched_cfg["codec"] = dict(global_cfg.get("codec", {}))
+        patched_cfg["codec"]["engine"]        = self._engine
+        patched_cfg["codec"]["codebook_size"] = self._cb_size
+        patched_cfg["codec"]["mode"]          = self._mode
+
+        self.kw_codec  = KeywordCodec(llm_client=llm, config=patched_cfg)
+        self.router    = SmartRouter(llm_client=llm, config=patched_cfg)
+        self.patched_cfg = patched_cfg
+
+        # Message counts
+        self.messages_per_node = global_cfg.get("experiment", {}).get(
+            "messages_per_node", global_cfg.get("messages_per_node", 10))
+        self.timeout_s = global_cfg.get("lemonade", {}).get("timeout_s",
+                         global_cfg.get("timeout_s", 45))
+        self.system_prompt = global_cfg.get("conversation_seed", "")
+
+        # Receive synchronization
+        self._rx_event   = threading.Event()
+        self._rx_pending: dict | None = None
+        self._rx_lock    = threading.Lock()
+
+        # Results
+        self.tx_records: list[dict] = []
+        self.rx_records: list[dict] = []
+
+    def _on_receive(self, raw_bytes: bytes, sender_id: str,
+                    rssi, snr, packet) -> None:
+        """Radio RX callback — runs in radio thread."""
+        # !ping check FIRST — never enters pipeline
+        if handle_ping(raw_bytes, sender_id, self.radio):
+            return
+
+        # Only accept packets from our peer
+        if sender_id != self.peer_id:
+            return
+
+        metrics = receive(
+            raw_bytes=raw_bytes,
+            sender_id=sender_id,
+            engine=self._engine,
+            codec=self.codec,
+            keyword_codec=self.kw_codec,
+            page_buffer=self.page_buf,
+            rssi=rssi,
+            snr=snr,
+        )
+
+        if metrics.get("_waiting_for_pages"):
+            return  # wait for more pages
+
+        with self._rx_lock:
+            self._rx_pending = metrics
+        self._rx_event.set()
+
+    def _wait_for_rx(self) -> dict:
+        """Block until RX arrives or timeout."""
+        self._rx_event.clear()
+        with self._rx_lock:
+            self._rx_pending = None
+
+        got = self._rx_event.wait(timeout=self.timeout_s)
+        if not got:
+            log(f"RX timeout ({self.timeout_s}s)", "WARN")
+            m = empty_metrics()
+            m["error"] = f"timeout_{self.timeout_s}s"
+            return m
+
+        with self._rx_lock:
+            return self._rx_pending or empty_metrics()
 
     def _is_my_tx_step(self, step: int) -> bool:
-        """Role B sends on odd steps (1,3,5,...), Role A sends on even steps (2,4,6,...)."""
-        if self.role == "B":
-            return step % 2 == 1
+        """
+        Role B sends on odd steps (1, 3, 5, …).
+        Role A sends on even steps (2, 4, 6, …).
+        """
+        return (step % 2 == 1) if self.role == "B" else (step % 2 == 0)
+
+    def run(self) -> tuple[list[dict], list[dict]]:
+        """
+        Execute all message exchanges for this run.
+
+        Returns (tx_records, rx_records).
+        """
+        run_name = self.run_cfg["name"]
+        total    = self.messages_per_node * 2
+
+        log(f"{'='*65}")
+        log(f"RUN {self.run_cfg['run']}/4: {run_name.upper()}")
+        log(f"  Engine={self._engine}  Codebook={self._cb_size}  Mode={self._mode}")
+        log(f"  Role={self.role}  Peer={self.peer_id}  Steps={total}")
+        log(f"{'='*65}")
+
+        # Register RX callback for this run
+        self.radio.register_rx_callback(self._on_receive)
+
+        for step in range(1, total + 1):
+            if self._is_my_tx_step(step):
+                self._do_tx(step)
+            else:
+                self._do_rx(step)
+
+        # Remove our callback (clean up before next run)
+        try:
+            self.radio._rx_callbacks.remove(self._on_receive)
+        except ValueError:
+            pass
+
+        return self.tx_records, self.rx_records
+
+    def _do_tx(self, step: int) -> None:
+        """Generate a message with the LLM and transmit it."""
+        history = self.ctx.get(self.peer_id)
+        text, gen_ms = generate_turn(self.llm, self.system_prompt, history)
+        log(f"[{step}/{self.messages_per_node*2}] TX gen ({gen_ms:.0f}ms): \"{text[:80]}\"")
+
+        metrics = transmit(
+            text=text,
+            sender_id=self.radio.my_node_id,
+            engine=self._engine,
+            codec=self.codec,
+            keyword_codec=self.kw_codec,
+            smart_router=self.router,
+            radio=self.radio,
+            cfg=self.patched_cfg,
+            dest_id=self.peer_id,
+        )
+        metrics["_original_text"] = text
+        metrics["_gen_ms"]        = round(gen_ms, 2)
+        metrics["_step"]          = step
+        self.tx_records.append(metrics)
+
+        # Add to context (assistant role — this node's output)
+        self.ctx.add(self.peer_id, "assistant", text)
+
+        # Loopback: the sent packet is also the received one for this node;
+        # in live mode the remote node sends back independently.
+
+    def _do_rx(self, step: int) -> None:
+        """Wait for an incoming packet and decode it."""
+        log(f"[{step}/{self.messages_per_node*2}] RX waiting...")
+
+        if self.radio._loopback:
+            # In loopback mode: pop the queued packet we just sent
+            raw = self.radio.pop_loopback(timeout=self.timeout_s)
+            if raw is None:
+                log("Loopback RX timeout", "WARN")
+                m = empty_metrics()
+                m["error"] = "loopback_timeout"
+                m["_step"] = step
+                self.rx_records.append(m)
+                return
+
+            metrics = receive(
+                raw_bytes=raw,
+                sender_id=self.peer_id,
+                engine=self._engine,
+                codec=self.codec,
+                keyword_codec=self.kw_codec,
+                page_buffer=self.page_buf,
+                rssi=None,
+                snr=None,
+            )
         else:
-            return step % 2 == 0
+            metrics = self._wait_for_rx()
 
-    # ── Full experiment ──
+        metrics["_step"] = step
+        self.rx_records.append(metrics)
 
-    def run_experiment(self):
-        """Run both codec runs in sequence, then generate comparison."""
+        decoded = metrics.get("decoded_text", "")
+        if decoded:
+            self.ctx.add(self.peer_id, "user", decoded)
+            log(f"  RX decoded: \"{decoded[:80]}\"")
+        elif metrics.get("error"):
+            log(f"  RX error: {metrics['error']}", "WARN")
+
+
+# =============================================================================
+# EXPERIMENT RUNNER
+# =============================================================================
+
+class ExperimentRunner:
+    """
+    Top-level orchestrator for the 4-run v7.0 experiment matrix.
+
+    Handles:
+      - Initialization sequence
+      - Trigger / role assignment (Role A = initiator, Role B = responder)
+      - Sequential run execution
+      - Log output
+    """
+
+    def __init__(self, cfg: dict):
+        self.cfg = cfg
+
+        # ── Init LLMClient ────────────────────────────────────────────────────
+        lem_cfg   = cfg.get("lemonade", {})
+        test_cfg  = cfg.get("testing", {})
+        self.llm  = LLMClient(
+            base_url = lem_cfg.get("base_url", "http://localhost:8000"),
+            model    = lem_cfg.get("model", "test01"),
+            timeout  = lem_cfg.get("timeout_s", 45),
+            mock     = test_cfg.get("mock_llm", False),
+        )
+        log(f"LLMClient: model={self.llm.model}  base_url={self.llm.base_url}  "
+            f"mock={self.llm.mock}")
+
+        # ── Init ContextManager ───────────────────────────────────────────────
+        ctx_cfg = cfg.get("context", {})
+        self.ctx_mgr = ContextManager(
+            window_size  = ctx_cfg.get("window_size", 4),
+            anchor_first = ctx_cfg.get("anchor_first", True),
+        )
+
+        # ── Init Radio ────────────────────────────────────────────────────────
+        radio_cfg = cfg.get("radio", cfg)
+        self.radio = RadioInterface(port=radio_cfg.get("port", "auto"))
+
+        # ── Shared page buffer (across runs) ──────────────────────────────────
+        self.page_buf = PageBuffer()
+
+        # ── Role / peer ───────────────────────────────────────────────────────
+        self.role    = "B"          # default; may change on trigger
+        self.peer_id = "!00000000"
+
+        # ── Trigger sync ──────────────────────────────────────────────────────
+        self._trigger_event  = threading.Event()
+        self._trigger_sender: str | None = None
+
+        # ── Results ───────────────────────────────────────────────────────────
+        self.all_results: dict[str, dict] = {}
+
+    # ── Initialization ────────────────────────────────────────────────────────
+
+    def initialize(self) -> None:
+        """Full initialization sequence per v7.0 spec §2."""
+        log("── Initialization ──────────────────────────────────────────")
+
         # Warmup LLM
-        warmup_model(self.model)
+        if self.cfg.get("lemonade", {}).get("warmup_on_start", True):
+            log("LLM warmup...")
+            warmup_ms = self.llm.warmup()
+            log(f"LLM warmup: {warmup_ms:.0f}ms")
 
-        # Wait for trigger
-        log("Waiting for trigger...")
-        while self.state == "LISTENING":
-            time.sleep(0.5)
+        # Connect radio
+        self.radio.connect()
+        log(f"Radio: {self.radio.my_node_name} ({self.radio.my_node_id})  "
+            f"loopback={self.radio._loopback}")
 
-        if self.state != "TRIGGERED":
-            log(f"Unexpected state: {self.state}", "ERROR")
-            return
+        # Register trigger listener
+        self.radio.register_rx_callback(self._on_trigger)
 
-        self.state = "RUNNING"
-        log(f"Role assigned: {self.role}  |  Peer: {self.peer_id}")
+        log("── Ready ─────────────────────────────────────────────────")
 
-        # === Run 1: MUX Grid ===
-        log("=" * 50)
-        log(f"RUN 1 OF 2: MUX GRID CODEC — {self.phase_label}")
-        log("=" * 50)
-        mux_results, mux_transcript = self._run_conversation("mux_grid")
-        self.runs["mux_grid"] = mux_results
-        self.transcripts["mux_grid"] = mux_transcript
+    def _on_trigger(self, raw_bytes: bytes, sender_id: str,
+                    rssi, snr, packet) -> None:
+        """
+        Trigger detection callback.
 
-        # Brief pause between runs
-        log("Run 1 complete. Pausing 5s before Run 2...")
-        time.sleep(5)
+        In live mode: Role A sends "Hi" (TEXT_MESSAGE_APP) to start the
+        experiment; Role B receives it and sets self.role = "B".
+        The node that receives the trigger first becomes Role B.
 
-        # Reset sync state for Run 2
-        self.msg_event.clear()
-        self.last_received_data = None
-        self.last_received_packet = None
-        self.trigger_data_is_step1 = False
-        self.seq_counter = 0
+        In loopback mode: immediately sets self.role = "B".
+        """
+        if self._trigger_event.is_set():
+            return  # Already triggered
 
-        # === Run 2: Huffman ===
-        log("=" * 50)
-        log(f"RUN 2 OF 2: HUFFMAN CODEC (4K) — {self.phase_label}")
-        log("=" * 50)
-
-        if self.role == "B":
-            huff_results, huff_transcript = self._run_conversation("huffman")
-        else:
-            log("Role A: waiting for Role B to start Run 2...")
-            self.msg_event.clear()
-            self.last_received_data = None
-            self.last_received_packet = None
-            self.trigger_data_is_step1 = True
-            self.msg_event.wait(timeout=self.timeout_s)
-            huff_results, huff_transcript = self._run_conversation("huffman")
-
-        self.runs["huffman"] = huff_results
-        self.transcripts["huffman"] = huff_transcript
-
-        self.state = "COMPLETE"
-
-        # Print summaries and write logs
-        self._print_run_summary("mux_grid", mux_results)
-        self._print_run_summary("huffman", huff_results)
-        self._print_comparison()
-        self._write_logs()
-
-    # ── Output ──
-
-    def _print_run_summary(self, codec_name: str, results: list[dict]):
-        label = "MUX Grid" if codec_name == "mux_grid" else "Huffman (4K)"
-        print(f"\n{'=' * 70}")
-        print(f"  {label} — Run Summary (Role {self.role}) — {self.phase_label}")
-        print(f"{'=' * 70}")
-
-        if self.use_llm_codec:
-            hdr = (f"  {'#':<3} {'Dir':<5} {'Raw':>4} {'Cmp':>4} {'Ratio':>6} "
-                   f"{'Gen':>6} {'Enc':>6} {'Dec':>6} {'Pg':>3} {'Hit%':>5} {'ESC':>4} {'FB':>3} "
-                   f"{'RSSI':>5} {'SNR':>4}  Message")
-            print(hdr)
-            sep = (f"  {'─'*3} {'─'*5} {'─'*4} {'─'*4} {'─'*6} "
-                   f"{'─'*6} {'─'*6} {'─'*6} {'─'*3} {'─'*5} {'─'*4} {'─'*3} "
-                   f"{'─'*5} {'─'*4}  {'─'*35}")
-        else:
-            hdr = (f"  {'#':<3} {'Dir':<5} {'Raw':>4} {'Cmp':>4} {'Ratio':>6} "
-                   f"{'Inf(ms)':>8} {'Pg':>3} {'Hit%':>5} {'ESC':>4} "
-                   f"{'RSSI':>5} {'SNR':>4}  Message")
-            print(hdr)
-            sep = (f"  {'─'*3} {'─'*5} {'─'*4} {'─'*4} {'─'*6} "
-                   f"{'─'*8} {'─'*3} {'─'*5} {'─'*4} "
-                   f"{'─'*5} {'─'*4}  {'─'*40}")
-        print(sep)
-
-        for r in results:
-            s = r["step"]
-            d = r.get("direction", "?")
-            raw = r.get("raw_bytes")
-            comp = r.get("comp_bytes")
-            ratio = r.get("ratio")
-            pg = r.get("pages", 0)
-            hit = r.get("hit_pct")
-            esc = r.get("esc_count")
-            rssi = r.get("rssi")
-            snr = r.get("snr")
-            msg = (r.get("natural") or r.get("original") or r.get("encoded") or
-                   r.get("decoded_by_llm") or "")[:35]
-
-            raw_s = f"{raw:>4}" if raw else "   —"
-            comp_s = f"{comp:>4}" if comp else "   —"
-            ratio_s = f"{ratio:>6.2f}" if ratio else "     —"
-            pg_s = f"{pg:>3}" if pg else "  —"
-            hit_s = f"{hit:>4.0f}%" if hit is not None else "    —"
-            esc_s = f"{esc:>4}" if esc is not None else "   —"
-            rssi_s = f"{rssi:>5}" if rssi is not None else "    —"
-            snr_s = f"{snr:>4}" if snr is not None else "   —"
-
-            if self.use_llm_codec:
-                gen = r.get("gen_ms")
-                enc = r.get("enc_ms")
-                dec = r.get("dec_ms")
-                fb = "Y" if r.get("fallback") else "N"
-                gen_s = f"{gen:>5.0f}" if gen else "    —"
-                enc_s = f"{enc:>5.0f}" if enc else "    —"
-                dec_s = f"{dec:>5.0f}" if dec else "    —"
-                print(f"  {s:<3} {d:<5} {raw_s} {comp_s} {ratio_s} "
-                      f"{gen_s} {enc_s} {dec_s} {pg_s} {hit_s} {esc_s}   {fb} "
-                      f"{rssi_s} {snr_s}  {msg}")
-            else:
-                inf = r.get("gen_ms")
-                inf_s = f"{inf:>7.0f}" if inf else "      —"
-                print(f"  {s:<3} {d:<5} {raw_s} {comp_s} {ratio_s} {inf_s} {pg_s} "
-                      f"{hit_s} {esc_s} {rssi_s} {snr_s}  {msg}")
-
-    def _print_comparison(self):
-        """Print side-by-side comparison of both runs."""
-        print(f"\n{'=' * 70}")
-        print(f"  EXPERIMENT {EXPERIMENT} — {self.phase_label} — Combined Results")
-        print(f"{'=' * 70}")
-
-        for codec_name, label in [("mux_grid", "MUX Grid"), ("huffman", "Huffman (4K)")]:
-            results = self.runs.get(codec_name, [])
-            tx_results = [r for r in results if r.get("raw_bytes") is not None]
-            rx_results = [r for r in results if r.get("comp_bytes") is not None and r.get("raw_bytes") is None]
-
-            total_raw = sum(r["raw_bytes"] for r in tx_results if r["raw_bytes"])
-            total_comp = sum(r["comp_bytes"] for r in tx_results if r["comp_bytes"])
-            ratio = total_raw / total_comp if total_comp else 0
-
-            hit_pcts = [r["hit_pct"] for r in tx_results if r.get("hit_pct") is not None]
-            avg_hit = sum(hit_pcts) / len(hit_pcts) if hit_pcts else 0
-
-            esc_counts = [r["esc_count"] for r in tx_results if r.get("esc_count") is not None]
-            avg_esc = sum(esc_counts) / len(esc_counts) if esc_counts else 0
-
-            gen_times = [r["gen_ms"] for r in tx_results if r.get("gen_ms")]
-            avg_gen = sum(gen_times) / len(gen_times) if gen_times else 0
-
-            enc_times = [r["enc_ms"] for r in tx_results if r.get("enc_ms")]
-            avg_enc = sum(enc_times) / len(enc_times) if enc_times else 0
-
-            dec_times = [r["dec_ms"] for r in rx_results if r.get("dec_ms")]
-            avg_dec = sum(dec_times) / len(dec_times) if dec_times else 0
-
-            pages_gt1 = sum(1 for r in tx_results if (r.get("pages") or 0) > 1)
-            fallbacks = sum(1 for r in tx_results if r.get("fallback"))
-
-            msgs_sent = len(tx_results)
-            msgs_received = len(rx_results)
-            errors = sum(1 for r in results if r.get("error"))
-
-            print(f"\n  --- {label} ---")
-            print(f"  Messages sent:           {msgs_sent}")
-            print(f"  Messages received:       {msgs_received}")
-            print(f"  Errors/Timeouts:         {errors}")
-            print(f"  Total raw bytes (TX):    {total_raw}")
-            print(f"  Total compressed (TX):   {total_comp}")
-            print(f"  Aggregate ratio:         {ratio:.2f}:1")
-            print(f"  Avg codebook hit rate:   {avg_hit:.1f}%")
-            print(f"  Avg ESC count per msg:   {avg_esc:.1f}")
-            print(f"  Avg LLM generate time:   {avg_gen:.0f}ms")
-            if self.use_llm_codec:
-                print(f"  Avg LLM encode time:     {avg_enc:.0f}ms")
-                print(f"  Avg LLM decode time:     {avg_dec:.0f}ms")
-                print(f"  Fallback events:         {fallbacks}/{msgs_sent}")
-            print(f"  Pages > 1 count:         {pages_gt1}")
-
-    def _write_logs(self):
-        """Write all experiment logs."""
-        logs_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
-        os.makedirs(logs_dir, exist_ok=True)
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        phase_tag = "phase2" if self.use_llm_codec else "phase1"
-
-        for codec_name in ["mux_grid", "huffman"]:
-            label = "MUX Grid" if codec_name == "mux_grid" else "Huffman (4K)"
-            results = self.runs.get(codec_name, [])
-            transcript = self.transcripts.get(codec_name, [])
-
-            filename = f"experiment-d-{phase_tag}-{codec_name.replace('_','-')}-log_{ts}.md"
-            filepath = os.path.join(logs_dir, filename)
-
-            lines = [
-                "---",
-                f'title: "Experiment {EXPERIMENT} — {self.phase_label} — {label} — Run Log"',
-                f"date: {datetime.now(timezone.utc).isoformat()}",
-                f"version: {VERSION}",
-                f"phase: {phase_tag}",
-                f"codec: {codec_name}",
-                f"model: {self.model}",
-                f"role: {self.role}",
-                f'node: "{self.my_node_id}"',
-                f'peer: "{self.peer_id}"',
-                f"messages_per_node: {self.messages_per_node}",
-                f"pretokenizer: {self.use_pretokenizer}",
-                f"llm_codec: {self.use_llm_codec}",
-                f"fallback_threshold: {self.fallback_threshold}",
-                "---",
-                "",
-                f"# Experiment {EXPERIMENT} — {self.phase_label} — {label} — Results",
-                "",
-                "## Per-Message Metrics",
-                "",
-            ]
-
-            if self.use_llm_codec:
-                lines.extend([
-                    "| # | Dir | Raw | Cmp | Ratio | Gen(ms) | Enc(ms) | Dec(ms) | Pg | Hit% | ESC | FB | RSSI | SNR | Natural | Encoded |",
-                    "|---|-----|-----|-----|-------|---------|---------|---------|----|------|-----|----|----- |-----|---------|---------|",
-                ])
-            else:
-                lines.extend([
-                    "| # | Dir | Raw | Cmp | Ratio | Inf(ms) | Tokens | Pg | Hit% | ESC | RSSI | SNR | Message |",
-                    "|---|-----|-----|-----|-------|---------|--------|----|------|-----|------|-----|---------|",
-                ])
-
-            for r in results:
-                s = r["step"]
-                d = r.get("direction", "?")
-                raw = r.get("raw_bytes", "—")
-                comp = r.get("comp_bytes", "—")
-                ratio = f"{r['ratio']:.2f}" if r.get("ratio") else "—"
-                pg = r.get("pages", "—")
-                hit = f"{r['hit_pct']:.0f}%" if r.get("hit_pct") is not None else "—"
-                esc = r.get("esc_count", "—")
-                rssi = r.get("rssi", "—")
-                snr = r.get("snr", "—")
-
-                if self.use_llm_codec:
-                    gen = f"{r['gen_ms']:.0f}" if r.get("gen_ms") else "—"
-                    enc = f"{r['enc_ms']:.0f}" if r.get("enc_ms") else "—"
-                    dec = f"{r['dec_ms']:.0f}" if r.get("dec_ms") else "—"
-                    fb = "Y" if r.get("fallback") else "N"
-                    nat = (r.get("natural") or "—")[:50]
-                    ecd = (r.get("encoded") or r.get("original") or "—")[:50]
-                    lines.append(f"| {s} | {d} | {raw} | {comp} | {ratio} | {gen} | {enc} | {dec} | "
-                                 f"{pg} | {hit} | {esc} | {fb} | {rssi} | {snr} | {nat} | {ecd} |")
-                else:
-                    gen = f"{r['gen_ms']:.0f}" if r.get("gen_ms") else "—"
-                    tok = r.get("tokens", "—")
-                    msg = (r.get("original") or r.get("encoded") or r.get("decoded_by_llm") or "")[:60]
-                    lines.append(f"| {s} | {d} | {raw} | {comp} | {ratio} | {gen} | {tok} | "
-                                 f"{pg} | {hit} | {esc} | {rssi} | {snr} | {msg} |")
-
-            # Transcript
-            lines.extend(["", "## Full Conversation Transcript", ""])
-            if self.use_llm_codec:
-                lines.extend([
-                    "| # | Sender | Natural | Encoded/Decoded |",
-                    "|---|--------|---------|-----------------|",
-                ])
-                for t in transcript:
-                    nat = (t.get("natural") or "—")[:60]
-                    ecd = (t.get("encoded") or t.get("decoded") or "—")[:60]
-                    lines.append(f"| {t['step']} | {t['sender']} | {nat} | {ecd} |")
-            else:
-                lines.extend([
-                    "| # | Sender | Text |",
-                    "|---|--------|------|",
-                ])
-                for t in transcript:
-                    text = t.get("natural") or t.get("encoded") or t.get("decoded") or "—"
-                    lines.append(f"| {t['step']} | {t['sender']} | {text} |")
-
-            lines.append("")
-            with open(filepath, "w", encoding="utf-8") as f:
-                f.write("\n".join(lines))
-            log(f"Log written: {filepath}")
-
-        # Comparison log
-        comp_file = os.path.join(logs_dir, f"experiment-d-{phase_tag}-comparison_{ts}.md")
-        self._write_comparison_log(comp_file)
-        log(f"Comparison written: {comp_file}")
-
-        # Structured JSON log
-        json_file = os.path.join(logs_dir, f"experiment-d-{phase_tag}-data_{ts}.json")
-        with open(json_file, "w", encoding="utf-8") as f:
-            json.dump({
-                "experiment": "D",
-                "phase": phase_tag,
-                "timestamp": datetime.now(timezone.utc).isoformat(),
-                "node": self.my_node_id,
-                "peer": self.peer_id,
-                "role": self.role,
-                "model": self.model,
-                "pretokenizer": self.use_pretokenizer,
-                "llm_codec": self.use_llm_codec,
-                "fallback_threshold": self.fallback_threshold,
-                "runs": {k: v for k, v in self.runs.items()},
-                "transcripts": {k: v for k, v in self.transcripts.items()},
-                "log_entries": LOG_ENTRIES,
-            }, f, indent=2, default=str)
-        log(f"JSON data written: {json_file}")
-
-    def _write_comparison_log(self, filepath: str):
-        phase_tag = "Phase 2 (LLM Codec)" if self.use_llm_codec else "Phase 1 (Pre-Tokenizer)"
-        lines = [
-            "---",
-            f'title: "Experiment {EXPERIMENT} — {phase_tag} — Combined Results"',
-            f"date: {datetime.now(timezone.utc).isoformat()}",
-            f"version: {VERSION}",
-            "---",
-            "",
-            f"# Experiment {EXPERIMENT} — {phase_tag} — Combined Results",
-            "",
-            "| Metric | Huffman (4K) | MUX Grid |",
-            "|--------|-------------|----------|",
-        ]
-
-        metrics = {}
-        for codec_name in ["huffman", "mux_grid"]:
-            results = self.runs.get(codec_name, [])
-            tx_results = [r for r in results if r.get("raw_bytes") is not None]
-            total_raw = sum(r["raw_bytes"] for r in tx_results if r["raw_bytes"])
-            total_comp = sum(r["comp_bytes"] for r in tx_results if r["comp_bytes"])
-            ratio = f"{total_raw / total_comp:.2f}:1" if total_comp else "—"
-            hit_pcts = [r["hit_pct"] for r in tx_results if r.get("hit_pct") is not None]
-            avg_hit = f"{sum(hit_pcts) / len(hit_pcts):.1f}%" if hit_pcts else "—"
-            esc_counts = [r["esc_count"] for r in tx_results if r.get("esc_count") is not None]
-            avg_esc = f"{sum(esc_counts) / len(esc_counts):.1f}" if esc_counts else "—"
-            gen_times = [r["gen_ms"] for r in tx_results if r.get("gen_ms")]
-            avg_gen = f"{sum(gen_times) / len(gen_times):.0f}ms" if gen_times else "—"
-            pages_gt1 = sum(1 for r in tx_results if (r.get("pages") or 0) > 1)
-            fallbacks = sum(1 for r in tx_results if r.get("fallback"))
-
-            metrics[codec_name] = {
-                "sent": len(tx_results), "ratio": ratio, "hit": avg_hit,
-                "esc": avg_esc, "gen": avg_gen, "pages": pages_gt1,
-                "fallbacks": fallbacks,
-            }
-
-        h, m = metrics["huffman"], metrics["mux_grid"]
-        lines.extend([
-            f"| Messages sent | {h['sent']} | {m['sent']} |",
-            f"| Aggregate ratio | {h['ratio']} | {m['ratio']} |",
-            f"| Avg codebook hit rate | {h['hit']} | {m['hit']} |",
-            f"| Avg ESC count per msg | {h['esc']} | {m['esc']} |",
-            f"| Avg LLM generate time | {h['gen']} | {m['gen']} |",
-            f"| Pages > 1 count | {h['pages']} | {m['pages']} |",
-        ])
-        if self.use_llm_codec:
-            lines.append(f"| Fallback events | {h['fallbacks']}/{h['sent']} | {m['fallbacks']}/{m['sent']} |")
-
-        lines.append("")
-        with open(filepath, "w", encoding="utf-8") as f:
-            f.write("\n".join(lines))
-
-    # ── Main loop ──
-
-    def run(self):
-        if not self.connect():
+        # !ping check
+        if handle_ping(raw_bytes, sender_id, self.radio):
             return
 
         try:
-            self.run_experiment()
-            print(f"\n{'=' * 65}")
-            print(f"  EXPERIMENT {EXPERIMENT} — {self.phase_label} — COMPLETE")
-            print(f"  Check logs/ directory for full results.")
-            print(f"{'=' * 65}\n")
-        except KeyboardInterrupt:
-            print("\n\n  Interrupted by user. Shutting down...")
-        finally:
-            if self.interface:
-                self.interface.close()
-            print("  Radio interface closed.\n")
+            text = raw_bytes.decode("utf-8").strip()
+        except UnicodeDecodeError:
+            text = ""
+
+        trigger_word = self.cfg.get("trigger_word", "Hi")
+        if text == trigger_word:
+            log(f"TRIGGER received from {sender_id}: \"{text}\"")
+            self._trigger_sender = sender_id
+            self.peer_id         = sender_id
+            self.role            = "B"
+            self._trigger_event.set()
+
+    def _send_trigger(self) -> None:
+        """Role A: send the trigger word to start the experiment."""
+        trigger_word = self.cfg.get("trigger_word", "Hi")
+        # In loopback, send directly to loopback peer
+        dest = self.cfg.get("radio", {}).get("peer_id",
+               self.cfg.get("peer_id", "!ffffffff"))
+        self.peer_id = dest
+        self.role    = "A"
+        log(f"Sending trigger \"{trigger_word}\" to {dest}")
+        self.radio.send_text(trigger_word, dest)
+
+    # ── Main experiment entry point ───────────────────────────────────────────
+
+    def run_experiment(self, role: str = "auto") -> None:
+        """
+        Run all 4 experiment runs.
+
+        role: "A" = initiator (sends first), "B" = responder, "auto" = wait
+        for trigger to determine role.
+        """
+        exp_name  = self.cfg.get("experiment", {}).get("name", "F")
+        log_dir   = self.cfg.get("logging", {}).get("dir", "./logs")
+        log_fmt   = self.cfg.get("logging", {}).get("format", "markdown")
+
+        # ── Role assignment ───────────────────────────────────────────────────
+        if role == "A":
+            self._send_trigger()
+            self.role = "A"
+        elif role == "B":
+            log("Role B: waiting for trigger...")
+            if not self.radio._loopback:
+                self._trigger_event.wait()
+            else:
+                # Loopback — self-trigger for testing
+                self.peer_id = self.radio.my_node_id
+                self.role    = "B"
+                log("Loopback mode: self-trigger as Role B")
+        else:
+            # Auto: wait up to 10 s for external trigger; if none, become A
+            log("Auto role: waiting for trigger (10s)...")
+            triggered = self._trigger_event.wait(timeout=10)
+            if triggered:
+                self.role    = "B"
+                self.peer_id = self._trigger_sender
+                log(f"Role assigned: B (peer={self.peer_id})")
+            else:
+                self._send_trigger()
+                self.role = "A"
+                log("No trigger received — assuming Role A")
+
+        log(f"Role: {self.role}  Peer: {self.peer_id}")
+
+        # Remove trigger listener (runs handle their own RX)
+        try:
+            self.radio._rx_callbacks.remove(self._on_trigger)
+        except ValueError:
+            pass
+
+        # ── Sequential runs ───────────────────────────────────────────────────
+        for run_cfg in EXPERIMENT_MATRIX:
+            run_name = run_cfg["name"]
+            log(f"\n{'─'*65}")
+            log(f"STARTING RUN {run_cfg['run']}/4: {run_name}")
+            log(f"{'─'*65}")
+
+            # Reset context for each run
+            self.ctx_mgr.clear(self.peer_id)
+            # Reset page buffer
+            self.page_buf.clear(self.peer_id)
+
+            runner = RunRunner(
+                run_cfg         = run_cfg,
+                global_cfg      = self.cfg,
+                llm             = self.llm,
+                radio           = self.radio,
+                context_manager = self.ctx_mgr,
+                page_buffer     = self.page_buf,
+                role            = self.role,
+                peer_id         = self.peer_id,
+            )
+
+            tx_records, rx_records = runner.run()
+
+            self.all_results[run_name] = {
+                "run_cfg":    run_cfg,
+                "role":       self.role,
+                "peer_id":    self.peer_id,
+                "tx_records": tx_records,
+                "rx_records": rx_records,
+            }
+
+            # ── Write per-run logs ────────────────────────────────────────────
+            if log_fmt in ("markdown", "both"):
+                write_markdown_log(
+                    run_name   = run_name,
+                    exp_name   = exp_name,
+                    role       = self.role,
+                    peer_id    = self.peer_id,
+                    run_cfg    = run_cfg,
+                    tx_records = tx_records,
+                    rx_records = rx_records,
+                    log_dir    = log_dir,
+                )
+            if log_fmt in ("json", "both"):
+                write_json_log(
+                    run_name = run_name,
+                    exp_name = exp_name,
+                    all_data = self.all_results[run_name],
+                    log_dir  = log_dir,
+                )
+
+            # Brief inter-run pause (allow radio to settle)
+            if run_cfg["run"] < len(EXPERIMENT_MATRIX):
+                pause = 5
+                log(f"Run {run_cfg['run']} complete. Pausing {pause}s...")
+                time.sleep(pause)
+
+        # ── Final comparison ──────────────────────────────────────────────────
+        self._print_comparison()
+        log("Experiment complete.")
+
+    # ── Comparison summary ────────────────────────────────────────────────────
+
+    def _print_comparison(self) -> None:
+        width = 78
+        print("\n" + "=" * width)
+        print(f"  EXPERIMENT COMPARISON — v{VERSION} \"{CODENAME}\"")
+        print("─" * width)
+        header = (f"  {'Run':<30} {'TX avg ratio':>14} {'RX kw/msg':>10} "
+                  f"{'RX recon_ms':>12} {'TX pkts':>8}")
+        print(header)
+        print("─" * width)
+
+        for run_name, data in self.all_results.items():
+            tx = data["tx_records"]
+            rx = data["rx_records"]
+
+            valid_tx = [r for r in tx if r.get("compression_ratio")]
+            avg_ratio = (sum(r["compression_ratio"] for r in valid_tx) /
+                         len(valid_tx)) if valid_tx else 0.0
+
+            valid_kw = [r for r in rx if r.get("keyword_count")]
+            avg_kw   = (sum(r["keyword_count"] for r in valid_kw) /
+                        len(valid_kw)) if valid_kw else 0.0
+
+            valid_rec = [r for r in rx if r.get("reconstruct_ms")]
+            avg_rec   = (sum(r["reconstruct_ms"] for r in valid_rec) /
+                         len(valid_rec)) if valid_rec else 0.0
+
+            total_pkts = sum(r.get("packet_count") or 1 for r in tx)
+
+            print(f"  {run_name:<30} {avg_ratio:>14.3f} {avg_kw:>10.1f} "
+                  f"{avg_rec:>12.1f} {total_pkts:>8}")
+
+        print("=" * width + "\n")
 
 
-# ==========================================
-# ENTRY POINT
-# ==========================================
+# =============================================================================
+# CLI ENTRY POINT
+# =============================================================================
 
-def main():
-    config = load_config()
+def main() -> None:
+    import argparse
 
-    # Determine phase
-    llm_codec = config.get("llm_codec", False)
-    phase_label = "Phase 2 (LLM Codec)" if llm_codec else "Phase 1 (Pre-Tokenizer)"
+    parser = argparse.ArgumentParser(
+        description=f"CyberMesh v{VERSION} \"{CODENAME}\" Experiment Harness",
+    )
+    parser.add_argument(
+        "--role", choices=["A", "B", "auto"], default="auto",
+        help="Node role: A=initiator, B=responder, auto=negotiate (default)",
+    )
+    parser.add_argument(
+        "--mock", action="store_true",
+        help="Force mock LLM mode (overrides config.testing.mock_llm)",
+    )
+    parser.add_argument(
+        "--run", type=int, choices=[1, 2, 3, 4], default=None,
+        help="Run only a single experiment run (1-4)",
+    )
+    args = parser.parse_args()
 
-    print("\n" + "─" * 65)
-    print(f"  huffman_mesh_poc.py v{VERSION}")
-    print(f"  Experiment {EXPERIMENT} — {phase_label}")
-    print(f"  CyberMesh / Liberty Mesh Project")
-    print(f"  Author: Mark Snow, Jr. — Mindtech")
-    print("─" * 65)
+    # ── Load config ───────────────────────────────────────────────────────────
+    cfg = load_config()
 
-    exp = ExperimentRunner(config)
-    exp.run()
+    # CLI overrides
+    if args.mock:
+        cfg.setdefault("testing", {})["mock_llm"] = True
+
+    # ── Banner ────────────────────────────────────────────────────────────────
+    print_banner(cfg)
+
+    # ── Build & run ───────────────────────────────────────────────────────────
+    runner = ExperimentRunner(cfg)
+    runner.initialize()
+
+    if args.run is not None:
+        # Slice EXPERIMENT_MATRIX to just the requested run
+        global EXPERIMENT_MATRIX
+        EXPERIMENT_MATRIX = [r for r in EXPERIMENT_MATRIX if r["run"] == args.run]
+        log(f"Single-run mode: {EXPERIMENT_MATRIX[0]['name']}")
+
+    runner.run_experiment(role=args.role)
 
 
 if __name__ == "__main__":

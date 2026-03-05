@@ -1,12 +1,12 @@
 ---
 title: "CyberMesh Codec POC — Experiment Design"
-version: 6.0.0
+version: 7.0.0
 date: 2026-03-05
 status: approved
 lifecycle_stage: build
 owner: "Mark Snow, Jr. — Mindtech / CyberMesh"
 project: huffman-mesh-poc
-scope: "Prove dual-codec compress → LoRa transmit → decompress roundtrip, LLM kernel conversation, LLM kernel-as-codec, and codec harness validation"
+scope: "Prove dual-codec compress → LoRa transmit → decompress roundtrip, LLM kernel conversation, LLM kernel-as-codec, codec harness validation, and Smart Router with 333K codebooks"
 hardware:
   node_a: "Heltec V3 — Liberty-Node-02 (!0408a160)"
   node_b: "Heltec V3 — Liberty-Node-04 (!07c01855)"
@@ -18,19 +18,20 @@ software:
     legacy: "Ollama with gemma3:latest (4B) — Experiments C & D"
     current: "Lemonade Server with Liquid LFM2.5-1.2B (aliased test01) — Experiments E & F"
   codecs:
-    huffman: "mesh_huffman.py v4 (4,095-word shared codebook)"
-    mux_grid: "mux_codec.py (4,096-entry 64×64 grid codebook)"
+    huffman: "huffman_codec.py v7 (4K legacy + 333K codebook)"
+    mux_grid: "mux_codec.py v7 (4K legacy + 333K 700×700 grid codebook)"
 ---
 
 # CyberMesh Codec POC — Experiment Design
 
 ## Overview
 
-Six-experiment POC proving text compression over LoRa mesh radio, progressing
+Seven-experiment POC proving text compression over LoRa mesh radio, progressing
 from scripted messages (A/B) to live LLM kernel conversation (C) to LLM kernel-as-codec
-(D) to backend migration (E) to codec harness validation (F).
-All experiments share the same hardware, trigger mechanism, and shared 4,096-word
-codebook. Each experiment isolates a single variable.
+(D) to backend migration (E) to codec harness validation (F) to Smart Router with
+333K codebooks and keyword compression (G/v7.0).
+Experiments A–F share the same hardware, trigger mechanism, and shared 4,096-word
+codebook. Experiment G (v7.0) introduces 333K codebooks and Smart Router architecture.
 
 | Experiment | Codec | Codebook | LLM Kernel | Status |
 |-----------|-------|----------|------------|--------|
@@ -41,6 +42,7 @@ codebook. Each experiment isolates a single variable.
 | D-Ph2 | LLM kernel encode/decode + both codecs | 4,096 shared | Gemma3 4B / Ollama | Built, ready for live test |
 | E | Full codec pipeline + Lemonade backend | 4,096 shared | LFM2.5-1.2B / Lemonade | Validated: 80/80 delivery, Huffman 1.94:1 |
 | F | Codec harness validation (SOUL.md + hooks) | 4,096 shared | LFM2.5-1.2B / Lemonade | Built, ready for live test |
+| G (v7.0) | Smart Router: Huffman/MUX + 333K codebooks + keyword codec | 333,333 words | LFM2.5-1.2B / Lemonade | Built, mock-validated |
 
 ---
 
@@ -605,3 +607,107 @@ max_tokens: 80            # Hard cap prevents noise appendages
 - Live LoRa mesh integration — after all issue gates pass
 - Multi-node (3+) testing
 - Changes to frozen codebook files
+
+---
+
+## Experiment G (v7.0) — Smart Router
+
+### Objective
+
+New architectural generation: 333K codebooks, Smart Router with size/classify/route
+pipeline, keyword compression (lossy mode), binary pagination, per-sender context
+management. 4-run experiment matrix comparing Huffman vs MUX across keyword and
+strict-only modes.
+
+### Architecture
+
+```
+TX pipeline:
+  pretokenize → encode_strict → smart_route(strict|lossy|paginate)
+    strict  → packet(0x01|0x02) → TX
+    lossy   → LLM extract_keywords → encode_keywords → packet(0x03|0x04) → TX
+    paginate → paginate_strict() → multi-packet TX
+
+RX pipeline:
+  packet.decode → page_reassemble (if multi-page) → codec.decode
+    strict  → text
+    lossy   → decode_keywords → LLM reconstruct → text
+```
+
+### Spec
+
+`cybermesh_v7_build_spec.md` — 803-line Architecture Agent document defining:
+- 7-step sequential build plan with validation gates
+- Module contracts for all 10 Python files
+- Wire protocol: codec IDs 0x01–0x04
+- 4-run experiment matrix
+- Keyword compression pipeline
+
+### Key Parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Codebook size | 333,333 words (from english_unigram_freq.csv) |
+| Huffman tree depth | 25 bits |
+| MUX grid | 700×700 (68% utilization, 156,667 spare slots) |
+| Strict threshold | 180 bytes |
+| Max keywords | 20 |
+| Context window | 4 messages, anchor-first |
+| Codec IDs | 0x01=Huffman strict, 0x02=MUX strict, 0x03=Huffman keyword, 0x04=MUX keyword |
+| Page size | 180 bytes (LoRa MTU) |
+| Inter-packet delay | 10 seconds |
+
+### Experiment Matrix
+
+| Run | Engine | Codebook | Mode | Name |
+|-----|--------|----------|------|------|
+| 1 | Huffman | 333K | keyword | huffman-333k-keyword |
+| 2 | MUX Grid | 333K | keyword | mux_grid-333k-keyword |
+| 3 | Huffman | 333K | strict_only | huffman-333k-strict |
+| 4 | MUX Grid | 333K | strict_only | mux_grid-333k-strict |
+
+### 333K Codebook Stats (Validated)
+
+**Huffman 333K:**
+- 333,333 words, 5–25 bits, tree depth 25
+- Weighted average: 10.09 bits/keyword
+- 100% encode→decode round-trip verified
+
+**MUX 333K:**
+- 333,333 words, 700×700 grid, 3 bytes/word fixed
+- 68% grid utilization, 156,667 spare slots
+- 100% encode→decode round-trip verified
+
+**Keyword compression advantage:**
+- 8 keywords: Huffman 15 bytes vs MUX 24 bytes (38% advantage)
+- Weighted bit average: Huffman 10.09 bits vs MUX 24 bits per keyword
+
+### New Modules
+
+| Module | Purpose |
+|--------|---------|
+| huffman_mesh_poc.py v7.0 | Main harness (1,308 lines) — 4-run matrix, loopback, logs |
+| llm_client.py | Raw HTTP to Lemonade, mock mode, generate/classify/warmup |
+| huffman_codec.py | Renamed from mesh_huffman.py, 333K + keyword support |
+| mux_codec.py | 333K 3-byte grid + keyword support (override approved) |
+| keyword_codec.py | LLM extract/reconstruct with spec prompts |
+| smart_router.py | Size check → classify → route |
+| packet.py | CyberMeshPacket with codec IDs 0x01–0x04 |
+| context_manager.py | Thread-safe per-sender history |
+| build_huffman_codebook_333k.py | Huffman tree from 333K Kaggle data |
+| build_mux_codebook_333k.py | 700×700 MUX grid from 333K Kaggle data |
+
+### Validation Status
+
+- Build: 7/7 steps PASS with per-step unit tests
+- Compile: py_compile PASS
+- Mock mode: 4/4 runs complete, 80 message exchanges, all decode clean
+- 4K backward compatibility: preserved and tested
+- Ready for live testing on Strix Halo + Nvidia hardware
+
+### What Experiment G Does NOT Address
+
+- Live LoRa mesh integration (mock-validated only)
+- Multi-node (3+) testing
+- Real LLM inference latency benchmarks (requires live Lemonade)
+- Changes to frozen files: mux_codebook.csv, huffman_codebook_4k.csv
