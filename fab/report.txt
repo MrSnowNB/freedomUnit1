@@ -1,0 +1,258 @@
+Info: Processing symbol 'ANT1:RF_Antenna:Johanson_2450AT18x100'.
+Info: Processing symbol 'BT1:Battery:BatteryHolder_Keystone_1042_1x18650'.
+Info: Processing symbol 'C1:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C2:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C3:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C4:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C5:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C6:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C7:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C8:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C10:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C11:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C12:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C13:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C14:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C15:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C16:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C17:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C18:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C19:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C20:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C21:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C22:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C23:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C24:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C32:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C33:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C34:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C35:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'C36:Capacitor_SMD:C_0402_1005Metric'.
+Info: Processing symbol 'D1:Diode_SMD:D_SOD-323'.
+Info: Processing symbol 'D2:LED_SMD:LED_0603_1608Metric'.
+Info: Processing symbol 'D3:LED_SMD:LED_0603_1608Metric'.
+Info: Processing symbol 'D4:LED_SMD:LED_0603_1608Metric'.
+Info: Processing symbol 'J1:Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal'.
+Info: Processing symbol 'J2:FreedomUnit:CONSMA006.062'.
+Info: Processing symbol 'J3:Connector_USB:USB_C_Receptacle_GCT_USB4085'.
+Info: Processing symbol 'SW1:Button_Switch_SMD:SW_SPDT_CK_JS102011SAQN'.
+Info: Processing symbol 'SW2:Button_Switch_SMD:SW_SPST_PTS636'.
+Info: Processing symbol 'U10:Package_SON:WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm'.
+Info: Processing symbol 'SW3:Button_Switch_SMD:SW_SPST_PTS636'.
+Info: Processing symbol 'U9:RF_GPS:ublox_MAX'.
+Info: Processing symbol 'SW4:Button_Switch_SMD:SW_SPST_PTS636'.
+Info: Processing symbol 'U8:Package_TO_SOT_SMD:SOT-23-5'.
+Info: Processing symbol 'SW5:Button_Switch_SMD:SW_SPST_PTS636'.
+Info: Processing symbol 'U7:Package_TO_SOT_SMD:SOT-23-5'.
+Info: Processing symbol 'SW6:Button_Switch_SMD:SW_SPST_PTS636'.
+Info: Processing symbol 'J4:Connector_FFC-FPC:Hirose_FH12-10S-0.5SH_1x10-1MP_P0.50mm_Horizontal'.
+Info: Processing symbol 'U6:Package_TO_SOT_SMD:SOT-23-5'.
+Info: Processing symbol 'SW7:Button_Switch_SMD:SW_SPST_PTS636'.
+Info: Processing symbol 'U5:Package_TO_SOT_SMD:SOT-23-5'.
+Info: Processing symbol 'SW8:Button_Switch_SMD:SW_SPST_PTS636'.
+Info: Processing symbol 'U3:FreedomUnit:Lambda62C-9S'.
+Info: Processing symbol 'U1:Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm'.
+Info: Processing symbol 'U4:Package_DFN_QFN:Texas_S-PVQFN-N16'.
+Info: Processing symbol 'J5:Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical'.
+Info: Processing symbol 'L1:Inductor_SMD:L_0402_1005Metric'.
+Info: Processing symbol 'R1:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'R2:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'R3:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'R4:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'R5:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'R6:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'R7:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'R8:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'R9:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'R10:Resistor_SMD:R_0402_1005Metric'.
+Info: Processing symbol 'Y1:Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm'.
+Info: Processing symbol 'Y2:Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm'.
+Info: Total warnings: 103, errors: 80.
+
+
+Warning: No net found for component J3 pad A8 (no pin A8 in symbol).
+Warning: No net found for component J3 pad B8 (no pin B8 in symbol).
+Warning: No net found for component J3 pad A9 (no pin A9 in symbol).
+Warning: No net found for component J3 pad B6 (no pin B6 in symbol).
+Warning: No net found for component J3 pad B9 (no pin B9 in symbol).
+Warning: No net found for component J4 pad MP (no pin MP in symbol).
+Warning: No net found for component J4 pad 6 (no pin 6 in symbol).
+Warning: No net found for component J4 pad 8 (no pin 8 in symbol).
+Warning: No net found for component J4 pad 7 (no pin 7 in symbol).
+Warning: No net found for component J4 pad 10 (no pin 10 in symbol).
+Warning: No net found for component J4 pad 9 (no pin 9 in symbol).
+Warning: No net found for component J4 pad MP (no pin MP in symbol).
+Warning: No net found for component U1 pad AD2 (no pin AD2 in symbol).
+Warning: No net found for component U1 pad A16 (no pin A16 in symbol).
+Warning: No net found for component U1 pad AC13 (no pin AC13 in symbol).
+Warning: No net found for component U1 pad AA24 (no pin AA24 in symbol).
+Warning: No net found for component U1 pad W24 (no pin W24 in symbol).
+Warning: No net found for component U1 pad Y23 (no pin Y23 in symbol).
+Warning: No net found for component U1 pad K2 (no pin K2 in symbol).
+Warning: No net found for component U1 pad B15 (no pin B15 in symbol).
+Warning: No net found for component U1 pad AC15 (no pin AC15 in symbol).
+Warning: No net found for component U1 pad D23 (no pin D23 in symbol).
+Warning: No net found for component U1 pad B24 (no pin B24 in symbol).
+Warning: No net found for component U1 pad E24 (no pin E24 in symbol).
+Warning: No net found for component U1 pad AC5 (no pin AC5 in symbol).
+Warning: No net found for component U1 pad A8 (no pin A8 in symbol).
+Warning: No net found for component U1 pad AC24 (no pin AC24 in symbol).
+Warning: No net found for component U1 pad U24 (no pin U24 in symbol).
+Warning: No net found for component U1 pad EP (no pin EP in symbol).
+Warning: No net found for component U1 pad A22 (no pin A22 in symbol).
+Warning: No net found for component U1 pad J1 (no pin J1 in symbol).
+Warning: No net found for component U1 pad T23 (no pin T23 in symbol).
+Warning: No net found for component U1 pad U1 (no pin U1 in symbol).
+Warning: No net found for component U1 pad AC17 (no pin AC17 in symbol).
+Warning: No net found for component U1 pad H23 (no pin H23 in symbol).
+Warning: No net found for component U1 pad A14 (no pin A14 in symbol).
+Warning: No net found for component U1 pad AD6 (no pin AD6 in symbol).
+Warning: No net found for component U1 pad B17 (no pin B17 in symbol).
+Warning: No net found for component U1 pad AC11 (no pin AC11 in symbol).
+Warning: No net found for component U1 pad AD23 (no pin AD23 in symbol).
+Warning: No net found for component U1 pad B3 (no pin B3 in symbol).
+Warning: No net found for component U1 pad J24 (no pin J24 in symbol).
+Warning: No net found for component U1 pad Y2 (no pin Y2 in symbol).
+Warning: No net found for component U1 pad A23 (no pin A23 in symbol).
+Warning: No net found for component U1 pad AD16 (no pin AD16 in symbol).
+Warning: No net found for component U1 pad F23 (no pin F23 in symbol).
+Warning: No net found for component U1 pad B19 (no pin B19 in symbol).
+Warning: No net found for component U1 pad P23 (no pin P23 in symbol).
+Warning: No net found for component U1 pad R1 (no pin R1 in symbol).
+Warning: No net found for component U1 pad N24 (no pin N24 in symbol).
+Warning: No net found for component U1 pad B13 (no pin B13 in symbol).
+Warning: No net found for component U1 pad D2 (no pin D2 in symbol).
+Warning: No net found for component U1 pad P2 (no pin P2 in symbol).
+Warning: No net found for component U1 pad AC21 (no pin AC21 in symbol).
+Warning: No net found for component U1 pad G1 (no pin G1 in symbol).
+Warning: No net found for component U1 pad AD14 (no pin AD14 in symbol).
+Warning: No net found for component U1 pad V23 (no pin V23 in symbol).
+Warning: No net found for component U1 pad R24 (no pin R24 in symbol).
+Warning: No net found for component U1 pad AD22 (no pin AD22 in symbol).
+Warning: No net found for component U1 pad C1 (no pin C1 in symbol).
+Warning: No net found for component U1 pad AD20 (no pin AD20 in symbol).
+Warning: No net found for component U1 pad A12 (no pin A12 in symbol).
+Warning: No net found for component U1 pad B1 (no pin B1 in symbol).
+Warning: No net found for component U1 pad F2 (no pin F2 in symbol).
+Warning: No net found for component U1 pad AC19 (no pin AC19 in symbol).
+Warning: No net found for component U1 pad AD4 (no pin AD4 in symbol).
+Warning: No net found for component U1 pad B7 (no pin B7 in symbol).
+Warning: No net found for component U1 pad AD12 (no pin AD12 in symbol).
+Warning: No net found for component U1 pad AD10 (no pin AD10 in symbol).
+Warning: No net found for component U1 pad AB2 (no pin AB2 in symbol).
+Warning: No net found for component U1 pad B11 (no pin B11 in symbol).
+Warning: No net found for component U1 pad A20 (no pin A20 in symbol).
+Warning: No net found for component U1 pad A18 (no pin A18 in symbol).
+Warning: No net found for component U1 pad N1 (no pin N1 in symbol).
+Warning: No net found for component U1 pad AD8 (no pin AD8 in symbol).
+Warning: No net found for component U1 pad B5 (no pin B5 in symbol).
+Warning: No net found for component U1 pad B9 (no pin B9 in symbol).
+Warning: No net found for component U1 pad L1 (no pin L1 in symbol).
+Warning: No net found for component U1 pad AC9 (no pin AC9 in symbol).
+Warning: No net found for component U1 pad AD18 (no pin AD18 in symbol).
+Warning: No net found for component U1 pad T2 (no pin T2 in symbol).
+Warning: No net found for component U1 pad A10 (no pin A10 in symbol).
+Warning: No net found for component U1 pad H2 (no pin H2 in symbol).
+Warning: No net found for component U1 pad M2 (no pin M2 in symbol).
+Warning: No net found for component U1 pad W1 (no pin W1 in symbol).
+Warning: No net found for component U1 pad L24 (no pin L24 in symbol).
+Warning: No net found for component U9 pad 12 (no pin 12 in symbol).
+Warning: No net found for component U9 pad 13 (no pin 13 in symbol).
+Warning: No net found for component U9 pad 15 (no pin 15 in symbol).
+Warning: No net found for component U9 pad 16 (no pin 16 in symbol).
+Warning: No net found for component U9 pad 17 (no pin 17 in symbol).
+Warning: No net found for component U9 pad 11 (no pin 11 in symbol).
+Warning: No net found for component U9 pad 18 (no pin 18 in symbol).
+Warning: No net found for component U9 pad 10 (no pin 10 in symbol).
+Warning: No net found for component U9 pad 8 (no pin 8 in symbol).
+Warning: No net found for component U9 pad 14 (no pin 14 in symbol).
+Warning: No net found for component U9 pad 9 (no pin 9 in symbol).
+Warning: No net found for component U10 pad 9 (no pin 9 in symbol).
+Warning: No net found for component J3 pad B1 (no pin B1 in symbol).
+Warning: No net found for component J3 pad B7 (no pin B7 in symbol).
+Warning: No net found for component J3 pad B12 (no pin B12 in symbol).
+Warning: No net found for component J3 pad A12 (no pin A12 in symbol).
+Warning: No net found for component J3 pad B4 (no pin B4 in symbol).
+Error: Cannot add SW6 (footprint 'Button_Switch_SMD:SW_SPST_PTS636' not found).
+Error: Cannot add SW2 (footprint 'Button_Switch_SMD:SW_SPST_PTS636' not found).
+Error: Cannot add SW5 (footprint 'Button_Switch_SMD:SW_SPST_PTS636' not found).
+Error: Cannot add SW4 (footprint 'Button_Switch_SMD:SW_SPST_PTS636' not found).
+Error: Cannot add SW3 (footprint 'Button_Switch_SMD:SW_SPST_PTS636' not found).
+Error: J2 pad 2 not found in FreedomUnit:CONSMA006.062.
+Error: U1 pad 13 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad 48 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.04 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.16 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.00 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.01 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.08 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.18 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.11 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.06 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.10 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: Cannot add SW8 (footprint 'Button_Switch_SMD:SW_SPST_PTS636' not found).
+Error: U1 pad P1.02 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.04 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.05 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.27 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.26 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.30 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.11 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.28 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.29 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.31 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.15 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.13 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.14 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.17 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.24 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.20 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.25 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.06 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.07 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad H1 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad 30 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad 7 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad 34 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad 35 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad 3 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad 4 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.12 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.15 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.12 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.13 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad GND not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.05 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.14 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.23 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.22 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.19 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad D- not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad D+ not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad 37 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad 46 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.08 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.09 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.09 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.10 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P0.21 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad P1.03 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad SWDCLK not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U1 pad SWDIO not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+Error: U3 pad 2 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 14 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 19 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 13 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 15 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 4 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 5 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 3 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 16 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 17 not found in FreedomUnit:Lambda62C-9S.
+Error: U3 pad 18 not found in FreedomUnit:Lambda62C-9S.
+Error: Cannot add U4 (footprint 'Package_DFN_QFN:Texas_S-PVQFN-N16' not found).
+Error: Cannot add SW7 (footprint 'Button_Switch_SMD:SW_SPST_PTS636' not found).
+Error: U1 pad P0.07 not found in Package_DFN_QFN:Nordic_AQFN-73-1EP_7x7mm_P0.5mm.
+
+
+Info: Total warnings: 103, errors: 80.
