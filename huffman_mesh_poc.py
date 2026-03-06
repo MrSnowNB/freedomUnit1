@@ -1468,6 +1468,7 @@ class ExperimentRunner:
 # =============================================================================
 
 def main() -> None:
+    global EXPERIMENT_MATRIX
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -1481,9 +1482,10 @@ def main() -> None:
         "--mock", action="store_true",
         help="Force mock LLM mode (overrides config.testing.mock_llm)",
     )
+    valid_runs = sorted(r["run"] for r in EXPERIMENT_MATRIX)
     parser.add_argument(
-        "--run", type=int, choices=[1, 2, 3, 4, 5], default=None,
-        help="Run only a single experiment run (1-5)",
+        "--run", type=int, choices=valid_runs, default=None,
+        help=f"Run only a single experiment run ({valid_runs[0]}-{valid_runs[-1]})",
     )
     args = parser.parse_args()
 
@@ -1508,7 +1510,6 @@ def main() -> None:
 
     if args.run is not None:
         # Slice EXPERIMENT_MATRIX to just the requested run
-        global EXPERIMENT_MATRIX
         EXPERIMENT_MATRIX = [r for r in EXPERIMENT_MATRIX if r["run"] == args.run]
         log(f"Single-run mode: {EXPERIMENT_MATRIX[0]['name']}")
 
