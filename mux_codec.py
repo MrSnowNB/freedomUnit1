@@ -234,7 +234,7 @@ class MuxGridCodec:
                 result.append(len(raw) & 0xFF)
                 result.extend(raw)
                 esc_count += 1
-                logger.debug("MUX 333K ESC: '%s'", word)
+                logger.info("MUX 333K ESC: '%s' (not in codebook)", word)
 
         if esc_count > 0:
             logger.info("MUX 333K encode: %d/%d ESC sequences",
@@ -425,7 +425,7 @@ class MuxGridCodec:
                 result.append(len(raw) & 0xFF)
                 result.extend(raw)
                 esc_count += 1
-                logger.debug("MUX 333K keyword ESC: '%s'", kw_lower)
+                logger.info("MUX 333K keyword ESC: '%s' (not in codebook)", kw_lower)
 
         if esc_count > 0:
             logger.info("MUX 333K encode_keywords: %d/%d ESC",

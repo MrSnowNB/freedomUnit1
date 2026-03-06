@@ -51,13 +51,14 @@ radio:
   node_name: Liberty-Node-02
 
 experiment:
-  name: G                      # experiment letter for log filenames
+  name: G-3                    # experiment letter for log filenames
   messages_per_node: 10
   runs: 2                      # number of codec comparison runs
 
 logging:
   dir: ./logs
-  format: markdown             # OPTIONS: markdown | json | both
+  format: both                 # changed from markdown to both for G-3
+  pipeline_trace: true         # full ORIGINAL/COMPRESSED/DECODED trace per step
 
 testing:
   mock_llm: false              # true = hardcoded LLM responses for CI/offline

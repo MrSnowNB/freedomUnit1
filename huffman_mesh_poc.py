@@ -409,6 +409,8 @@ EXPERIMENT_MATRIX = [
     {"run": 2, "engine": "mux_grid", "codebook_size": "333k", "mode": "keyword",     "name": "mux_grid-333k-keyword"},
     {"run": 3, "engine": "huffman",  "codebook_size": "333k", "mode": "strict_only", "name": "huffman-333k-strict"},
     {"run": 4, "engine": "mux_grid", "codebook_size": "333k", "mode": "strict_only", "name": "mux_grid-333k-strict"},
+    {"run": 5, "engine": "huffman",  "codebook_size": "333k", "mode": "keyword",     "name": "huffman-333k-lossy-forced",
+     "strict_threshold_override": 40},
 ]
 
 
@@ -500,6 +502,13 @@ def transmit(
 
     metrics["route"] = route
 
+    # Opt 1: When keyword mode is configured but router chose strict,
+    # log what keyword extraction would have yielded (for comparison)
+    if mode == "keyword" and route == "strict":
+        if cfg.get("logging", {}).get("pipeline_trace", False):
+            log(f"  KW-vs-strict note: strict chosen ({len(encoded)}B ≤ {strict_threshold}B). "
+                f"Raw text: {len(pretok)}chars")
+
     # ── Step 4: Act on route ──────────────────────────────────────────────────
     if route == "strict":
         codec_id = 0x01 if engine == "huffman" else 0x02
@@ -514,6 +523,12 @@ def transmit(
         keywords, extract_ms = keyword_codec.extract(text)
         metrics["extract_ms"]   = round(extract_ms, 2)
         metrics["keyword_count"] = len(keywords)
+
+        # Opt 1: Log keyword extraction for comparison
+        kw_joined = " ".join(keywords)
+        log(f"  KW extract: {len(keywords)} keywords: \"{kw_joined}\"")
+        raw_b = metrics["raw_bytes"]
+        log(f"  KW vs raw:  raw={raw_b}B  kw_text={len(kw_joined)}chars")
 
         if engine == "huffman":
             kw_encoded = codec.encode_keywords(keywords)
@@ -548,6 +563,18 @@ def transmit(
     if metrics["raw_bytes"] and metrics["encoded_bytes"]:
         metrics["compression_ratio"] = round(
             metrics["raw_bytes"] / metrics["encoded_bytes"], 4)
+
+    # ── Pipeline trace (controlled by config) ──────────────────────────────────────
+    if cfg.get("logging", {}).get("pipeline_trace", False):
+        wire_hex = encoded.hex() if encoded else ""
+        log(f"  [PIPELINE TX]")
+        log(f"    [ORIGINAL]   {text}")
+        log(f"    [PRETOK]     {pretok}")
+        log(f"    [COMPRESSED] {wire_hex} ({len(encoded)}B)")
+        log(f"    [RATIO]      {metrics.get('compression_ratio', 0):.3f}:1")
+        log(f"    [ROUTE]      {route}")
+        metrics["_wire_hex"] = wire_hex
+        metrics["_encoded_bytes_hex"] = wire_hex
 
     metrics["_total_tx_ms"] = round((time.perf_counter() - t_total) * 1000, 2)
     return metrics
@@ -608,13 +635,16 @@ def receive(
     if codec_id in (0x01, 0x02):
         # Strict / lossless
         try:
+            t_decode = time.perf_counter()
             if codec_id == 0x01:
                 decoded = codec.decode(payload)
             else:
                 decoded = codec.decode(payload, 0)  # 0 padding for 333k
             metrics["decoded_text"] = decoded
+            metrics["decode_ms"] = round((time.perf_counter() - t_decode) * 1000, 2)
+            metrics["keyword_count"] = len(decoded.split()) if decoded else 0
             metrics["route"] = "strict"
-            log(f"RX strict: {len(raw_bytes)}B → \"{decoded[:60]}\"  "
+            log(f"RX strict: {len(raw_bytes)}B → \"{decoded}\"  "
                 f"RSSI={rssi}  SNR={snr}")
         except Exception as exc:
             log(f"RX: strict decode error: {exc}", "ERROR")
@@ -636,7 +666,7 @@ def receive(
             metrics["reconstruct_ms"] = round(recon_ms, 2)
             metrics["decoded_text"]   = reconstructed
 
-            log(f"RX lossy: {len(keywords)} kws → \"{reconstructed[:60]}\"  "
+            log(f"RX lossy: {len(keywords)} kws → \"{reconstructed}\"  "
                 f"recon={recon_ms:.0f}ms  RSSI={rssi}  SNR={snr}")
 
         except Exception as exc:
@@ -645,6 +675,12 @@ def receive(
     else:
         log(f"RX: unknown codec_id 0x{codec_id:02X}", "ERROR")
         metrics["error"] = f"unknown codec_id: 0x{codec_id:02X}"
+
+    # ── Pipeline trace ───────────────────────────────────────────────────
+    # Note: pipeline_trace checked by caller; here we always store hex
+    wire_hex = raw_bytes.hex() if raw_bytes else ""
+    metrics["_wire_hex"] = wire_hex
+    metrics["_encoded_bytes_hex"] = wire_hex
 
     return metrics
 
@@ -755,9 +791,9 @@ def write_markdown_log(
         f"## TX Messages",
         f"",
         f"| # | route | raw_B | enc_B | ratio | hit_rate | ESC | kw | "
-        f"extract_ms | classify_ms | pkts | text |",
+        f"extract_ms | classify_ms | pkts | text | wire_hex |",
         f"|---|-------|-------|-------|-------|----------|-----|----|"
-        f"-----------|-------------|------|------|",
+        f"-----------|-------------|------|------|----------|",
     ]
 
     for i, r in enumerate(tx_records, 1):
@@ -773,7 +809,8 @@ def write_markdown_log(
             f"| {r.get('extract_ms') or '—'} "
             f"| {r.get('classify_ms') or '—'} "
             f"| {r.get('packet_count') or '—'} "
-            f"| `{str(r.get('_original_text', ''))[:60]}` |"
+            f"| `{str(r.get('_original_text', ''))}` "
+            f"| `{r.get('_wire_hex', '')}` |"
         )
 
     lines += [
@@ -794,7 +831,7 @@ def write_markdown_log(
             f"| {r.get('RSSI') or '—'} "
             f"| {r.get('SNR') or '—'} "
             f"| {r.get('packet_count') or '—'} "
-            f"| `{str(r.get('decoded_text', ''))[:80]}` |"
+            f"| `{str(r.get('decoded_text', ''))}` |"
         )
 
     lines += ["", "---", ""]
@@ -829,6 +866,8 @@ def write_json_log(
     ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     fname = f"experiment-{exp_name}-{run_name}-log_{ts}.json"
     fpath = os.path.join(_make_log_dir(log_dir), fname)
+    all_data["_fidelity_note"] = ("Cross-reference tx_records[i]._original_text with "
+                                  "rx_records[i].decoded_text for fidelity scoring")
     with open(fpath, "w", encoding="utf-8") as f:
         json.dump(all_data, f, indent=2, default=str)
     log(f"JSON log written: {fpath}")
@@ -880,6 +919,13 @@ class RunRunner:
         patched_cfg["codec"]["engine"]        = self._engine
         patched_cfg["codec"]["codebook_size"] = self._cb_size
         patched_cfg["codec"]["mode"]          = self._mode
+
+        # Opt 4: Per-run threshold override (forces lossy path testing)
+        self._strict_threshold_override = run_cfg.get("strict_threshold_override")
+        if self._strict_threshold_override is not None:
+            patched_cfg["router"] = dict(patched_cfg.get("router", {}))
+            patched_cfg["router"]["strict_threshold"] = self._strict_threshold_override
+            log(f"  Threshold override: {self._strict_threshold_override}B (force lossy)")
 
         self.kw_codec  = KeywordCodec(llm_client=llm, config=patched_cfg)
         self.router    = SmartRouter(llm_client=llm, config=patched_cfg)
@@ -975,7 +1021,7 @@ class RunRunner:
         total    = self.messages_per_node * 2
 
         log(f"{'='*65}")
-        log(f"RUN {self.run_cfg['run']}/4: {run_name.upper()}")
+        log(f"RUN {self.run_cfg['run']}/{len(EXPERIMENT_MATRIX)}: {run_name.upper()}")
         log(f"  Engine={self._engine}  Codebook={self._cb_size}  Mode={self._mode}")
         log(f"  Role={self.role}  Peer={self.peer_id}  Steps={total}")
         log(f"{'='*65}")
@@ -1005,6 +1051,13 @@ class RunRunner:
                 else:
                     consecutive_timeouts = 0
 
+        # --- Bug 5 fix: Post-TX flush delay ---
+        # After last step, wait for radio to finish transmitting.
+        # Prevents last-packet loss from premature teardown.
+        if not self.radio._loopback:
+            log("Last step complete. Waiting 5s for radio flush...")
+            time.sleep(5)
+
         # Hard-reset RX callbacks to prevent stacking across runs
         self.radio._rx_callbacks = []
 
@@ -1014,7 +1067,7 @@ class RunRunner:
         """Generate a message with the LLM and transmit it."""
         history = self.ctx.get(self.peer_id)
         text, gen_ms = generate_turn(self.llm, self.system_prompt, history)
-        log(f"[{step}/{self.messages_per_node*2}] TX gen ({gen_ms:.0f}ms): \"{text[:80]}\"")
+        log(f"[{step}/{self.messages_per_node*2}] TX gen ({gen_ms:.0f}ms): \"{text}\"")
 
         metrics = transmit(
             text=text,
@@ -1069,10 +1122,18 @@ class RunRunner:
         metrics["_step"] = step
         self.rx_records.append(metrics)
 
+        # Pipeline trace
+        if self.cfg.get("logging", {}).get("pipeline_trace", False):
+            wire_hex = metrics.get("_wire_hex", "")
+            decoded_text = metrics.get("decoded_text", "")
+            log(f"  [PIPELINE RX]")
+            log(f"    [WIRE HEX]  {wire_hex} ({metrics.get('encoded_bytes', 0)}B)")
+            log(f"    [DECODED]   {decoded_text}")
+
         decoded = metrics.get("decoded_text", "")
         if decoded:
             self.ctx.add(self.peer_id, "user", decoded)
-            log(f"  RX decoded: \"{decoded[:80]}\"")
+            log(f"  RX decoded: \"{decoded}\"")
         elif metrics.get("error"):
             log(f"  RX error: {metrics['error']}", "WARN")
 
@@ -1285,7 +1346,7 @@ class ExperimentRunner:
         for run_cfg in EXPERIMENT_MATRIX:
             run_name = run_cfg["name"]
             log(f"\n{'─'*65}")
-            log(f"STARTING RUN {run_cfg['run']}/4: {run_name}")
+            log(f"STARTING RUN {run_cfg['run']}/{len(EXPERIMENT_MATRIX)}: {run_name}")
             log(f"{'─'*65}")
 
             # Reset context for each run
@@ -1369,13 +1430,15 @@ class ExperimentRunner:
             rx_total = len(rx)
             rx_str   = f"{rx_ok}/{rx_total}"
 
-            valid_kw = [r for r in rx if r.get("keyword_count")]
+            valid_kw = [r for r in rx if r.get("keyword_count") is not None]
             avg_kw   = (sum(r["keyword_count"] for r in valid_kw) /
                         len(valid_kw)) if valid_kw else 0.0
 
-            valid_rec = [r for r in rx if r.get("reconstruct_ms")]
-            avg_rec   = (sum(r["reconstruct_ms"] for r in valid_rec) /
-                         len(valid_rec)) if valid_rec else 0.0
+            # RX timing: use decode_ms for strict, reconstruct_ms for lossy
+            valid_ms = [r for r in rx if r.get("decode_ms") or r.get("reconstruct_ms")]
+            avg_rec  = (sum(r.get("decode_ms") or r.get("reconstruct_ms") or 0
+                            for r in valid_ms) /
+                        len(valid_ms)) if valid_ms else 0.0
 
             total_pkts = sum(r.get("packet_count") or 1 for r in tx)
 
@@ -1411,8 +1474,8 @@ def main() -> None:
         help="Force mock LLM mode (overrides config.testing.mock_llm)",
     )
     parser.add_argument(
-        "--run", type=int, choices=[1, 2, 3, 4], default=None,
-        help="Run only a single experiment run (1-4)",
+        "--run", type=int, choices=[1, 2, 3, 4, 5], default=None,
+        help="Run only a single experiment run (1-5)",
     )
     args = parser.parse_args()
 

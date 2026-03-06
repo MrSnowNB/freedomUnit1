@@ -994,3 +994,87 @@ generation.
 4. Comparison table shows actual RX metrics for round-trip validation
 
 - **Status**: All 3 bugs fixed + 3 hardening items. Ready for Mark to re-run as Experiment G-2 on Strix Halo + eSports hardware.
+
+---
+
+## Entry 025 — Experiment G-3 Prep: Pipeline Visibility + Bug Fixes + Optimizations
+
+**Timestamp:** 2026-03-06T10:50:00-05:00  
+**Phase:** Build → Validate  
+**Spec:** `cybermesh-v7-full-audit-G3-prep.md` (architecture agent cross-node audit of G-2 logs)  
+**Trigger:** Mark's architecture agent completed full audit of G-2 Strix Halo + Nvidia logs
+
+### Changes Made
+
+**PRIORITY 1 — Pipeline Visibility:**
+
+1. **Removed all 6 truncation slices** (`[:60]`, `[:80]`) from `huffman_mesh_poc.py` — console and markdown logs now show full text for every message
+2. **Added `[PIPELINE TX]` trace** after transmit: `[ORIGINAL]` → `[PRETOK]` → `[COMPRESSED]` (hex + byte count) → `[RATIO]` → `[ROUTE]`
+3. **Added `[PIPELINE RX]` trace** after receive: `[WIRE HEX]` (hex + byte count) → `[DECODED]`
+4. **Added `pipeline_trace` config toggle** under `logging:` section — `true` enables full trace, `false` for quiet mode
+5. **Added `wire_hex` column** to markdown TX log table + stored `_wire_hex` and `_encoded_bytes_hex` in metrics for JSON logs
+6. **Changed logging format** from `markdown` to `both` (markdown + JSON) for G-3
+
+**Bug 4 (HIGH) — RX Metrics Broken:**
+
+7. **Added `t_decode` timing** around `codec.decode()` in `receive()` strict path → populates `decode_ms`
+8. **Added `keyword_count = len(decoded.split())`** in strict path (word count of decoded text)
+9. **Fixed `_print_comparison()` aggregation** — now reads `decode_ms OR reconstruct_ms` for RX ms column; fixed `keyword_count` check from truthy to `is not None`
+10. **Result:** Comparison table now shows non-zero `RX kw/msg` (was always `0.0`)
+
+**Bug 5 (MEDIUM) — Last-Packet Loss:**
+
+11. **Added 5-second post-TX flush delay** after last step of each run (skipped in loopback mode) — prevents radio teardown before Meshtastic finishes transmitting
+
+**Opt 1 (HIGH) — Keyword vs Strict Comparison:**
+
+12. **Added KW extraction logging** in lossy TX path: keyword list + char count vs raw bytes
+13. **Added KW-vs-strict note** when router chooses strict in keyword mode (pipeline_trace only)
+
+**Opt 2 (HIGH) — MUX ESC Word Logging:**
+
+14. **Upgraded MUX ESC logging** from `logger.debug` to `logger.info` in `mux_codec.py` (`_encode_333k` and `_encode_keywords_333k`) — now shows which specific words trigger ESC sequences during normal runs
+
+**Opt 4 (MEDIUM) — Lossy Path Testing:**
+
+15. **Added Run 5** to `EXPERIMENT_MATRIX`: `huffman-333k-lossy-forced` with `strict_threshold_override: 40` — forces lossy routing for messages > 40B encoded
+16. **Added `strict_threshold_override` support** in `RunRunner.__init__()` — per-run threshold patching
+17. **Updated `--run` CLI** to accept choices `[1, 2, 3, 4, 5]`
+18. **Updated run count references** to use `len(EXPERIMENT_MATRIX)` dynamically
+
+**Opt 5 (LOW) — Fidelity Scoring:**
+
+19. **Added `_fidelity_note`** to JSON log output — documents how to cross-reference TX `_original_text` with RX `decoded_text` for post-hoc fidelity scoring
+
+**Config Updates:**
+
+20. `experiment.name: G-3`
+21. `logging.format: both`
+22. `logging.pipeline_trace: true`
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `huffman_mesh_poc.py` | 1,449→1,511 lines: 6 truncation removals, pipeline trace TX/RX, Bug 4 decode_ms + keyword_count, Bug 5 flush delay, Opt 1 KW logging, Opt 4 Run 5 + threshold override, Opt 5 fidelity note |
+| `mux_codec.py` | ESC logging debug→info (Opt 2) |
+| `config.yaml` | experiment.name G→G-3, logging.format→both, pipeline_trace: true |
+
+### Validation Results
+
+- **Truncation check**: 0 remaining `[:60]` or `[:80]` slices
+- **Pipeline trace**: 50 `[PIPELINE TX]` + 50 `[PIPELINE RX]` appearances across 5 runs
+- **Bug 4**: `RX kw/msg` shows `1.0` (was `0.0`); `decode_ms` populated in JSON (0.01-0.04ms in mock)
+- **Bug 5**: Flush delay code present, skips loopback correctly
+- **Run 5**: Threshold override applies (40B), SmartRouter init confirms `threshold=40`
+- **Mock mode**: 5/5 runs, 100 messages, 10/10 RX per run, all OK
+
+### Key Design Decisions
+
+- Pipeline trace is config-gated (`pipeline_trace: true/false`) — live runs can disable for cleaner console if needed
+- RX ms in mock mode shows 0.0 (decode takes <0.05ms) — this is correct; live mode with real 333K codebooks will show meaningful decode times
+- Run 5 lossy-forced with mock LLM doesn't trigger lossy path (mock "ready" = 5B < 40B threshold) — in live mode real LLM text (15-71B per G-2 data) will exceed 40B and trigger the lossy/paginate path as intended
+- MUX ESC logging at INFO level may be verbose in live runs with many ESC words — can be tuned back to DEBUG after G-3 data collection
+- Model: test01 on Lemonade (localhost:8000) — unchanged
+
+- **Status**: All items from G-3 audit implemented. Ready for Mark to run as Experiment G-3 on hardware.
