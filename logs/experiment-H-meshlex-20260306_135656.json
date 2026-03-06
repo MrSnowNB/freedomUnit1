@@ -1,0 +1,1127 @@
+{
+  "experiment": "H",
+  "version": "7.1",
+  "timestamp": "2026-03-06T13:56:56",
+  "messages": 10,
+  "runs": [
+    {
+      "name": "huffman-333k-strict",
+      "codec": "Huffman 333K",
+      "aggregate_ratio": 1.2664,
+      "total_original_bytes": 1483,
+      "total_encoded_bytes": 1171,
+      "total_cb_upd_bytes": 0,
+      "total_esc": 73,
+      "total_dynamic_adds": 0,
+      "total_dynamic_hits": 0,
+      "delivery": "8/10",
+      "runtime_ms": 2.17,
+      "steps": [
+        {
+          "msg": 1,
+          "raw_bytes": 137,
+          "enc_bytes": 111,
+          "ratio": 1.2342,
+          "roundtrip": true,
+          "esc_count": 7,
+          "esc_words": [
+            "🚨",
+            "40.2171°n",
+            "74.7429°w",
+            "—",
+            "1",
+            "15",
+            "fast,"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "c1ddfa2784fcd5418038feebecade4b1776709fc1ddfa39a"
+        },
+        {
+          "msg": 2,
+          "raw_bytes": 132,
+          "enc_bytes": 112,
+          "ratio": 1.1786,
+          "roundtrip": true,
+          "esc_count": 5,
+          "esc_words": [
+            "liberty-node-04",
+            "08648",
+            "—",
+            "609-555-0147",
+            "1430"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "787b3026a383bbed6b026a39a06604d470777dad604d4707"
+        },
+        {
+          "msg": 3,
+          "raw_bytes": 129,
+          "enc_bytes": 79,
+          "ratio": 1.6329,
+          "roundtrip": true,
+          "esc_count": 5,
+          "esc_words": [
+            "nb-07",
+            "12.4",
+            "0800",
+            "—",
+            "1200"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "21d3b1114efd3f0357a69eb47604d470777dad604d470777"
+        },
+        {
+          "msg": 4,
+          "raw_bytes": 141,
+          "enc_bytes": 167,
+          "ratio": 0.8443,
+          "roundtrip": false,
+          "esc_count": 11,
+          "esc_words": [
+            "⚠️",
+            "⚠️",
+            "a3",
+            "b7",
+            "c12",
+            "—",
+            "98%",
+            "41°f",
+            "29.12",
+            "#floodwatch",
+            "#libertymesh"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "c1ddfa1f14d503026a383bbf43efb88f66ffc1ddfa1f14d5"
+        },
+        {
+          "msg": 5,
+          "raw_bytes": 152,
+          "enc_bytes": 72,
+          "ratio": 2.1111,
+          "roundtrip": true,
+          "esc_count": 3,
+          "esc_words": [
+            "—",
+            "ps-14",
+            "street,"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "cc986ac5dd8875e7bb2b05062c1ddfa1f1404a6466d8f148"
+        },
+        {
+          "msg": 6,
+          "raw_bytes": 139,
+          "enc_bytes": 63,
+          "ratio": 2.2063,
+          "roundtrip": true,
+          "esc_count": 4,
+          "esc_words": [
+            "1",
+            "—",
+            "park,",
+            "14"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "b1776be4052a034f0e4ff22dac796b5b0777d001827d83bb"
+        },
+        {
+          "msg": 7,
+          "raw_bytes": 135,
+          "enc_bytes": 137,
+          "ratio": 0.9854,
+          "roundtrip": false,
+          "esc_count": 8,
+          "esc_words": [
+            "kd2zyx-7",
+            "40.4862°n",
+            "74.4518°w",
+            "45",
+            "62",
+            "—",
+            "28.88",
+            "inhg,"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "cd037c71db026a383bbe8013026a221548d81351c1ddf6b5"
+        },
+        {
+          "msg": 8,
+          "raw_bytes": 156,
+          "enc_bytes": 209,
+          "ratio": 0.7464,
+          "roundtrip": true,
+          "esc_count": 9,
+          "esc_words": [
+            "ops@libertymesh.net",
+            "—",
+            "sitrep:",
+            "7/10",
+            "online,",
+            "3",
+            "0600,",
+            "73%,",
+            "https://status.libertymesh.net/live"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "3f3dc9efc4604d470777dc0604d470777e96d8d2c4cae4e8"
+        },
+        {
+          "msg": 9,
+          "raw_bytes": 174,
+          "enc_bytes": 82,
+          "ratio": 2.122,
+          "roundtrip": true,
+          "esc_count": 6,
+          "esc_words": [
+            "1",
+            "—",
+            "206",
+            "princeton,",
+            "45",
+            "min,"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "b1776634362a16b5b0777d001827d7aef83bbf43e28094e1"
+        },
+        {
+          "msg": 10,
+          "raw_bytes": 188,
+          "enc_bytes": 139,
+          "ratio": 1.3525,
+          "roundtrip": true,
+          "esc_count": 15,
+          "esc_words": [
+            "📊",
+            "meshlex",
+            "sync:",
+            "47",
+            "5",
+            "—",
+            "✅",
+            "✅",
+            "✅",
+            "✅",
+            "✅",
+            "✅",
+            "1",
+            "✅",
+            "🟢"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "c1ddfa2784fc9c560eefd1d35154d21311560953b604d470"
+        }
+      ]
+    },
+    {
+      "name": "mux-333k-strict",
+      "codec": "MUX Grid 333K",
+      "aggregate_ratio": 1.2918,
+      "total_original_bytes": 1483,
+      "total_encoded_bytes": 1148,
+      "total_cb_upd_bytes": 0,
+      "total_esc": 73,
+      "total_dynamic_adds": 0,
+      "total_dynamic_hits": 0,
+      "delivery": "10/10",
+      "runtime_ms": 6.4,
+      "steps": [
+        {
+          "msg": 1,
+          "raw_bytes": 137,
+          "enc_bytes": 111,
+          "ratio": 1.2342,
+          "roundtrip": true,
+          "esc_count": 7,
+          "esc_words": [
+            "🚨",
+            "40.2171°n",
+            "74.7429°w",
+            "—",
+            "1",
+            "15",
+            "fast,"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "fffff004f09f9aa801a680006b90004fd000520005698000"
+        },
+        {
+          "msg": 2,
+          "raw_bytes": 132,
+          "enc_bytes": 101,
+          "ratio": 1.3069,
+          "roundtrip": true,
+          "esc_count": 5,
+          "esc_words": [
+            "liberty-node-04",
+            "08648",
+            "—",
+            "609-555-0147",
+            "1430"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "fffff00f6c6962657274792d6e6f64652d3034002a90028c"
+        },
+        {
+          "msg": 3,
+          "raw_bytes": 129,
+          "enc_bytes": 94,
+          "ratio": 1.3723,
+          "roundtrip": true,
+          "esc_count": 5,
+          "esc_words": [
+            "nb-07",
+            "12.4",
+            "0800",
+            "—",
+            "1200"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0014d0005eb00001500001a0024980022580fffff0056e62"
+        },
+        {
+          "msg": 4,
+          "raw_bytes": 141,
+          "enc_bytes": 132,
+          "ratio": 1.0682,
+          "roundtrip": true,
+          "esc_count": 11,
+          "esc_words": [
+            "⚠️",
+            "⚠️",
+            "a3",
+            "b7",
+            "c12",
+            "—",
+            "98%",
+            "41°f",
+            "29.12",
+            "#floodwatch",
+            "#libertymesh"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "fffff006e29aa0efb88f00d5d0fffff006e29aa0efb88f01"
+        },
+        {
+          "msg": 5,
+          "raw_bytes": 152,
+          "enc_bytes": 84,
+          "ratio": 1.8095,
+          "roundtrip": true,
+          "esc_count": 3,
+          "esc_words": [
+            "—",
+            "ps-14",
+            "street,"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0b96700569800014d00046e0009d0000c250fffff003e280"
+        },
+        {
+          "msg": 6,
+          "raw_bytes": 139,
+          "enc_bytes": 84,
+          "ratio": 1.6548,
+          "roundtrip": true,
+          "esc_count": 4,
+          "esc_words": [
+            "1",
+            "—",
+            "park,",
+            "14"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0569800050300300a002e70000003001640001eae000daf0"
+        },
+        {
+          "msg": 7,
+          "raw_bytes": 135,
+          "enc_bytes": 113,
+          "ratio": 1.1947,
+          "roundtrip": true,
+          "esc_count": 8,
+          "esc_words": [
+            "kd2zyx-7",
+            "40.4862°n",
+            "74.4518°w",
+            "45",
+            "62",
+            "—",
+            "28.88",
+            "inhg,"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0125e0fffff0086b64327a79782d37000150fffff00a3430"
+        },
+        {
+          "msg": 8,
+          "raw_bytes": 156,
+          "enc_bytes": 157,
+          "ratio": 0.9936,
+          "roundtrip": true,
+          "esc_count": 9,
+          "esc_words": [
+            "ops@libertymesh.net",
+            "—",
+            "sitrep:",
+            "7/10",
+            "online,",
+            "3",
+            "0600,",
+            "73%,",
+            "https://status.libertymesh.net/live"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "008020000030fffff0136f7073406c6962657274796d6573"
+        },
+        {
+          "msg": 9,
+          "raw_bytes": 174,
+          "enc_bytes": 113,
+          "ratio": 1.5398,
+          "roundtrip": true,
+          "esc_count": 6,
+          "esc_words": [
+            "1",
+            "—",
+            "206",
+            "princeton,",
+            "45",
+            "min,"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0569800063100122d000daf0fffff0013100cbc000a2d0ff"
+        },
+        {
+          "msg": 10,
+          "raw_bytes": 188,
+          "enc_bytes": 159,
+          "ratio": 1.1824,
+          "roundtrip": true,
+          "esc_count": 15,
+          "esc_words": [
+            "📊",
+            "meshlex",
+            "sync:",
+            "47",
+            "5",
+            "—",
+            "✅",
+            "✅",
+            "✅",
+            "✅",
+            "✅",
+            "✅",
+            "1",
+            "✅",
+            "🟢"
+          ],
+          "dynamic_adds": 0,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 0,
+          "wire_hex": "fffff004f09f938afffff0076d6573686c6578fffff00573"
+        }
+      ]
+    },
+    {
+      "name": "mux-333k-meshlex",
+      "codec": "MUX Grid 333K + MeshLex",
+      "aggregate_ratio": 1.3834,
+      "total_original_bytes": 1483,
+      "total_encoded_bytes": 1072,
+      "total_cb_upd_bytes": 641,
+      "total_esc": 0,
+      "total_dynamic_adds": 53,
+      "total_dynamic_hits": 20,
+      "delivery": "10/10",
+      "runtime_ms": 1.04,
+      "steps": [
+        {
+          "msg": 1,
+          "raw_bytes": 137,
+          "enc_bytes": 111,
+          "ratio": 1.2342,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 7,
+          "dynamic_hits": 0,
+          "cb_upd_bytes": 77,
+          "wire_hex": "fffff004f09f9aa801a680006b90004fd000520005698000"
+        },
+        {
+          "msg": 2,
+          "raw_bytes": 132,
+          "enc_bytes": 97,
+          "ratio": 1.3608,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 4,
+          "dynamic_hits": 1,
+          "cb_upd_bytes": 60,
+          "wire_hex": "fffff00f6c6962657274792d6e6f64652d3034002a90028c"
+        },
+        {
+          "msg": 3,
+          "raw_bytes": 129,
+          "enc_bytes": 90,
+          "ratio": 1.4333,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 4,
+          "dynamic_hits": 1,
+          "cb_upd_bytes": 41,
+          "wire_hex": "0014d0005eb00001500001a0024980022580fffff0056e62"
+        },
+        {
+          "msg": 4,
+          "raw_bytes": 141,
+          "enc_bytes": 121,
+          "ratio": 1.1653,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 9,
+          "dynamic_hits": 2,
+          "cb_upd_bytes": 103,
+          "wire_hex": "fffff006e29aa0efb88f00d5d0ac80f001aa2001509001cb"
+        },
+        {
+          "msg": 5,
+          "raw_bytes": 152,
+          "enc_bytes": 80,
+          "ratio": 1.9,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 2,
+          "dynamic_hits": 1,
+          "cb_upd_bytes": 24,
+          "wire_hex": "0b96700569800014d00046e0009d0000c250ac80300357c0"
+        },
+        {
+          "msg": 6,
+          "raw_bytes": 139,
+          "enc_bytes": 78,
+          "ratio": 1.7821,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 2,
+          "dynamic_hits": 2,
+          "cb_upd_bytes": 19,
+          "wire_hex": "0569800050300300a002e70000003001640001eae000daf0"
+        },
+        {
+          "msg": 7,
+          "raw_bytes": 135,
+          "enc_bytes": 109,
+          "ratio": 1.2385,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 7,
+          "dynamic_hits": 1,
+          "cb_upd_bytes": 84,
+          "wire_hex": "0125e0fffff0086b64327a79782d37000150fffff00a3430"
+        },
+        {
+          "msg": 8,
+          "raw_bytes": 156,
+          "enc_bytes": 153,
+          "ratio": 1.0196,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 8,
+          "dynamic_hits": 1,
+          "cb_upd_bytes": 130,
+          "wire_hex": "008020000030fffff0136f7073406c6962657274796d6573"
+        },
+        {
+          "msg": 9,
+          "raw_bytes": 174,
+          "enc_bytes": 104,
+          "ratio": 1.6731,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 3,
+          "dynamic_hits": 3,
+          "cb_upd_bytes": 35,
+          "wire_hex": "0569800063100122d000daf0ac804000cbc000a2d0ac8030"
+        },
+        {
+          "msg": 10,
+          "raw_bytes": 188,
+          "enc_bytes": 129,
+          "ratio": 1.4574,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 7,
+          "dynamic_hits": 8,
+          "cb_upd_bytes": 68,
+          "wire_hex": "fffff004f09f938afffff0076d6573686c6578fffff00573"
+        }
+      ]
+    },
+    {
+      "name": "mux-333k-meshlex-warm",
+      "codec": "MUX Grid 333K + MeshLex",
+      "aggregate_ratio": 2.1307,
+      "total_original_bytes": 1483,
+      "total_encoded_bytes": 696,
+      "total_cb_upd_bytes": 0,
+      "total_esc": 0,
+      "total_dynamic_adds": 0,
+      "total_dynamic_hits": 73,
+      "delivery": "10/10",
+      "runtime_ms": 0.84,
+      "steps": [
+        {
+          "msg": 1,
+          "raw_bytes": 137,
+          "enc_bytes": 69,
+          "ratio": 1.9855,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 7,
+          "cb_upd_bytes": 0,
+          "wire_hex": "ac800001a680006b90004fd000520005698000d3a0ac8010"
+        },
+        {
+          "msg": 2,
+          "raw_bytes": 132,
+          "enc_bytes": 57,
+          "ratio": 2.3158,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 5,
+          "cb_upd_bytes": 0,
+          "wire_hex": "ac8070002a90028c1000015001640001eae0ac8080000130"
+        },
+        {
+          "msg": 3,
+          "raw_bytes": 129,
+          "enc_bytes": 69,
+          "ratio": 1.8696,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 5,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0014d0005eb00001500001a0024980022580ac80b0000b30"
+        },
+        {
+          "msg": 4,
+          "raw_bytes": 141,
+          "enc_bytes": 63,
+          "ratio": 2.2381,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 11,
+          "cb_upd_bytes": 0,
+          "wire_hex": "ac80f000d5d0ac80f001aa2001509001cb70ac8100ac8110"
+        },
+        {
+          "msg": 5,
+          "raw_bytes": 152,
+          "enc_bytes": 66,
+          "ratio": 2.303,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 3,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0b96700569800014d00046e0009d0000c250ac80300357c0"
+        },
+        {
+          "msg": 6,
+          "raw_bytes": 139,
+          "enc_bytes": 69,
+          "ratio": 2.0145,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 4,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0569800050300300a002e70000003001640001eae000daf0"
+        },
+        {
+          "msg": 7,
+          "raw_bytes": 135,
+          "enc_bytes": 60,
+          "ratio": 2.25,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 8,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0125e0ac81c0000150ac81d0ac81e0002a90009f20ac81f0"
+        },
+        {
+          "msg": 8,
+          "raw_bytes": 156,
+          "enc_bytes": 63,
+          "ratio": 2.4762,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 9,
+          "cb_upd_bytes": 0,
+          "wire_hex": "008020000030ac8230ac8030ac8240ac8250020390ac8260"
+        },
+        {
+          "msg": 9,
+          "raw_bytes": 174,
+          "enc_bytes": 84,
+          "ratio": 2.0714,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 6,
+          "cb_upd_bytes": 0,
+          "wire_hex": "0569800063100122d000daf0ac804000cbc000a2d0ac8030"
+        },
+        {
+          "msg": 10,
+          "raw_bytes": 188,
+          "enc_bytes": 96,
+          "ratio": 1.9583,
+          "roundtrip": true,
+          "esc_count": 0,
+          "esc_words": [],
+          "dynamic_adds": 0,
+          "dynamic_hits": 15,
+          "cb_upd_bytes": 0,
+          "wire_hex": "ac82e0ac82f0ac8300ac831000e71000c000005640ac8320"
+        }
+      ]
+    }
+  ],
+  "meshlex_lexicon": [
+    {
+      "word": "🚨",
+      "row": 690,
+      "col": 0,
+      "added_at_msg": 1,
+      "hit_count": 1
+    },
+    {
+      "word": "40.2171°n",
+      "row": 690,
+      "col": 1,
+      "added_at_msg": 1,
+      "hit_count": 1
+    },
+    {
+      "word": "74.7429°w",
+      "row": 690,
+      "col": 2,
+      "added_at_msg": 1,
+      "hit_count": 1
+    },
+    {
+      "word": "—",
+      "row": 690,
+      "col": 3,
+      "added_at_msg": 1,
+      "hit_count": 10
+    },
+    {
+      "word": "1",
+      "row": 690,
+      "col": 4,
+      "added_at_msg": 1,
+      "hit_count": 4
+    },
+    {
+      "word": "15",
+      "row": 690,
+      "col": 5,
+      "added_at_msg": 1,
+      "hit_count": 1
+    },
+    {
+      "word": "fast,",
+      "row": 690,
+      "col": 6,
+      "added_at_msg": 1,
+      "hit_count": 1
+    },
+    {
+      "word": "liberty-node-04",
+      "row": 690,
+      "col": 7,
+      "added_at_msg": 2,
+      "hit_count": 1
+    },
+    {
+      "word": "08648",
+      "row": 690,
+      "col": 8,
+      "added_at_msg": 2,
+      "hit_count": 1
+    },
+    {
+      "word": "609-555-0147",
+      "row": 690,
+      "col": 9,
+      "added_at_msg": 2,
+      "hit_count": 1
+    },
+    {
+      "word": "1430",
+      "row": 690,
+      "col": 10,
+      "added_at_msg": 2,
+      "hit_count": 1
+    },
+    {
+      "word": "nb-07",
+      "row": 690,
+      "col": 11,
+      "added_at_msg": 3,
+      "hit_count": 1
+    },
+    {
+      "word": "12.4",
+      "row": 690,
+      "col": 12,
+      "added_at_msg": 3,
+      "hit_count": 1
+    },
+    {
+      "word": "0800",
+      "row": 690,
+      "col": 13,
+      "added_at_msg": 3,
+      "hit_count": 1
+    },
+    {
+      "word": "1200",
+      "row": 690,
+      "col": 14,
+      "added_at_msg": 3,
+      "hit_count": 1
+    },
+    {
+      "word": "⚠️",
+      "row": 690,
+      "col": 15,
+      "added_at_msg": 4,
+      "hit_count": 2
+    },
+    {
+      "word": "a3",
+      "row": 690,
+      "col": 16,
+      "added_at_msg": 4,
+      "hit_count": 1
+    },
+    {
+      "word": "b7",
+      "row": 690,
+      "col": 17,
+      "added_at_msg": 4,
+      "hit_count": 1
+    },
+    {
+      "word": "c12",
+      "row": 690,
+      "col": 18,
+      "added_at_msg": 4,
+      "hit_count": 1
+    },
+    {
+      "word": "98%",
+      "row": 690,
+      "col": 19,
+      "added_at_msg": 4,
+      "hit_count": 1
+    },
+    {
+      "word": "41°f",
+      "row": 690,
+      "col": 20,
+      "added_at_msg": 4,
+      "hit_count": 1
+    },
+    {
+      "word": "29.12",
+      "row": 690,
+      "col": 21,
+      "added_at_msg": 4,
+      "hit_count": 1
+    },
+    {
+      "word": "#floodwatch",
+      "row": 690,
+      "col": 22,
+      "added_at_msg": 4,
+      "hit_count": 1
+    },
+    {
+      "word": "#libertymesh",
+      "row": 690,
+      "col": 23,
+      "added_at_msg": 4,
+      "hit_count": 1
+    },
+    {
+      "word": "ps-14",
+      "row": 690,
+      "col": 24,
+      "added_at_msg": 5,
+      "hit_count": 1
+    },
+    {
+      "word": "street,",
+      "row": 690,
+      "col": 25,
+      "added_at_msg": 5,
+      "hit_count": 1
+    },
+    {
+      "word": "park,",
+      "row": 690,
+      "col": 26,
+      "added_at_msg": 6,
+      "hit_count": 1
+    },
+    {
+      "word": "14",
+      "row": 690,
+      "col": 27,
+      "added_at_msg": 6,
+      "hit_count": 1
+    },
+    {
+      "word": "kd2zyx-7",
+      "row": 690,
+      "col": 28,
+      "added_at_msg": 7,
+      "hit_count": 1
+    },
+    {
+      "word": "40.4862°n",
+      "row": 690,
+      "col": 29,
+      "added_at_msg": 7,
+      "hit_count": 1
+    },
+    {
+      "word": "74.4518°w",
+      "row": 690,
+      "col": 30,
+      "added_at_msg": 7,
+      "hit_count": 1
+    },
+    {
+      "word": "45",
+      "row": 690,
+      "col": 31,
+      "added_at_msg": 7,
+      "hit_count": 2
+    },
+    {
+      "word": "62",
+      "row": 690,
+      "col": 32,
+      "added_at_msg": 7,
+      "hit_count": 1
+    },
+    {
+      "word": "28.88",
+      "row": 690,
+      "col": 33,
+      "added_at_msg": 7,
+      "hit_count": 1
+    },
+    {
+      "word": "inhg,",
+      "row": 690,
+      "col": 34,
+      "added_at_msg": 7,
+      "hit_count": 1
+    },
+    {
+      "word": "ops@libertymesh.net",
+      "row": 690,
+      "col": 35,
+      "added_at_msg": 8,
+      "hit_count": 1
+    },
+    {
+      "word": "sitrep:",
+      "row": 690,
+      "col": 36,
+      "added_at_msg": 8,
+      "hit_count": 1
+    },
+    {
+      "word": "7/10",
+      "row": 690,
+      "col": 37,
+      "added_at_msg": 8,
+      "hit_count": 1
+    },
+    {
+      "word": "online,",
+      "row": 690,
+      "col": 38,
+      "added_at_msg": 8,
+      "hit_count": 1
+    },
+    {
+      "word": "3",
+      "row": 690,
+      "col": 39,
+      "added_at_msg": 8,
+      "hit_count": 1
+    },
+    {
+      "word": "0600,",
+      "row": 690,
+      "col": 40,
+      "added_at_msg": 8,
+      "hit_count": 1
+    },
+    {
+      "word": "73%,",
+      "row": 690,
+      "col": 41,
+      "added_at_msg": 8,
+      "hit_count": 1
+    },
+    {
+      "word": "https://status.libertymesh.net/live",
+      "row": 690,
+      "col": 42,
+      "added_at_msg": 8,
+      "hit_count": 1
+    },
+    {
+      "word": "206",
+      "row": 690,
+      "col": 43,
+      "added_at_msg": 9,
+      "hit_count": 1
+    },
+    {
+      "word": "princeton,",
+      "row": 690,
+      "col": 44,
+      "added_at_msg": 9,
+      "hit_count": 1
+    },
+    {
+      "word": "min,",
+      "row": 690,
+      "col": 45,
+      "added_at_msg": 9,
+      "hit_count": 1
+    },
+    {
+      "word": "📊",
+      "row": 690,
+      "col": 46,
+      "added_at_msg": 10,
+      "hit_count": 1
+    },
+    {
+      "word": "meshlex",
+      "row": 690,
+      "col": 47,
+      "added_at_msg": 10,
+      "hit_count": 1
+    },
+    {
+      "word": "sync:",
+      "row": 690,
+      "col": 48,
+      "added_at_msg": 10,
+      "hit_count": 1
+    },
+    {
+      "word": "47",
+      "row": 690,
+      "col": 49,
+      "added_at_msg": 10,
+      "hit_count": 1
+    },
+    {
+      "word": "5",
+      "row": 690,
+      "col": 50,
+      "added_at_msg": 10,
+      "hit_count": 1
+    },
+    {
+      "word": "✅",
+      "row": 690,
+      "col": 51,
+      "added_at_msg": 10,
+      "hit_count": 7
+    },
+    {
+      "word": "🟢",
+      "row": 690,
+      "col": 52,
+      "added_at_msg": 10,
+      "hit_count": 1
+    }
+  ]
+}
