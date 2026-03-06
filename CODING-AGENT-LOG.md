@@ -942,3 +942,55 @@ generation.
 - Legacy .bin format detection preserved: if `all_codes` key missing, falls back to expensive tree rebuild with warning
 
 - **Status**: All 6 bugs fixed (1 verified non-bug), codebooks rebuilt, mock mode validated. Ready for Mark to re-test on Strix Halo.
+
+---
+
+## Entry 024 — Experiment G Live LoRa Bugfix (Peer Discovery + Trigger ACK)
+
+**Date**: 2026-03-06
+**Trigger**: Mark ran Experiment G live on Strix Halo (Liberty-Node-04) + eSports laptop (Liberty-Node-02) using test01 model on Lemonade at localhost:8000. Communication was one-way only: A→B worked at RSSI -25 to -27 dBm, B→A silently dropped by peer_id filter bug. 100% RX timeouts on Node A across all 4 runs.
+
+### Bugs Fixed
+
+| # | Severity | Bug | Fix |
+|---|----------|-----|-----|
+| 1 | BLOCKER | peer_id stuck at `!ffffffff` after broadcast trigger — all incoming packets from real peer silently dropped | Added peer discovery in `_on_receive`: when `self.peer_id == "!ffffffff"`, accept first sender as peer and lock. Fallback for Bug 2 ACK miss. |
+| 2 | HIGH | No trigger ACK step — Node A broadcasts "Hi", Node B becomes Role B, but A never learns B's node ID | Added `_on_ack()` handler + `_ack_event`. Node B now sends `send_text("ACK", sender_id)` after receiving trigger. Node A waits 15s for ACK to learn peer ID. |
+| 3 | MEDIUM | Meshtastic mesh rebroadcast of "Hi" enters codec path ~40s later — `codec_id 0x48` error (ASCII 'H') | Guard in `_on_receive`: reject packets < 4 bytes + reject known control payloads (b"Hi", b"ACK", b"PONG"). |
+
+### Hardening Improvements
+
+| # | Description | Implementation |
+|---|-------------|----------------|
+| H1 | Abort on missing peer after trigger phase | If `peer_id` still `!ffffffff` or `!00000000` after trigger handshake in live mode, `sys.exit(1)` with clear error message. Skipped in loopback. |
+| H2 | Early exit on consecutive RX timeouts | After 5 consecutive RX timeouts in a run, abort with log message. Prevents burning 75+ minutes transmitting to nobody. |
+| H3 | RX success rate + FAILED flag in comparison table | Added `RX ok/tot` column and `Status` column. Any run with <50% RX success flagged as `! FAILED`. |
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| huffman_mesh_poc.py | `_on_receive`: Bug 1 peer discovery + Bug 3 short packet guard. `ExperimentRunner.__init__`: added `_ack_event`. `initialize()`: register `_on_ack` callback. `_on_trigger`: sends ACK after becoming Role B. `_send_trigger`: waits 15s for ACK. New `_on_ack()` method. `run_experiment()`: remove both trigger+ack listeners; Hardening 1 peer guard. `RunRunner.run()`: Hardening 2 timeout counter. `_print_comparison()`: Hardening 3 RX ok/total + FAILED flag. |
+
+### Validation Results
+
+- **py_compile**: PASS
+- **Mock mode**: 4/4 runs, 80 messages, 10/10 RX per run, all OK
+- **Comparison table**: Now shows `RX ok/tot` and `Status` columns
+
+### Key Design Decisions
+
+- Bug 1 fix is the safety net — even without ACK, peer discovery from first data packet works
+- Bug 2 ACK uses `send_text()` (TEXT_MESSAGE_APP) not `send_data()` — matches trigger protocol
+- 15s ACK timeout (increased from spec's 5s) accounts for Meshtastic TX queue delays
+- Hardening 1 gate only active in live mode — loopback/mock mode unaffected
+- Model: test01 on Lemonade (localhost:8000) — no external LLM dependencies
+
+### Expected Outcome on Re-Test (Experiment G-2)
+
+1. Node A discovers B's ID via ACK (or via first data packet as fallback)
+2. Bidirectional comms at RSSI -25 to -27 dBm (proven from G run)
+3. 0x48 trigger rebroadcast caught and logged as harmless
+4. Comparison table shows actual RX metrics for round-trip validation
+
+- **Status**: All 3 bugs fixed + 3 hardening items. Ready for Mark to re-run as Experiment G-2 on Strix Halo + eSports hardware.

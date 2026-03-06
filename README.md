@@ -280,6 +280,7 @@ messages that exceed the LoRa MTU.
 
 ```
 huffman-mesh-poc/
+├── hardware/                  ← KiCad PCB and schematic files, libs, fab outputs, scripts
 ├── README.md                  ← You are here
 ├── PLAN.md                    ← Experiment design spec (A–G)
 ├── CODING-AGENT-LOG.md        ← AI coding agent build decisions & rationale (22 entries)

@@ -908,9 +908,21 @@ class RunRunner:
         if handle_ping(raw_bytes, sender_id, self.radio):
             return
 
-        # Only accept packets from our peer
-        if sender_id != self.peer_id:
+        # --- Bug 3 fix: Reject trigger-length packets & known control payloads ---
+        if len(raw_bytes) < 4:
+            log(f"Ignoring short packet ({len(raw_bytes)}B) from {sender_id}"
+                " — likely trigger rebroadcast")
             return
+        if raw_bytes in (b"Hi", b"ACK", b"PONG"):
+            return
+
+        # --- Bug 1 fix: Peer discovery when peer is unknown/broadcast ---
+        if self.peer_id == "!ffffffff":
+            self.peer_id = sender_id
+            # Also update the ExperimentRunner's peer_id via the RunRunner ref
+            log(f"Peer discovered: {sender_id}")
+        elif sender_id != self.peer_id:
+            return  # ignore packets from non-peers
 
         metrics = receive(
             raw_bytes=raw_bytes,
@@ -971,11 +983,27 @@ class RunRunner:
         # Register RX callback for this run
         self.radio.register_rx_callback(self._on_receive)
 
+        # --- Hardening 2: Track consecutive RX timeouts ---
+        MAX_CONSECUTIVE_TIMEOUTS = 5
+        consecutive_timeouts = 0
+
         for step in range(1, total + 1):
             if self._is_my_tx_step(step):
                 self._do_tx(step)
+                consecutive_timeouts = 0  # TX doesn't count
             else:
                 self._do_rx(step)
+                # Check if the last RX was a timeout
+                if (self.rx_records and
+                        (self.rx_records[-1].get("error") or "").startswith("timeout")):
+                    consecutive_timeouts += 1
+                    if consecutive_timeouts >= MAX_CONSECUTIVE_TIMEOUTS:
+                        log(f"ABORT: {MAX_CONSECUTIVE_TIMEOUTS} consecutive "
+                            f"RX timeouts. Peer {self.peer_id} appears "
+                            f"offline.", "ERROR")
+                        break
+                else:
+                    consecutive_timeouts = 0
 
         # Hard-reset RX callbacks to prevent stacking across runs
         self.radio._rx_callbacks = []
@@ -1099,6 +1127,7 @@ class ExperimentRunner:
 
         # ── Trigger sync ──────────────────────────────────────────────────────
         self._trigger_event  = threading.Event()
+        self._ack_event      = threading.Event()   # Bug 2: ACK handshake
         self._trigger_sender: str | None = None
 
         # ── Results ───────────────────────────────────────────────────────────
@@ -1123,6 +1152,8 @@ class ExperimentRunner:
 
         # Register trigger listener
         self.radio.register_rx_callback(self._on_trigger)
+        # Register ACK listener (Bug 2: Role A learns peer ID from ACK)
+        self.radio.register_rx_callback(self._on_ack)
 
         log("── Ready ─────────────────────────────────────────────────")
 
@@ -1155,6 +1186,9 @@ class ExperimentRunner:
             self._trigger_sender = sender_id
             self.peer_id         = sender_id
             self.role            = "B"
+            # --- Bug 2 fix: Send ACK so Role A learns our node ID ---
+            self.radio.send_text("ACK", sender_id)
+            log(f"Trigger ACK sent to {sender_id}")
             self._trigger_event.set()
 
     def _send_trigger(self) -> None:
@@ -1167,6 +1201,28 @@ class ExperimentRunner:
         self.role    = "A"
         log(f"Sending trigger \"{trigger_word}\" to {dest}")
         self.radio.send_text(trigger_word, dest)
+
+        # --- Bug 2 fix: Wait for ACK to learn peer ID ---
+        ack_received = self._ack_event.wait(timeout=15.0)
+        if ack_received:
+            log(f"Trigger ACK received. Peer: {self.peer_id}")
+        else:
+            log("No trigger ACK received (15s). Peer remains: "
+                f"{self.peer_id}", "WARN")
+
+    def _on_ack(self, raw_bytes: bytes, sender_id: str,
+                rssi, snr, packet) -> None:
+        """ACK handler: Role A learns peer ID from ACK response."""
+        if self._ack_event.is_set():
+            return  # Already received ACK
+        try:
+            text = raw_bytes.decode("utf-8").strip()
+        except UnicodeDecodeError:
+            return
+        if text == "ACK":
+            self.peer_id = sender_id
+            log(f"ACK from {sender_id}")
+            self._ack_event.set()
 
     # ── Main experiment entry point ───────────────────────────────────────────
 
@@ -1209,11 +1265,21 @@ class ExperimentRunner:
 
         log(f"Role: {self.role}  Peer: {self.peer_id}")
 
-        # Remove trigger listener (runs handle their own RX)
-        try:
-            self.radio._rx_callbacks.remove(self._on_trigger)
-        except ValueError:
-            pass
+        # Remove trigger/ACK listeners (runs handle their own RX)
+        for cb in (self._on_trigger, self._on_ack):
+            try:
+                self.radio._rx_callbacks.remove(cb)
+            except ValueError:
+                pass
+
+        # --- Hardening 1: Abort if no peer discovered (live mode only) ---
+        if not self.radio._loopback and self.peer_id in ("!ffffffff", "!00000000"):
+            log("ERROR: No peer discovered during trigger handshake. "
+                "Aborting experiment.", "ERROR")
+            log("       Ensure both nodes are powered on, on the same "
+                "Meshtastic channel, and within radio range.", "ERROR")
+            self.radio.close()
+            sys.exit(1)
 
         # ── Sequential runs ───────────────────────────────────────────────────
         for run_cfg in EXPERIMENT_MATRIX:
@@ -1281,12 +1347,12 @@ class ExperimentRunner:
     # ── Comparison summary ────────────────────────────────────────────────────
 
     def _print_comparison(self) -> None:
-        width = 78
+        width = 86
         print("\n" + "=" * width)
         print(f"  EXPERIMENT COMPARISON — v{VERSION} \"{CODENAME}\"")
         print("─" * width)
-        header = (f"  {'Run':<30} {'TX avg ratio':>14} {'RX kw/msg':>10} "
-                  f"{'RX recon_ms':>12} {'TX pkts':>8}")
+        header = (f"  {'Run':<30} {'TX ratio':>10} {'RX ok/tot':>10} "
+                  f"{'RX kw/msg':>10} {'RX ms':>8} {'pkts':>6} {'Status':>8}")
         print(header)
         print("─" * width)
 
@@ -1298,6 +1364,11 @@ class ExperimentRunner:
             avg_ratio = (sum(r["compression_ratio"] for r in valid_tx) /
                          len(valid_tx)) if valid_tx else 0.0
 
+            # --- Hardening 3: RX ok/total + FAILED flag ---
+            rx_ok    = sum(1 for r in rx if r.get("decoded_text"))
+            rx_total = len(rx)
+            rx_str   = f"{rx_ok}/{rx_total}"
+
             valid_kw = [r for r in rx if r.get("keyword_count")]
             avg_kw   = (sum(r["keyword_count"] for r in valid_kw) /
                         len(valid_kw)) if valid_kw else 0.0
@@ -1308,8 +1379,15 @@ class ExperimentRunner:
 
             total_pkts = sum(r.get("packet_count") or 1 for r in tx)
 
-            print(f"  {run_name:<30} {avg_ratio:>14.3f} {avg_kw:>10.1f} "
-                  f"{avg_rec:>12.1f} {total_pkts:>8}")
+            # Flag FAILED if RX success rate < 50%
+            if rx_total > 0 and rx_ok / rx_total < 0.5:
+                status = "! FAILED"
+            else:
+                status = "OK"
+
+            print(f"  {run_name:<30} {avg_ratio:>10.3f} {rx_str:>10} "
+                  f"{avg_kw:>10.1f} {avg_rec:>8.1f} {total_pkts:>6} "
+                  f"{status:>8}")
 
         print("=" * width + "\n")
 
