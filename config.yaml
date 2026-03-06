@@ -3,7 +3,7 @@
 
 codec:
   engine: huffman              # OPTIONS: huffman | mux_grid
-  codebook_size: 333k          # OPTIONS: 4k | 333k
+  codebook_size: cube96         # OPTIONS: 4k | 333k | cube96
   mode: keyword                # OPTIONS: keyword | strict_only | legacy
                                # keyword    = Smart Router (strict + lossy)
                                # strict_only = always lossless, paginate overflow

@@ -1078,3 +1078,112 @@ generation.
 - Model: test01 on Lemonade (localhost:8000) — unchanged
 
 - **Status**: All items from G-3 audit implemented. Ready for Mark to run as Experiment G-3 on hardware.
+
+---
+
+## Entry 026 — G-4 MUX Cube 96³ Build (v7.1 3D Memory Upgrade)
+
+**Date:** 2026-03-06
+**Spec:** G4_MUX_CUBE96_HANDOFF.md
+**Trigger:** User approved all 3 review decisions: shared namespace, 3-counter probe, inner format nests in packet.py
+**Status:** COMPLETE — 17/17 tests pass
+
+### Summary
+
+Replaced the 2D 700×700 MUX grid path with a 3D 96×96×96 cube while keeping both the 4K and 333K 2D paths fully intact and backward compatible. Same 3 bytes per word, same LoRa packet format, but with byte-aligned flag bits for namespace (F0), hyperedge/reserved (F1), and capitalization (F2). Added inline MeshLex definitions for OOV words — packets are self-contained, no prior sync needed between encoder and decoder.
+
+### Architecture Decisions Applied
+
+| Decision | Implementation |
+|----------|---------------|
+| Cube size 96³ (884,736 cells) | CUBE_SIZE = 96, shared coordinate space |
+| SHARED namespace | Static + MeshLex words occupy SAME cube (no coordinate reuse) |
+| 3-counter Z→Y→X probe | z_attempts, y_attempts counters with full axis wraparound |
+| SHA-256 hash placement | `h[0] % 96, h[1] % 96, h[2] % 96` — deterministic, reproducible |
+| ESC sentinel 0xFF 0xFF 0xFF | x=127, y=127, z=127 — all outside 0-95 valid range |
+| Inner format in packet.py | `[word_count:1B][def_count:1B][defs...][body...]` nests as payload |
+| Packet IDs 0x05/0x06 | CODEC_MUX_CUBE_STRICT / CODEC_MUX_CUBE_LOSSY |
+| F2 capitalization | Original word[0].isupper() → F2=1, restored on decode |
+| MeshLex OOV | SHA-256 hash + probe into shared cube (NOT random) |
+| Bit layout FROZEN | Byte0=[F0\|x], Byte1=[F1\|y], Byte2=[F2\|z] — no cross-byte ops |
+
+### Files Created
+
+| File | Lines | Description |
+|------|-------|-------------|
+| `build_mux_cube96.py` | 421 | Codebook builder: SHA-256 hash + Z→Y→X probe, roundtrip validation |
+| `codebooks/mux_cube96.bin` | — | 9.1 MB pickle: word_to_xyz, xyz_to_word, metadata |
+| `codebooks/mux_cube96.csv` | — | 7.9 MB human-readable: word, x, y, z, frequency_rank |
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `mux_codec.py` | 746→1363 lines: Added cube96 init/encode/decode, pack/unpack_cube96, MeshLex OOV placement, inline def encode/decode, cube96 keyword encode/decode, cube96-specific self-tests (C1-C5), ESC sentinel, analyze/stats/coverage for cube96 |
+| `packet.py` | Added CODEC_MUX_CUBE_STRICT (0x05), CODEC_MUX_CUBE_LOSSY (0x06), updated LOSSY/STRICT/ALL sets, added `is_cube` property, updated repr(), added Test 5 (6 IDs) and Test 6 (is_cube property) |
+| `config.yaml` | `codebook_size: 333k` → `codebook_size: cube96` |
+| `huffman_mesh_poc.py` | v7.0→v7.1 docstring, added cube96 codebook check in ensure_codebooks(), added Run 6 (cube96-keyword) and Run 7 (cube96-strict) to EXPERIMENT_MATRIX |
+| `test_codecs.py` | Added 9 cube96 test functions (Tests 9-17): static roundtrip, capitalization flag, namespace flag, inline MeshLex def, two-node simulation, ESC sentinel, compression ratio, collision resolution, packet IDs |
+
+### Build Results (from build_mux_cube96.py)
+
+- Words placed: 333,316 / 884,736 (37.7% utilization)
+- Collisions: 129,270 total, 69,011 words affected (20.7%)
+- Max probe distance: 33
+- Build time: 1.15s
+- Roundtrip validation: 333,316/333,316 (100%)
+
+### Self-Test Results (mux_codec.py --cube96)
+
+- 8/8 full-text messages: 100% roundtrip PASS
+- 4/4 keyword sets: 100% roundtrip PASS
+- C1 Capitalization: PASS (same xyz, different F2)
+- C2 ESC sentinel: PASS (127,127,127 all > 95)
+- C3 MeshLex OOV inline def: PASS (two-node roundtrip)
+- C4 Two-node simulation: PASS (separate instances)
+- C5 Namespace flag: PASS (static F0=0)
+- Aggregate compression: 1.24:1 (20% savings) — includes short messages and OOV numbers
+
+### Test Suite Results (test_codecs.py — 17 tests)
+
+All 17 tests PASS:
+- Tests 1-8: Original codec tests (4K MUX, Huffman, pretokenizer, LLM codec) — unchanged, still pass
+- Test 9: Cube96 static vocabulary roundtrip — 6/6 PASS
+- Test 10: Capitalization flag (F2) — PASS
+- Test 11: Namespace flag (F0) — 4 static + 1 MeshLex, all PASS
+- Test 12: Inline MeshLex definition (two-node) — PASS, decoder learned OOV from inline def
+- Test 13: Two-node simulation — 3/3 PASS
+- Test 14: ESC sentinel — 5/5 checks PASS
+- Test 15: Compression ratio — 2.01:1 aggregate (50% savings on static-only messages)
+- Test 16: Collision resolution — displaced word 'hard' (45,84,5)→(45,84,6) roundtrips
+- Test 17: Packet IDs 0x05/0x06 — strict + lossy both roundtrip, is_cube property correct
+
+### Packet.py Self-Test Results
+
+All 6 tests PASS:
+- Tests 1-4: Original 4 codec ID tests — unchanged, still pass
+- Test 5: All 6 codec IDs roundtrip (0x01-0x06) — PASS
+- Test 6: is_cube property for 0x05 strict and 0x06 lossy — PASS
+
+### Key Constraints Preserved
+
+- **No int.from_bytes()/int.to_bytes() in cube96 pack/unpack** — direct byte ops only
+- **Static and MeshLex are SEPARATE dictionaries** — dispatched by F0 flag
+- **Bit layout FROZEN** — single AND + single shift per field, zero cross-byte ops
+- **333K 2D path remains functional** — selected via config (`codebook_size: 333k`)
+- **4K path remains functional** — selected via config (`codebook_size: 4k`)
+- **build_mux_codebook_333k.py untouched** — kept for archive comparison
+- **Coordinates 96-127 on any axis reserved** for control codes
+- **MeshLex OOV uses SHA-256 hash + probe** (not random)
+- **Model: test01 on Lemonade (localhost:8000)** — unchanged
+
+### Compression Performance
+
+| Message Type | Raw Bytes | Cube96 Bytes | Ratio | Savings |
+|-------------|-----------|--------------|-------|---------|
+| Short (1-2 words) | 2-3B | 5B | 0.40-0.60 | -67% to -150% (overhead) |
+| Medium (4-6 words, static) | 21-34B | 11-20B | 1.60-2.47 | 37-59% |
+| Long (7+ words, static) | 41-56B | 20-32B | 1.75-2.05 | 43-51% |
+| Aggregate (static-only corpus) | 241B | 120B | 2.01 | 50% |
+
+Note: Short messages suffer fixed overhead (2-byte inner header). This is by design — the inner header enables self-contained MeshLex definitions. For messages >= 4 words, cube96 consistently achieves > 1.5:1 compression.

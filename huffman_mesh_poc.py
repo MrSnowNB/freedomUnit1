@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
 """
-huffman_mesh_poc.py — CyberMesh v7.0 "Smart Router" Harness
+huffman_mesh_poc.py — CyberMesh v7.1 "Smart Router" Harness
 =============================================================
 Experiment G: Smart Router — Huffman/MUX + Keyword/Strict routing over LoRa.
 
 Architecture:
-  - config.yaml       — full v7.0 config
+  - config.yaml       — full v7.1 config
   - llm_client.py     — LLMClient (generate, classify, warmup)
   - huffman_codec.py  — MeshHuffmanCodec (4k | 333k codebook)
-  - mux_codec.py      — MuxGridCodec     (4k | 333k codebook)
+  - mux_codec.py      — MuxGridCodec     (4k | 333k | cube96 codebook)
   - keyword_codec.py  — KeywordCodec (extract, reconstruct via LLM)
   - smart_router.py   — SmartRouter (route: strict / lossy / paginate)
-  - packet.py         — CyberMeshPacket (encode/decode, codec IDs 0x01-0x04)
+  - packet.py         — CyberMeshPacket (encode/decode, codec IDs 0x01-0x06)
   - paginator.py      — paginate_strict(), reassemble_strict()
   - context_manager.py — ContextManager (per-sender sliding-window history)
   - pretokenizer.py   — normalize() (always applied before encoding)
 
 Experiment matrix (runs sequentially):
-  Run 1: huffman  + 333k + keyword
-  Run 2: mux_grid + 333k + keyword
-  Run 3: huffman  + 333k + strict_only
-  Run 4: mux_grid + 333k + strict_only
+  Run 1: huffman  + 333k   + keyword
+  Run 2: mux_grid + 333k   + keyword
+  Run 3: huffman  + 333k   + strict_only
+  Run 4: mux_grid + 333k   + strict_only
+  Run 5: huffman  + 333k   + lossy-forced
+  Run 6: mux_grid + cube96 + keyword
+  Run 7: mux_grid + cube96 + strict_only
 
 !ping interrupt: handled before pipeline — replies "PONG", never touches
 context or codec pipeline.
@@ -105,7 +108,7 @@ def log(msg: str, level: str = "INFO") -> None:
 
 def ensure_codebooks() -> None:
     """
-    Check that 333K codebook .bin files exist. If missing, attempt to
+    Check that codebook .bin files exist. If missing, attempt to
     build them by running the build scripts. If the build fails or the
     source CSV is missing, exit with a clear message.
     """
@@ -113,12 +116,15 @@ def ensure_codebooks() -> None:
     codebooks_dir = os.path.join(base, "codebooks")
     huff_bin = os.path.join(codebooks_dir, "huffman_333k.bin")
     mux_bin  = os.path.join(codebooks_dir, "mux_333k.bin")
+    cube_bin = os.path.join(codebooks_dir, "mux_cube96.bin")
 
     missing = []
     if not os.path.exists(huff_bin):
         missing.append(("huffman_333k.bin", "build_huffman_codebook_333k.py"))
     if not os.path.exists(mux_bin):
         missing.append(("mux_333k.bin", "build_mux_codebook_333k.py"))
+    if not os.path.exists(cube_bin):
+        missing.append(("mux_cube96.bin", "build_mux_cube96.py"))
 
     if not missing:
         return  # All good
@@ -126,7 +132,7 @@ def ensure_codebooks() -> None:
     # Check source CSV exists
     src_csv = os.path.join(base, "english_unigram_freq.csv")
     if not os.path.exists(src_csv):
-        log("FATAL: 333K codebook .bin files missing and source CSV "
+        log("FATAL: codebook .bin files missing and source CSV "
             f"(english_unigram_freq.csv) not found in {base}", "ERROR")
         log("Download the Kaggle unigram frequency dataset first.", "ERROR")
         sys.exit(1)
@@ -403,14 +409,16 @@ class PageBuffer:
 # EXPERIMENT RUN CONFIG
 # =============================================================================
 
-# Fixed experiment matrix (v7.0 spec requirement #6)
+# Fixed experiment matrix (v7.1 spec — includes cube96 runs)
 EXPERIMENT_MATRIX = [
-    {"run": 1, "engine": "huffman",  "codebook_size": "333k", "mode": "keyword",     "name": "huffman-333k-keyword"},
-    {"run": 2, "engine": "mux_grid", "codebook_size": "333k", "mode": "keyword",     "name": "mux_grid-333k-keyword"},
-    {"run": 3, "engine": "huffman",  "codebook_size": "333k", "mode": "strict_only", "name": "huffman-333k-strict"},
-    {"run": 4, "engine": "mux_grid", "codebook_size": "333k", "mode": "strict_only", "name": "mux_grid-333k-strict"},
-    {"run": 5, "engine": "huffman",  "codebook_size": "333k", "mode": "keyword",     "name": "huffman-333k-lossy-forced",
+    {"run": 1, "engine": "huffman",  "codebook_size": "333k",   "mode": "keyword",     "name": "huffman-333k-keyword"},
+    {"run": 2, "engine": "mux_grid", "codebook_size": "333k",   "mode": "keyword",     "name": "mux_grid-333k-keyword"},
+    {"run": 3, "engine": "huffman",  "codebook_size": "333k",   "mode": "strict_only", "name": "huffman-333k-strict"},
+    {"run": 4, "engine": "mux_grid", "codebook_size": "333k",   "mode": "strict_only", "name": "mux_grid-333k-strict"},
+    {"run": 5, "engine": "huffman",  "codebook_size": "333k",   "mode": "keyword",     "name": "huffman-333k-lossy-forced",
      "strict_threshold_override": 40},
+    {"run": 6, "engine": "mux_grid", "codebook_size": "cube96", "mode": "keyword",     "name": "cube96-keyword"},
+    {"run": 7, "engine": "mux_grid", "codebook_size": "cube96", "mode": "strict_only", "name": "cube96-strict"},
 ]
 
 

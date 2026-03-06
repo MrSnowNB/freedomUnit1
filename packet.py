@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-packet.py — CyberMesh v7.0 Packet Format Encode/Decode
+packet.py — CyberMesh v7.1 Packet Format Encode/Decode
 ========================================================
 Binary packet format for LoRa transmission. All modes use a unified
 header followed by encoded payload.
@@ -11,6 +11,8 @@ Packet format:
     0x02 = MUX Grid strict (lossless)
     0x03 = Huffman lossy (keyword mode)
     0x04 = MUX Grid lossy (keyword mode)
+    0x05 = MUX Cube96 strict (lossless, 3D cube encoding)
+    0x06 = MUX Cube96 lossy (keyword mode, 3D cube encoding)
 
   Byte 1: Meta byte
     Bits 7-5: Page number (0-7, where 0 = single packet)
@@ -21,6 +23,10 @@ Packet format:
   Byte 2 (lossy modes only): Keyword count (N_KW)
 
   Bytes 2+ (strict) or 3+ (lossy): Payload
+    For cube96 strict (0x05), payload is inner format:
+      [word_count:1B][def_count:1B][inline_defs...][body...]
+    For cube96 lossy (0x06), keyword_count in header byte 2,
+      payload is keyword-encoded body.
 
 Author: Mark Snow, Jr. — Mindtech / CyberMesh / Liberty Mesh
 Date:   March 2026
@@ -36,9 +42,11 @@ CODEC_HUFFMAN_STRICT = 0x01
 CODEC_MUX_STRICT = 0x02
 CODEC_HUFFMAN_LOSSY = 0x03
 CODEC_MUX_LOSSY = 0x04
+CODEC_MUX_CUBE_STRICT = 0x05
+CODEC_MUX_CUBE_LOSSY = 0x06
 
-LOSSY_CODEC_IDS = {CODEC_HUFFMAN_LOSSY, CODEC_MUX_LOSSY}
-STRICT_CODEC_IDS = {CODEC_HUFFMAN_STRICT, CODEC_MUX_STRICT}
+LOSSY_CODEC_IDS = {CODEC_HUFFMAN_LOSSY, CODEC_MUX_LOSSY, CODEC_MUX_CUBE_LOSSY}
+STRICT_CODEC_IDS = {CODEC_HUFFMAN_STRICT, CODEC_MUX_STRICT, CODEC_MUX_CUBE_STRICT}
 ALL_CODEC_IDS = LOSSY_CODEC_IDS | STRICT_CODEC_IDS
 
 # Header sizes
@@ -180,12 +188,21 @@ class CyberMeshPacket:
         return self.codec_id in {CODEC_MUX_STRICT, CODEC_MUX_LOSSY}
 
     @property
+    def is_cube(self) -> bool:
+        return self.codec_id in {CODEC_MUX_CUBE_STRICT, CODEC_MUX_CUBE_LOSSY}
+
+    @property
     def header_size(self) -> int:
         return LOSSY_HEADER_SIZE if self.is_lossy else STRICT_HEADER_SIZE
 
     def __repr__(self) -> str:
         mode = "lossy" if self.is_lossy else "strict"
-        engine = "huffman" if self.is_huffman else "mux"
+        if self.is_cube:
+            engine = "cube96"
+        elif self.is_huffman:
+            engine = "huffman"
+        else:
+            engine = "mux"
         return (f"CyberMeshPacket(codec=0x{self.codec_id:02X} "
                 f"[{engine}/{mode}] page={self.page_num}/{self.total_pages} "
                 f"pri={self.priority} kw={self.keyword_count} "
@@ -276,11 +293,12 @@ if __name__ == "__main__":
     print(f"      Result: {'PASS ✓' if ok else 'FAIL ✗'}")
     if not ok: all_pass = False
 
-    # Test 5: All 4 codec IDs round-trip
-    print("\n  [5] All 4 codec IDs — round-trip")
+    # Test 5: All 6 codec IDs round-trip
+    print("\n  [5] All 6 codec IDs — round-trip")
     for cid, name in [(0x01, "Huffman strict"), (0x02, "MUX strict"),
-                       (0x03, "Huffman lossy"), (0x04, "MUX lossy")]:
-        kw = 10 if cid in (0x03, 0x04) else 0
+                       (0x03, "Huffman lossy"), (0x04, "MUX lossy"),
+                       (0x05, "Cube96 strict"), (0x06, "Cube96 lossy")]:
+        kw = 10 if cid in (0x03, 0x04, 0x06) else 0
         payload = bytes(range(20))
         pkt = CyberMeshPacket.encode(cid, payload, keyword_count=kw)
         dec = CyberMeshPacket.decode(pkt)
@@ -289,6 +307,25 @@ if __name__ == "__main__":
         print(f"      0x{cid:02X} {name:<16} → "
               f"{'PASS ✓' if rt_ok else 'FAIL ✗'}")
         if not rt_ok: all_pass = False
+
+    # Test 6: Cube96 is_cube property
+    print("\n  [6] Cube96 is_cube property")
+    pkt_cube = CyberMeshPacket.decode(
+        CyberMeshPacket.encode(CODEC_MUX_CUBE_STRICT, b"\x01\x02\x03"))
+    cube_ok = pkt_cube.is_cube and not pkt_cube.is_huffman
+    print(f"      0x05 is_cube={pkt_cube.is_cube} is_huffman={pkt_cube.is_huffman}: "
+          f"{'PASS ✓' if cube_ok else 'FAIL ✗'}")
+    if not cube_ok: all_pass = False
+
+    pkt_cube_lossy = CyberMeshPacket.decode(
+        CyberMeshPacket.encode(CODEC_MUX_CUBE_LOSSY, b"\x04\x05\x06",
+                               keyword_count=5))
+    cl_ok = (pkt_cube_lossy.is_cube and pkt_cube_lossy.is_lossy and
+             pkt_cube_lossy.keyword_count == 5)
+    print(f"      0x06 is_cube={pkt_cube_lossy.is_cube} is_lossy={pkt_cube_lossy.is_lossy} "
+          f"kw={pkt_cube_lossy.keyword_count}: "
+          f"{'PASS ✓' if cl_ok else 'FAIL ✗'}")
+    if not cl_ok: all_pass = False
 
     print(f"\n  {'─' * 74}")
     print(f"  ALL TESTS: {'PASS ✓' if all_pass else 'FAIL ✗'}")
